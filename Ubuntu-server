@@ -20,6 +20,10 @@ dns-nameservers 104.237.144.172 74.207.232.103 104.245.39.112
 ####ufw Setup####
 #########################
 
+Alira=ssh, OpenVPN, Mumble
+Kraityn: ssh, Apache (only HTTPS), MySQL
+Oak: ssh, CMaNGOS, Minetest
+
 --Alira--
 sudo ufw allow ssh
 sudo ufw allow 1194/udp
@@ -49,23 +53,15 @@ sudo ufw allow 25565/tcp
 ####Software####
 #########################
 
-- Use one or the other and/or adjust for usage
-- Use this if starting from generic Ubuntu Server install
-
-sudo apt-add-repository ppa:nginx/development
-
-sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-sudo add-apt-repository 'deb http://mirror.jmu.edu/pub/mariadb/repo/10.0/ubuntu trusty main'
-
-sudo apt-get install git mariadb-client mariadb-server libmariadbclient18 nginx-full php5 php5-cli php5-common php5-curl php5-enchant php5-fpm php5-gd php5-gmp php5-imagick php5-intl php5-json php5-mcrypt php5-mysqlnd php5-recode php5-apcu
-
-- Use this if selected LAMP during Ubuntu Server install
+- Select LAMP during Ubuntu setup
 
 sudo apt-get install git php5-curl php5-gd php5-gmp php5-intl php5-json php5-mysqlnd php5-apcu
 
 #########################
 ####PHP Configuration####
 #########################
+
+- Doesn't seem to affect attachment upload on status update on GNU social; needs looked into
 
 sudo nano '/etc/php5/cli/php.ini'
 
@@ -76,6 +72,8 @@ upload_max_filesize = 64M
 #########################
 ####FPM Configuration####
 #########################
+
+- Only tested on nginx
 
 sudo nano '/etc/php5/fpm/pool.d/www.conf'
 
@@ -139,78 +137,6 @@ sudo nano '/etc/apache2/apache2.conf'
 - Change "AllowOverride None" to "AllowOverride All" under <Directory /var/www/>
 
 #########################
-####NGINX Certificates####
-#########################
-
-sudo mkdir '/etc/nginx/ssl'
-- Copy ssl.key and ssl-unified.crt to that folder (use archive or follow StartSSL guide)
-sudo chmod 600 /etc/nginx/ssl/*
-
-#########################
-####NGINX Virtual Host####
-#########################
-
-sudo nano '/etc/nginx/sites-available/gnusocial'
-
-----------
-server {
-	listen 443;
-	listen [::]:443;
-
-	server_name realmofespionage.com;
-	root /var/www/html;
-	index index.php index.html index.htm;
-
-	location ~ \.php$ {
-		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		fastcgi_pass 127.0.0.1:2000;
-		fastcgi_index index.php;
-                fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
-		include fastcgi_params;
-		fastcgi_buffer_size 128k;
-		fastcgi_buffers 4 256k;
-		fastcgi_busy_buffers_size 256k;
-	}
-
-	location / {
-		rewrite ^(.*)$ /index.php?p=$1 last;
-		break;
-	}
-
-	location ~* ^/(.*)\.(ico|css|js|gif|png|jpg|bmp|JPG|jpeg)$ {
-		root /var/www/html;
-		rewrite ^/(.*)$ /$1 break;
-		access_log off;
-		expires max;
-	}
-
-	ssl on;
-	ssl_certificate /etc/nginx/ssl/ssl-unified.crt;
-	ssl_certificate_key /etc/nginx/ssl/ssl.key;
-
-	ssl_session_timeout 5m;
-
-	ssl_protocols SSLv3 TLSv1;
-	ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
-	ssl_prefer_server_ciphers on;
-
-	client_max_body_size      15m;
-	
-	access_log /var/log/nginx/access.log;
-	error_log /var/log/nginx/error.log;
-}
-
-server {
-        listen 80;
-        server_name realmofespionage.com;
-        rewrite     ^ https://www.realmofespionage.com$request_uri? permanent;
-}
-----------
-
-sudo ln -s '/etc/nginx/sites-available/gnusocial' '/etc/nginx/sites-enabled/gnusocial'
-sudo ln -s '/etc/nginx/sites-available/wordpress' '/etc/nginx/sites-enabled/wordpress'
-
-#########################
 ####MySQL Remote Permissions####
 #########################
 
@@ -224,7 +150,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.1.152';
 
 mysql -u root -p
 create database gnusocial;
-grant usage on gnusocial.* to 'gnusocial'@'localhost' identified by 'gnusocial';
+grant usage on gnusocial.* to 'gnusocial'@'localhost' identified by 'password';
 grant all privileges on gnusocial.* to 'gnusocial'@'localhost';
 flush privileges;
 exit
@@ -238,7 +164,7 @@ drop database gnusocial;
 
 mysql -u root -p
 create database wordpress;
-grant usage on wordpress.* to 'wordpress'@'localhost' identified by 'wordpress';
+grant usage on wordpress.* to 'wordpress'@'localhost' identified by 'password';
 grant all privileges on wordpress.* to 'wordpress'@'localhost';
 flush privileges;
 exit
@@ -252,7 +178,7 @@ drop database wordpress;
 
 mysql -u root -p
 create database mybb;
-grant usage on mybb.* to 'mybb'@'localhost' identified by 'mybb';
+grant usage on mybb.* to 'mybb'@'localhost' identified by 'password';
 grant all privileges on mybb.* to 'mybb'@'localhost';
 flush privileges;
 exit
@@ -413,7 +339,7 @@ sudo nano '/etc/mumble-server.ini'
 
 - Uncomment autoban
 welcometext="Welcome to the Realm of Espionage Mumble server!"
-serverpassword=roemumble
+serverpassword=password
 registerName=RoE (Mumble)
 registerUrl=https://www.realmofespionage.com
 registerHostname=realmofespionage.com
@@ -494,17 +420,10 @@ sudo add-apt-repository ppa:ubuntu-toolchain-r/test
 sudo apt-get install build-essential gcc g++ automake git-core autoconf make patch libmysql++-dev libtool libssl-dev grep binutils zlibc libc6 libbz2-dev cmake
 
 #########################
-####Create User####
-#########################
-
-- May not be used; wait
-sudo useradd -m -k -U mangos
-
-#########################
 ####Get programs from Git####
 #########################
 
-- Run from ~ (home directory)
+- Run from home folder
 
 git clone git://github.com/cmangos/mangos-classic.git mangos
 git clone git://github.com/scriptdev2/scriptdev2-classic.git mangos/src/bindings/ScriptDev2
@@ -552,7 +471,7 @@ GRANT ALL PRIVILEGES ON mangos.* TO ‘mangos’@'192.168.1.152’;
 
 select User,Host from mysql.user;
 DROP USER 'username'@'localhost';
-SET PASSWORD FOR 'mangos'@'192.168.1.152' = PASSWORD('mangos');
+SET PASSWORD FOR 'mangos'@'192.168.1.152' = PASSWORD('password');
 
 show databases;
 use DATABASEZ;
