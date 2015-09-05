@@ -1,0 +1,442 @@
+#########################
+####DNS####
+#########################
+
+Wraeclast
+
+--Fusl's OpenNIC Tier2 DNS Servers East Coast--
+
+Newark
+104.237.144.172
+
+Atlanta
+74.207.232.103
+
+Orlando
+104.245.39.112
+
+104.237.144.172,74.207.232.103,104.245.39.112
+
+#########################
+####fstab Tweaks####
+#########################
+
+pkexec env DISPLAY=$DISPLAY gedit '/etc/fstab'
+kdesu kwrite '/etc/fstab'
+
+--ext4--
+relatime,data=writeback,nobarrier,commit=60
+
+#########################
+####EnviromentVariable Tweaks####
+#########################
+
+pkexec env DISPLAY=$DISPLAY gedit '/etc/profile.d/custom.sh'
+kdesu kwrite '/etc/profile.d/custom.sh'
+
+# Disable Vsync Globally
+export vblank_mode=0
+
+# VA-API-to-VDPAU (radeon)
+export LIBVA_DRIVER_NAME=vdpau
+
+# Disable Vsync on Mutter
+export CLUTTER_VBLANK=none
+
+#########################
+####Custom Keyboard Shortcuts####
+#########################
+
+gnome-terminal
+gnome-terminal
+Ctrl + Alt + T
+
+konsole
+konsole
+Ctrl + Alt + T
+
+Master Password
+java -jar /home/espionage724/Documents/masterpassword-gui.jar
+Ctrl + Alt + Z
+
+#########################
+####mpv Setup####
+#########################
+
+mkdir ~/.config/mpv && gedit ~/.config/mpv/mpv.conf
+mkdir ~/.config/mpv && kwrite ~/.config/mpv/mpv.conf
+
+hwdec=vdpau
+vo=opengl-hq
+geometry=50%:50%
+
+#########################
+####Repos####
+#########################
+
+--HandBrake---
+sudo dnf config-manager --add-repo http://negativo17.org/repos/fedora-handbrake.repo
+
+--RPM Fusion--
+sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-22.noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-22.noarch.rpm
+
+#########################
+####Disable Wayland GDM####
+#########################
+
+pkexec env DISPLAY=$DISPLAY gedit '/etc/gdm/custom.conf'
+
+#########################
+####Allow XOrg Gamma####
+#########################
+
+sudo systemctl mask colord
+
+#########################
+####Graphics (Hammerstorm)####
+#########################
+
+pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
+kdesu kwrite '/usr/share/X11/xorg.conf.d/99-graphics.conf'
+
+Section "Device"
+	Identifier	"Southern Islands"
+	Driver		"radeon"
+	Option		"SwapBuffersWait"	"false"
+	Option		"DRI3"			"true"
+EndSection
+
+Section "Monitor"
+	Identifier	"DisplayPort-0"
+	Option		"LeftOf" 		"HDMI-0"
+	Gamma		0.8
+EndSection
+
+Section "Monitor"
+	Identifier "HDMI-0"
+	Gamma		0.8
+	Option		"Primary" 		"true"
+EndSection
+
+Section "Monitor"
+	Identifier	"DVI-0"
+	Option		"RightOf" 		"HDMI-0"
+	Gamma		0.8
+EndSection
+
+#########################
+####Multi-monitor Order####
+#########################
+
+- Do primary monitor setup arrangement/primary
+
+sudo cp ~/.config/monitors.xml ~gdm/.config/
+
+#########################
+####Graphics (Spinecrack)####
+#########################
+
+pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
+kdesu kwrite '/usr/share/X11/xorg.conf.d/99-graphics.conf'
+
+Section "Device"
+	Identifier	"Northern Islands"
+	Driver		"radeon"
+	Option		"SwapBuffersWait"	"false"
+	Option		"DRI3"			"true"
+EndSection
+
+Section "Monitor"
+	Identifier	"eDP"
+	Gamma		0.8
+EndSection
+
+#########################
+####Apps####
+#########################
+
+-- Removal --
+sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-weather shotwell
+
+-- Hammerstorm + Spinecrack --
+sudo dnf install wine perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers HandBrake-gui libtxc_dxtn unar aria2 java-1.8.0-openjdk hdparm mediainfo mesa-libOpenCL
+
+--GNOME--
+gnome-tweak-tool gstreamer1-libav libva-vdpau-driver freetype-freeworld lm_sensors gimp
+
+--KDE--
+calligra-krita qupzilla wget
+
+-- Hatebeat (OpenITG/SM3.95) --
+libmad libpng12 joystick-support
+
+-- Hatebeat (StepMania 5 Compile) --
+automake autoconf mesa-libGL-devel mesa-libGLU-devel glew-devel xorg-x11-server-devel libXtst-devel libXrandr-devel libpng-devel libjpeg-turbo-devel zlib-devel bzip2-devel libogg-devel libvorbis-devel glibc-devel yasm-devel pulseaudio-libs-devel alsa-lib-devel make automake binutils-devel gtk2-devel libmad-devel libstdc++-devel gcc-c++ joystick-support
+
+#########################
+####Firefox Settings####
+#########################
+
+--True--
+media.fragmented-mp4.exposed
+media.fragmented-mp4.ffmpeg.enabled
+media.fragmented-mp4.gmp.enabled
+media.mediasource.enabled
+media.mediasource.webm.enabled
+media.mediasource.ignore_codecs
+privacy.trackingprotection.enabled
+
+#########################
+####Sensors (GNOME)####
+#########################
+
+wget https://github.com/UshakovVasilii/gnome-shell-extension-freon/archive/master.zip
+- Install with gnome-tweak-tool
+
+sudo sensors-detect
+
+--Hammerstorm--
+sudo mkdir '/etc/sensors.d' && pkexec env DISPLAY=$DISPLAY gedit '/etc/sensors.d/Hammerstorm'
+sudo mkdir '/etc/sensors.d' && kdesu kwrite '/etc/sensors.d/Hammerstorm'
+
+chip "radeon-pci-0400"
+label temp1 "GPU Core"
+
+chip "k10temp-pci-00c3"
+label temp1 "CPU Core"
+
+chip "f71889a-isa-0480"
+label temp1 "CPU Socket"
+label temp3 "Motherboard"
+
+--Spinecrack--
+sudo mkdir '/etc/sensors.d' && pkexec env DISPLAY=$DISPLAY gedit '/etc/sensors.d/Spinecrack'
+sudo mkdir '/etc/sensors.d' && kdesu kwrite '/etc/sensors.d/Spinecrack'
+
+chip "radeon-pci-0100"
+label temp1 "dGPU Core"
+
+chip "k10temp-pci-00c3"
+label temp1 "APU"
+
+#########################
+####Check Xorg.0.log####
+#########################
+
+journalctl -b _COMM=gdm-x-session > k.txt && gedit k.txt
+
+#########################
+####Bittorrent Blocklist####
+#########################
+
+http://ip2k.com/list.gz
+
+#########################
+####HOSTS####
+#########################
+
+wget https://github.com/StevenBlack/hosts/archive/master.zip && unzip 'master.zip' && cd 'hosts-master' && chmod +x 'updateHostsFile.py' && python 'updateHostsFile.py' && sudo cp 'hosts' '/etc/hosts' && rm -R ~/hosts-master ~/master.zip && cd ~
+
+#########################
+####GRUB2 Tweaks####
+#########################
+
+pkexec env DISPLAY=$DISPLAY gedit '/etc/default/grub'
+kdesu kwrite '/etc/default/grub'
+
+- Timeout = 3
+
+elevator=deadline rootflags=data=writeback nmi_watchdog=0 pcie_aspm=0
+
+--Doom Disable LVDS--
+video=LVDS-0:d
+
+--UEFI--
+sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+
+--BIOS--
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+
+#########################
+####Wine####
+#########################
+
+rm '/home/espionage724/Wine Prefixes/EyeQ/drive_c/users/Public/Start Menu/Programs/StartUp/MiniEYE-MiniREAD Launch.lnk'
+
+#########################
+####Icons####
+#########################
+
+~/.local/share/icons/hicolor/
+
+#########################
+####Shortcuts####
+#########################
+
+~/.local/share/applications
+
+#########################
+####Remove Metadata####
+#########################
+
+exiftool -all= *.* -overwrite_original
+
+####################################################################################################
+################Deprecated################
+####################################################################################################
+
+#########################
+####Change Hostname####
+#########################
+
+sudo hostnamectl set-hostname --static NAME
+
+#########################
+####vsftpd Configuration####
+#########################
+
+pkexec env DISPLAY=$DISPLAY gedit /etc/vsftpd/vsftpd.conf
+
+# Security Stuff
+rsa_cert_file=/etc/ssl/certs/vsftpd.pem
+rsa_private_key_file=/etc/ssl/certs/vsftpd.pem
+ssl_enable=YES
+allow_anon_ssl=NO
+force_local_data_ssl=YES
+force_local_logins_ssl=YES
+ssl_tlsv1=YES
+ssl_sslv2=YES
+ssl_sslv3=YES
+
+sudo openssl req -x509 -nodes -days 365  rsa:2048 -keyout /etc/ssl/certs/vsftpd.pem -out /etc/ssl/certs/vsftpd.pem
+
+openssl req -new -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/httpd/ssl/httpd.key -out /etc/httpd/ssl/httpd.pem
+
+
+sudo systemctl enable vsftpd
+
+firewall-cmd --permanent --add-service=ftp
+firewall-cmd --reload
+
+sudo setsebool -P ftpd_full_access 1
+
+#########################
+####Chrome Unstable Icon Fix####
+#########################
+
+sudo cp '/usr/share/icons/hicolor/256x256/apps/google-chrome.png' '/usr/share/icons/hicolor/256x256/apps/google-chrome-unstable.png'
+
+pkexec env DISPLAY=$DISPLAY gedit '/usr/share/applications/google-chrome-unstable.desktop'
+
+- Rename temporarily, save, reload GNOME, rename back
+
+#########################
+####Trust Google Repo####
+#########################
+
+sudo rpm --import https://dl-ssl.google.com/linux/linux_signing_key.pub
+
+#########################
+####GRUB2 Tweaks####
+#########################
+
+radeon.vm_block_size=12
+
+#########################
+####Sensors####
+#########################
+
+Freon GNOME Shell Extension: https://extensions.gnome.org/extension/841/freon/
+- Use with Firefox
+
+#########################
+####fstab Tweaks####
+#########################
+
+# Temp
+tmpfs   /tmp       tmpfs   defaults,noatime,mode=1777   0  0
+tmpfs   /var/spool tmpfs   defaults,noatime,mode=1777   0  0
+tmpfs   /var/tmp   tmpfs   defaults,noatime,mode=1777   0  0
+tmpfs   /var/log   tmpfs   defaults,noatime,mode=0755   0  0
+
+#########################
+####Tweak Swappiness####
+#########################
+
+pkexec env DISPLAY=$DISPLAY gedit /usr/lib/sysctl.d/swappiness.conf
+
+# Decrease swap usage to a workable level
+vm.swappiness=10
+# Improve cache management
+vm.vfs_cache_pressure=50
+
+#########################
+####fstab Tweaks####
+#########################
+
+# NAS Share
+//192.168.1.157/Espionage724 /run/media/NAS cifs auto,x-systemd.automount,uid=root,credentials=/root/.smbcredentials,iocharset=utf8,sec=ntlmv2 0 0
+
+# Quake for Flash Drive Handling for StepMania
+/dev/sdb1 /mnt/sdb1 vfat   rw,user,noauto,sync   0   0
+
+#########################
+####NAS to fstab####
+#########################
+
+sudo mkdir '/run/media'
+sudo mkdir '/run/media/NAS'
+sudo chown espionage724:espionage724 '/run/media/NAS'
+
+gedit ~/.smbcredentials
+
+username=espionage724
+password=PASSWORD
+
+chmod 600 ~/.smbcredentials
+
+#########################
+####Flash Drive + SM####
+#########################
+
+sudo mkdir '/mnt/sdb1'
+sudo chown espionage724:espionage724 '/mnt/sdb1'
+
+#########################
+####Disable GNOME Color Management####
+#########################
+
+pkexec env DISPLAY=$DISPLAY gedit '/usr/share/glib-2.0/schemas/org.gnome.settings-daemon.plugins.color.gschema.override'
+
+[org.gnome.settings-daemon.plugins.color]
+active=false
+
+sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
+
+gsettings reset org.gnome.settings-daemon.plugins.color active
+
+#########################
+####Show More Apps in Software####
+#########################
+
+pkexec env DISPLAY=$DISPLAY gedit '/usr/share/glib-2.0/schemas/org.gnome.software.gschema.override'
+
+[org.gnome.software]
+require-appdata=false
+
+sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
+
+gsettings reset org.gnome.software require-appdata
+
+#########################
+####Font Fix (GNOME)####
+#########################
+
+- Install freetype-freeworld from rpmfusion-free
+- Disable "Use the system fixed width font" from gedit Preferences
+
+gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "hinting" "slight"
+gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "antialiasing" "rgba"
+echo "Xft.lcdfilter: lcddefault" > ~/.Xresources
+
+####END####
