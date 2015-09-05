@@ -1,0 +1,147 @@
+--------------------------
+Check Internet + Sync Time
+--------------------------
+
+ping google.com
+timedatectl set-ntp true
+
+--------------------------
+Partitioning and Mounting
+--------------------------
+
+sgdisk --zap-all /dev/sda
+
+gdisk /dev/sda
+
+n p [Enter] +512MiB ef00
+n p [Enter] [Enter] 8e00
+p (verify 2 partitions)
+w
+
+cryptsetup -v --type LUKS --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 5000 --use-random luksFormat /dev/sda2
+
+cryptsetup luksOpen /dev/sda2 lvm
+
+pvcreate /dev/mapper/lvm
+vgcreate vg /dev/mapper/lvm
+lvcreate -L 8GB vg -n swap
+lvcreate -l 100%FREE vg -n root
+
+mkfs.vfat -F32 /dev/sda1
+mkfs.xfs /dev/mapper/vg-root
+
+mkswap /dev/mapper/vg-swap
+swapon /dev/mapper/vg-swap
+
+mount /dev/mapper/vg-root /mnt
+mkdir -p /mnt/boot
+mount /dev/sda1 /mnt/boot
+
+--------------------------
+Installation
+--------------------------
+
+pacstrap -i /mnt base base-devel
+
+genfstab -U /mnt > /mnt/etc/fstab
+nano /mnt/etc/fstab
+
+arch-chroot /mnt /bin/bash
+
+--------------------------
+Locale and Timezone (en_US.UTF-8)
+--------------------------
+
+nano /etc/locale.gen
+locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+
+ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime
+hwclock --systohc --utc
+
+--------------------------
+Computer Name
+--------------------------
+
+echo Hammerstorm > /etc/hostname
+nano /etc/hosts
+127.0.0.1 localhost.localdomain localhost Hammerstorm
+::1   localhost.localdomain localhost Hammerstorm
+
+--------------------------
+Fix mkinitcpio For Encryption
+--------------------------
+
+nano /etc/mkinitcpio.conf
+- Add " encrypt lvm2" between block and filesystems
+mkinitcpio -p linux
+
+--------------------------
+Pacman Changes
+--------------------------
+
+nano /etc/pacman.conf
+- Uncomment [multilib] and the following Include line
+pacman -Syyu
+
+--------------------------
+Password Root
+--------------------------
+
+passwd
+
+--------------------------
+Bootloader
+--------------------------
+
+pacman -S dosfstools
+bootctl --path=/boot install
+
+nano /boot/loader/entries/arch.conf
+
+title        Arch Linux
+linux       /vmlinuz-linux
+initrd      /initramfs-linux.img
+options     cryptdevice=PARTUUID=(sda2 PARTUUID):lvm root=UUID=(vg-root UUID) rw elevator=deadline nmi_watchdog=0 pcie_aspm=0
+
+
+nano /boot/loader/loader.conf
+
+timeout 3
+default arch
+
+--------------------------
+Unmount and Reboot
+--------------------------
+
+sync
+exit
+umount -R /mnt
+reboot
+
+--------------------------
+Other stuff
+--------------------------
+
+dhcpcd enp1s0
+
+pacman -S xorg-server xf86-video-ati
+
+pacman -S xorg-server xf86-video-ati xorg-xinit xorg-twm xterm i3 perl-anyevent-i3 perl-json-xs dmenu firefox mpv cups
+p7zip aria2 xdg-user-dirs handbrake transmission-gtk gnome-system-monitor gnome-disk-utility deadbeef gimp gedit kodi
+
+pacman -S xfce4 xfce4-goodies lightdm lightdm-gtk-greeter pulseaudio pulseaudio-alsa pavucontrol gnome-disk-utility gnome-system-monitor firefox transmission-gtk pidgin handbrake gimp mpv deadbeef file-roller p7zip android-tools android-udev xdg-user-dirs libtxc_dxtn aria2 lm_sensors mesa-vdpau opencl-mesa networkmanager light-locker gvfs-smb gvfs-mtp network-manager-applet networkmanager-vpnc
+
+plasma-meta kde-applications-meta sddm sddm-kcm handbrake xdg-user-dirs aria2 p7zip kdeconnect ttf-dejavu ttf-liberation cups mpv firefox
+
+systemctl enable org.cups.cupsd
+gpasswd -a espionage724 sys
+
+systemctl enable NetworkManager
+
+useradd -m -G wheel -s /bin/bash espionage724
+passwd espionage724
+xdg-user-dirs-update
+
+EDITOR=nano visudo
+- Uncomment "%wheel ALL=(ALL) ALL" line (leave space in beginning)
