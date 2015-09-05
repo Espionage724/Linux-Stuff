@@ -1,0 +1,36 @@
+overscan_left=32
+overscan_right=32
+overscan_top=32
+overscan_bottom=32
+
+overscan_scale=1
+
+gpu_mem=384
+
+decode_MPG2=0x00000000
+decode_WVC1=0x00000000
+
+disable_splash=1
+
+--OpenELEC Mount NAS--
+
+nano '/storage/.config/system.d/storage-NAS.mount'
+
+--------------
+[Unit]
+Description=cifs mount script
+Requires=network-online.service
+After=network-online.service
+Before=kodi.service
+
+[Mount]
+What=//192.168.1.157/Espionage724/Media
+Where=/storage/NAS
+Options=username=Espionage724,password=CHANGE,rw
+Type=cifs
+
+[Install]
+WantedBy=multi-user.target
+--------------
+
+systemctl enable storage-NAS.mount
