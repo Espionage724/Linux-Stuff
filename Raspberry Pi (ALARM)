@@ -1,0 +1,155 @@
+-----------------------
+-- Initial Setup --
+-----------------------
+
+- Partition SD Card
+
+fdisk /dev/mmcblk0
+o (wipe partitions)
+p (new partition scheme)
+n p 1 [Enter] +100M (create new 100MB primary partition)
+t c (make new partition FAT32)
+n p 2 [Enter] [Enter] (create another partition for remaining space)
+p (verify two partitions)
+w (write partitions)
+
+- Format and Mount Partitions (change device name as-needed)
+- If on Fedora, install f2fs-tools first: sudo dnf install f2fs-tools
+
+mkfs.vfat /dev/mmcblk0p1 && mkdir boot && mount /dev/mmcblk0p1 boot && sync
+mkfs.f2fs /dev/mmcblk0p2 && mkdir root && mount /dev/mmcblk0p2 root && sync
+
+- Download and Copy Image to SD Card (install aria2 or replace with wget)
+
+aria2c http://archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz
+bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C root && sync
+mv root/boot/* boot && sync
+
+- Unmount Partitions
+
+umount boot root
+
+- Remove Mount Folders
+
+rm -R boot root -f
+
+-----------------------
+-- Boot Config --
+-----------------------
+
+- Either edit before taking out SD card, or nano into it later
+- Use Turbo OC
+
+nano /boot/config.txt
+
+- Overscan settings that affect everything + Kodi
+overscan_left=32
+overscan_right=32
+overscan_top=32
+overscan_bottom=32
+overscan_scale=1
+
+- GPU memory, Licenses, and disabled splash
+gpu_mem=384
+decode_MPG2=0x00000000
+decode_WVC1=0x00000000
+disable_splash=1
+
+-----------------------
+-- Boot Tweaks --
+-----------------------
+
+nano /boot/cmdline.txt
+
+- Disable IPv6
+ipv6.disable=1
+
+rootfstype=f2fs
+
+-----------------------
+-- NAS fstab --
+-----------------------
+
+nano /etc/fstab
+
+# NAS Share
+//192.168.1.157/Espionage724 /run/media/NAS cifs auto,x-systemd.automount,uid=root,credentials=/root/.smbcredentials,iocharset=utf8,sec=ntlmv2 0 0
+
+mkdir '/run/media'
+mkdir '/run/media/NAS'
+
+gedit ~/.smbcredentials
+
+username=Espionage724
+password=PASSWORD
+
+chmod 600 ~/.smbcredentials
+
+-----------------------
+-- Static IP --
+-----------------------
+
+nano /etc/systemd/network/eth0.network
+
+[Match]
+Name=eth0
+
+[Network]
+DNS=104.237.144.172
+DNS=74.207.232.103
+DNS=104.245.39.112
+
+[Address]
+Address=192.168.1.167/24
+
+[Route]
+Gateway=192.168.1.1
+
+-----------------------
+-- Keyboard --
+-----------------------
+
+nano /etc/udev/rules.d/raspberrypi.rules
+
+SUBSYSTEM=="tty", KERNEL=="tty0", GROUP="tty", MODE="0666"
+
+-----------------------
+-- General Settings --
+-----------------------
+
+- Change hostname
+echo Soulmourn > /etc/hostname
+
+- Timezone
+timedatectl set-timezone America/New_York
+
+- Create new user (for ssh)
+useradd -m -G wheel -s /bin/bash espionage724
+passwd espionage724
+
+- Keyboard Layout
+localectl set-keymap --no-convert us
+
+- Locale Stuff (en_US.UTF-8)
+nano /etc/locale.gen
+locale-gen
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+
+- Possible Fix For Kodi Not Displaying
+echo 'SUBSYSTEM=="vchiq",GROUP="video",MODE="0660"' > /etc/udev/rules.d/10-vchiq-permissions.rules
+
+- Log (remove decode licenses before uploading)
+nano /var/lib/kodi/.kodi/temp/kodi.log
+cp /var/lib/kodi/.kodi/temp/kodi.log /home/espionage724/kodi.log
+
+- Disable CEC on non-HDMI TVs under Input Settings
+
+-----------------------
+-- Pacman Install --
+-----------------------
+
+pacman -Syu
+
+pacman -S kodi-rbp omxplayer-git xorg-xrefresh xorg-xset upower polkit lsb-release unrar lirc libxv
+
+systemctl enable kodi
