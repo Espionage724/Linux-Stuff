@@ -1,0 +1,442 @@
+#########################
+####DNS####
+#########################
+
+Wraeclast
+
+--Fusl's OpenNIC Tier2 DNS Servers East Coast--
+
+Newark
+104.237.144.172
+
+Atlanta
+74.207.232.103
+
+Orlando
+104.245.39.112
+
+104.237.144.172,74.207.232.103,104.245.39.112
+
+#########################
+####fstab Tweaks####
+#########################
+
+sudo gedit '/etc/fstab'
+pkexec mousepad '/etc/fstab'
+
+--ext4--
+relatime,data=writeback,nobarrier,commit=60
+
+#########################
+####EnviromentVariable Tweaks####
+#########################
+
+sudo gedit '/etc/profile.d/custom.sh'
+pkexec mousepad '/etc/profile.d/custom.sh'
+
+# Disable Vsync Globally
+export vblank_mode=0
+
+# VA-API-to-VDPAU (radeon)
+export LIBVA_DRIVER_NAME=vdpau
+
+#########################
+####Custom Keyboard Shortcuts####
+#########################
+
+Master Password
+java -jar /home/espionage724/Documents/masterpassword-gui.jar
+Ctrl + Alt + Z
+
+#########################
+####mpv Setup####
+#########################
+
+mkdir ~/.config/mpv && gedit ~/.config/mpv/mpv.conf
+mkdir ~/.config/mpv && mousepad ~/.config/mpv/mpv.conf
+
+hwdec=vdpau
+vo=opengl-hq
+geometry=50%:50%
+
+#########################
+####PPAs####
+#########################
+
+---oibaf Graphics---
+sudo add-apt-repository ppa:oibaf/graphics-drivers
+
+---wine-staging---
+sudo add-apt-repository ppa:pipelight/stable
+
+---HandBrake Snapshots---
+sudo apt-add-repository ppa:stebbins/handbrake-snapshots
+
+#########################
+####Liquorix Kernel####
+#########################
+
+pkexec mousepad '/etc/apt/sources.list.d/liquorix.list'
+
+----
+deb http://liquorix.net/debian sid main
+deb-src http://liquorix.net/debian sid main
+
+# Mirrors:
+#
+# Unit193 - France
+# deb http://mirror.unit193.net/liquorix sid main
+# deb-src http://mirror.unit193.net/liquorix sid main
+----
+
+sudo apt-get install apt-get install liquorix-keyring
+
+sudo apt-get install linux-image-liquorix-amd64 linux-headers-liquorix-amd64
+
+#########################
+####Allow XOrg Gamma####
+#########################
+
+--Global (not needed on Xubuntu)--
+sudo systemctl mask colord
+
+#########################
+####Graphics (Hammerstorm)####
+#########################
+
+sudo gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
+pkexec mousepad '/usr/share/X11/xorg.conf.d/99-graphics.conf'
+
+Section "Device"
+	Identifier	"Southern Islands"
+	Driver		"radeon"
+	Option		"SwapBuffersWait"	"false"
+	Option		"DRI3"			"true"
+EndSection
+
+Section "Monitor"
+	Identifier	"DisplayPort-0"
+	Option		"LeftOf" 		"HDMI-0"
+	Gamma		0.8
+EndSection
+
+Section "Monitor"
+	Identifier "HDMI-0"
+	Gamma		0.8
+	Option		"Primary" 		"true"
+EndSection
+
+Section "Monitor"
+	Identifier	"DVI-0"
+	Option		"RightOf" 		"HDMI-0"
+	Gamma		0.8
+EndSection
+
+#########################
+####Graphics (Spinecrack)####
+#########################
+
+sudo gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
+pkexec mousepad '/usr/share/X11/xorg.conf.d/99-graphics.conf'
+
+Section "Device"
+	Identifier	"Northern Islands"
+	Driver		"radeon"
+	Option		"SwapBuffersWait"	"false"
+	Option		"DRI3"			"true"
+EndSection
+
+Section "Monitor"
+	Identifier	"eDP"
+	Gamma		0.8
+EndSection
+
+#########################
+####Ubuntu Apps####
+#########################
+
+--Remove--
+sudo apt-get purge xul-ext-ubufox*
+
+--General--
+sudo apt-get install aria2 android-tools-adb android-tools-fastboot mesa-vdpau-drivers mpv p7zip-rar mesa-utils handbrake vdpau-va-driver wine-staging-compat openjdk-8-jre mesa-opencl-icd libtxc-dxtn-s2tc0 mediainfo mat
+
+--Xubuntu--
+xfce4-sensors-plugin gnome-disk-utility gnome-system-monitor mediainfo-gui
+
+--Ubuntu--
+unity-tweak-tool
+
+--Kubuntu--
+krita
+
+--Hatebeat + Piety--
+openssh-server
+
+#########################
+####Thunar Custom Actions####
+#########################
+
+Media Info
+Displays information about an audio or video file.
+mediainfo-gui %f
+[x] Use Startup Notification
+Icon: mediainfo
+File Pattern: *
+Appears if selection contains: Audio Files, Video Files
+
+
+#########################
+####Firefox Settings####
+#########################
+
+--True--
+media.fragmented-mp4.exposed
+media.fragmented-mp4.ffmpeg.enabled
+media.fragmented-mp4.gmp.enabled
+media.mediasource.enabled
+media.mediasource.webm.enabled
+media.mediasource.ignore_codecs
+privacy.trackingprotection.enabled
+
+#########################
+####Sensors####
+#########################
+
+sudo sensors-detect
+
+--Hammerstorm--
+pkexec mousepad '/etc/sensors.d/Hammerstorm'
+
+chip "radeon-pci-0400"
+label temp1 "GPU Core"
+
+chip "k10temp-pci-00c3"
+label temp1 "CPU Core"
+
+chip "f71889a-isa-0480"
+label temp1 "CPU Socket"
+label temp3 "Motherboard"
+
+--Spinecrack--
+pkexec mousepad '/etc/sensors.d/Spinecrack'
+
+chip "radeon-pci-0100"
+label temp1 "dGPU Core"
+
+chip "k10temp-pci-00c3"
+label temp1 "APU"
+
+#########################
+####Bittorrent Blocklist####
+#########################
+
+http://ip2k.com/list.gz
+
+#########################
+####HOSTS####
+#########################
+
+wget https://github.com/StevenBlack/hosts/archive/master.zip && unzip 'master.zip' && cd 'hosts-master' && chmod +x 'updateHostsFile.py' && python 'updateHostsFile.py' && sudo cp 'hosts' '/etc/hosts' && rm -R ~/hosts-master ~/master.zip && cd ~
+
+pkexec mousepad '/etc/hosts'
+
+127.0.1.1	Hammerstorm
+
+#########################
+####Boot Stuff####
+#########################
+
+- Don't do elevator if using Liquorix; test if it defaults to bfq, else, set bfq
+- Don't do GFXPAYLOAD with Liquorix; test if dm_crypt shows, else, do it
+
+sudo apt-get purge shim shim-signed
+
+sudo grub-install
+
+pkexec mousepad '/etc/default/grub'
+
+elevator=bfq rootflags=data=writeback nmi_watchdog=0 pcie_aspm=0
+
+--Add and fix per-computer basis with UEFI--
+GRUB_GFXPAYLOAD_LINUX="1600x900"
+
+--Add on Doom--
+video=LVDS-0:d
+
+sudo update-grub
+
+#########################
+####DeaDBeeF####
+#########################
+
+%f = Filename no Path
+%F = Filename + Path
+
+Only configure OSD plugin
+
+#########################
+####Java Certificate Fix####
+#########################
+
+- May not need 2nd command
+
+sudo update-ca-certificates -f
+sudo apt-get install --reinstall ca-certificates-java
+
+#########################
+####Disable Apport####
+#########################
+
+pkexec mousepad '/etc/default/apport'
+
+enabled=0
+
+sudo service apport stop
+
+#########################
+####Icons####
+#########################
+
+~/.local/share/icons/hicolor/
+
+#########################
+####Shortcuts####
+#########################
+
+~/.local/share/applications
+
+#########################
+####Wine Stuff####
+#########################
+
+rm '/home/espionage724/Wine Prefixes/EyeQ/drive_c/users/Public/Start Menu/Programs/StartUp/MiniEYE-MiniREAD Launch.lnk'
+
+#########################
+####systemd NAS Mount####
+#########################
+
+- Needed for Kodi standalone setups
+
+sudo mkdir '/run/media'
+sudo mkdir '/run/media/NAS'
+sudo nano '/etc/systemd/system/run-media-NAS.mount'
+
+--------------
+[Unit]
+Description=cifs mount script
+Requires=network-online.service
+After=network-online.service
+Before=kodi.service
+
+[Mount]
+What=//192.168.1.157/Espionage724/Media
+Where=/run/media/NAS
+Options=username=Espionage724,password=CHANGE,rw
+Type=cifs
+
+[Install]
+WantedBy=multi-user.target
+--------------
+
+sudo systemctl enable run-media-NAS.mount
+
+####################################################################################################
+################Deprecated################
+####################################################################################################
+
+#########################
+####PPAs####
+#########################
+
+---Kubuntu Backports---
+sudo add-apt-repository ppa:kubuntu-ppa/backports
+
+#########################
+####Reset Unity/Compiz####
+#########################
+
+gconftool-2 –recursive-unset /apps/compiz-1
+
+#########################
+####Useful Enviroment Variables####
+#########################
+
+WINEDEBUG=-all
+vblank_mode=0
+
+#########################
+####StepMania Compile####
+#########################
+
+sudo apt-get install libpng-dev libxrandr-dev libjpeg-dev libbz2-dev libvorbis-dev libmad0-dev libglew-dev libgtk2.0-dev libpulse-dev
+
+#########################
+####Ubuntu Apps####
+#########################
+
+sudo apt-get purge libreoffice* empathy*
+
+#########################
+####Kill Chrome####
+#########################
+
+pkill chrome
+
+#########################
+####Heretic FTP####
+#########################
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/certs/vsftpd.pem -out /etc/ssl/certs/vsftpd.pem
+
+pkexec mousepad /etc/vsftpd.conf
+
+rsa_cert_file=/etc/ssl/certs/vsftpd.pem
+rsa_private_key_file=/etc/ssl/certs/vsftpd.pem
+ssl_enable=YES
+allow_anon_ssl=NO
+force_local_data_ssl=YES
+force_local_logins_ssl=YES
+ssl_tlsv1=YES
+ssl_sslv2=YES
+ssl_sslv3=YES
+
+#########################
+####Ubuntu pkexex Fixes####
+#########################
+
+--Nautilus--
+wget https://raw.githubusercontent.com/hotice/webupd8/master/org.gnome.nautilus.policy -O /tmp/org.gnome.nautilus.policy
+
+sudo cp /tmp/org.gnome.nautilus.policy /usr/share/polkit-1/actions/
+
+--mousepad
+wget https://raw.githubusercontent.com/hotice/webupd8/master/org.gnome.mousepad.policy -O /tmp/org.gnome.mousepad.policy
+
+sudo cp /tmp/org.gnome.mousepad.policy /usr/share/polkit-1/actions/
+
+#########################
+####DNS####
+#########################
+
+OpenNIC: 75.127.14.107,104.237.144.172
+
+PIA: 209.222.18.222,209.222.18.218
+
+--Possible Wine Fix--
+p11-kit:i386 p11-kit-modules:i386 libp11-kit-gnome-keyring:i386
+
+#########################
+####Ubuntu Apps####
+#########################
+
+--Test--
+winbind
+
+--Heretic--
+cifs-utils
+
+--Extras--
+openarena synaptic steam
+
+####END####
