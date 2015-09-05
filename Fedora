@@ -31,6 +31,8 @@ relatime,data=writeback,nobarrier,commit=60
 ####EnviromentVariable Tweaks####
 #########################
 
+- Mutter var not needed on non-GNOME DE
+
 pkexec env DISPLAY=$DISPLAY gedit '/etc/profile.d/custom.sh'
 kdesu kwrite '/etc/profile.d/custom.sh'
 
@@ -46,6 +48,8 @@ export CLUTTER_VBLANK=none
 #########################
 ####Custom Keyboard Shortcuts####
 #########################
+
+- konsole shortcut not needed on non-KDE
 
 gnome-terminal
 gnome-terminal
@@ -84,6 +88,8 @@ sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-relea
 ####Disable Wayland GDM####
 #########################
 
+- Only for GNOME/GDM setups
+
 pkexec env DISPLAY=$DISPLAY gedit '/etc/gdm/custom.conf'
 
 #########################
@@ -103,7 +109,6 @@ Section "Device"
 	Identifier	"Southern Islands"
 	Driver		"radeon"
 	Option		"SwapBuffersWait"	"false"
-	Option		"DRI3"			"true"
 EndSection
 
 Section "Monitor"
@@ -143,7 +148,6 @@ Section "Device"
 	Identifier	"Northern Islands"
 	Driver		"radeon"
 	Option		"SwapBuffersWait"	"false"
-	Option		"DRI3"			"true"
 EndSection
 
 Section "Monitor"
