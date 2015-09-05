@@ -1,0 +1,563 @@
+##################################################
+####General Start####
+##################################################
+
+#########################
+####Network####
+#########################
+
+sudo nano /etc/network/interfaces
+
+----------
+iface eth0 inet static
+address 192.168.1.15X
+netmask 255.255.255.0
+gateway 192.168.1.1
+dns-nameservers 104.237.144.172 74.207.232.103 104.245.39.112
+----------
+
+#########################
+####ufw Setup####
+#########################
+
+--Alira--
+sudo ufw allow ssh
+sudo ufw allow 1194/udp
+sudo ufw allow 64738
+sudo ufw enable
+
+--Kraityn--
+sudo ufw allow ssh
+sudo ufw allow https
+sudo ufw allow mysql
+
+--Oak--
+sudo ufw allow ssh
+sudo ufw allow 3724/tcp
+sudo ufw allow 8085/tcp
+sudo ufw allow 25565/tcp
+
+##################################################
+####General End####
+##################################################
+
+##################################################
+####Kraityn Start####
+##################################################
+
+#########################
+####Software####
+#########################
+
+- Use one or the other and/or adjust for usage
+- Use this if starting from generic Ubuntu Server install
+
+sudo apt-add-repository ppa:nginx/development
+
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
+sudo add-apt-repository 'deb http://mirror.jmu.edu/pub/mariadb/repo/10.0/ubuntu trusty main'
+
+sudo apt-get install git mariadb-client mariadb-server libmariadbclient18 nginx-full php5 php5-cli php5-common php5-curl php5-enchant php5-fpm php5-gd php5-gmp php5-imagick php5-intl php5-json php5-mcrypt php5-mysqlnd php5-recode php5-apcu
+
+- Use this if selected LAMP during Ubuntu Server install
+
+sudo apt-get install git php5-curl php5-gd php5-gmp php5-intl php5-json php5-mysqlnd php5-apcu
+
+#########################
+####PHP Configuration####
+#########################
+
+sudo nano '/etc/php5/cli/php.ini'
+
+----------
+upload_max_filesize = 64M
+----------
+
+#########################
+####FPM Configuration####
+#########################
+
+sudo nano '/etc/php5/fpm/pool.d/www.conf'
+
+----------
+listen = 127.0.0.1:2000
+----------
+
+#########################
+####MariaDB Tweaks####
+#########################
+
+sudo nano '/etc/mysql/my.cnf'
+
+----------
+innodb_buffer_pool_size = 1024M
+innodb_thread_concurrency = 4
+
+collation-server = utf8_unicode_ci
+init-connect='SET NAMES utf8'
+character-set-server = utf8
+
+- Comment bind-address
+----------
+
+#########################
+####Apache Certificates####
+#########################
+
+- Copy/paste certificate text into following files from host macine, or copy over
+
+sudo mkdir '/etc/apache2/ssl'
+sudo nano '/etc/apache2/ssl/ssl.crt'
+sudo nano '/etc/apache2/ssl/ssl.key'
+sudo nano '/etc/apache2/ssl/sub.class1.server.ca.pem'
+sudo chmod 600 '/etc/apache2/ssl/'*
+
+sudo nano '/etc/apache2/sites-available/default-ssl.conf'
+
+- Add "SSLProtocol all -SSLv2" and "SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM" under "SSLEngine on"
+- Change "SSLCertificateFile" to "/etc/apache2/ssl/ssl.crt"
+- Change "SSLCertificateKeyFile" to "/etc/apache2/ssl/ssl.key"
+- Uncomment and change "SSLCertificateChainFile" to "/etc/apache2/ssl/sub.class1.server.ca.pem"
+
+sudo a2ensite default-ssl
+sudo service apache2 reload
+
+#########################
+####Apache Services####
+#########################
+
+sudo a2enmod ssl
+sudo a2enmod rewrite
+sudo service apache2 reload
+
+#########################
+####Apache Enable .htaccess####
+#########################
+
+sudo nano '/etc/apache2/apache2.conf'
+
+- Change "AllowOverride None" to "AllowOverride All" under <Directory /var/www/>
+
+#########################
+####NGINX Certificates####
+#########################
+
+sudo mkdir '/etc/nginx/ssl'
+- Copy ssl.key and ssl-unified.crt to that folder (use archive or follow StartSSL guide)
+sudo chmod 600 /etc/nginx/ssl/*
+
+#########################
+####NGINX Virtual Host####
+#########################
+
+sudo nano '/etc/nginx/sites-available/gnusocial'
+
+----------
+server {
+	listen 443;
+	listen [::]:443;
+
+	server_name realmofespionage.com;
+	root /var/www/html;
+	index index.php index.html index.htm;
+
+	location ~ \.php$ {
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass 127.0.0.1:2000;
+		fastcgi_index index.php;
+                fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+		include fastcgi_params;
+		fastcgi_buffer_size 128k;
+		fastcgi_buffers 4 256k;
+		fastcgi_busy_buffers_size 256k;
+	}
+
+	location / {
+		rewrite ^(.*)$ /index.php?p=$1 last;
+		break;
+	}
+
+	location ~* ^/(.*)\.(ico|css|js|gif|png|jpg|bmp|JPG|jpeg)$ {
+		root /var/www/html;
+		rewrite ^/(.*)$ /$1 break;
+		access_log off;
+		expires max;
+	}
+
+	ssl on;
+	ssl_certificate /etc/nginx/ssl/ssl-unified.crt;
+	ssl_certificate_key /etc/nginx/ssl/ssl.key;
+
+	ssl_session_timeout 5m;
+
+	ssl_protocols SSLv3 TLSv1;
+	ssl_ciphers ALL:!ADH:!EXPORT56:RC4+RSA:+HIGH:+MEDIUM:+LOW:+SSLv3:+EXP;
+	ssl_prefer_server_ciphers on;
+
+	client_max_body_size      15m;
+	
+	access_log /var/log/nginx/access.log;
+	error_log /var/log/nginx/error.log;
+}
+
+server {
+        listen 80;
+        server_name realmofespionage.com;
+        rewrite     ^ https://www.realmofespionage.com$request_uri? permanent;
+}
+----------
+
+sudo ln -s '/etc/nginx/sites-available/gnusocial' '/etc/nginx/sites-enabled/gnusocial'
+sudo ln -s '/etc/nginx/sites-available/wordpress' '/etc/nginx/sites-enabled/wordpress'
+
+#########################
+####MySQL Remote Permissions####
+#########################
+
+mysql -u root -p
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.1.150';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.1.152';
+
+#########################
+####GNU social Database Setup####
+#########################
+
+mysql -u root -p
+create database gnusocial;
+grant usage on gnusocial.* to 'gnusocial'@'localhost' identified by 'gnusocial';
+grant all privileges on gnusocial.* to 'gnusocial'@'localhost';
+flush privileges;
+exit
+
+- If need reset, do below, then repeat above
+drop database gnusocial;
+
+#########################
+####Wordpress Database Setup####
+#########################
+
+mysql -u root -p
+create database wordpress;
+grant usage on wordpress.* to 'wordpress'@'localhost' identified by 'wordpress';
+grant all privileges on wordpress.* to 'wordpress'@'localhost';
+flush privileges;
+exit
+
+- If need reset, do below, then repeat above
+drop database wordpress;
+
+#########################
+####MyBB Database Setup####
+#########################
+
+mysql -u root -p
+create database mybb;
+grant usage on mybb.* to 'mybb'@'localhost' identified by 'mybb';
+grant all privileges on mybb.* to 'mybb'@'localhost';
+flush privileges;
+exit
+
+- If need reset, do below, then repeat above
+drop database mybb;
+
+#########################
+####Download GNU social####
+#########################
+
+- Installs from master; change branch if needed
+
+cd '/var/www'
+sudo rm -R '/var/www/html/'
+sudo git clone -b nightly https://git.gnu.io/gnu/gnu-social.git html
+
+#########################
+####Download Wordpress####
+#########################
+
+- Installs from master; change branch if needed
+
+cd '/var/www/html'
+sudo git clone -b master https://github.com/WordPress/WordPress.git blog
+
+#########################
+####Download MyBB####
+#########################
+
+- Installs from feature (newer than master); change branch if needed
+
+cd '/var/www/html'
+sudo git clone -b feature https://github.com/mybb/mybb.git forums
+
+#########################
+####GNU social Setup####
+#########################
+
+sudo cp '/var/www/html/htaccess.sample' '/var/www/html/.htaccess'
+sudo chmod a+w -R '/var/www/html'
+
+- Do GNU social setup on website
+
+sudo nano '/var/www/html/config.php'
+
+----------
+(uncomment out schemacheck line)
+
+$config['mail']['domain'] = 'realmofespionage.com';
+$config['mail']['notifyfrom'] = 'accounts@realmofespionage.com';
+$config['mail']['backend'] = 'smtp';
+$config['mail']['params'] = array(
+'host' => 'smtp.comcast.net',
+'port' => 587,
+'auth' => true,
+'username' => 'USER',
+'password' => 'PASS'
+);
+
+addPlugin('EmailRegistration');
+addPlugin("GeoURL");
+addPlugin("ModPlus");
+addPlugin("ChooseTheme");
+----------
+
+sudo php '/var/www/html/scripts/checkschema.php'
+
+sudo rm -R '/var/www/html/INSTALL'
+
+#########################
+####Wordpress Setup####
+#########################
+
+- Needed for manually setup; else, try install from browser
+
+sudo cp '/var/www/html/blog/wp-config-sample.php' '/var/www/html/blog/wp-config.php'
+sudo nano '/var/www/html/blog/wp-config.php'
+- Input database info
+- Visit https://api.wordpress.org/secret-key/1.1/salt/ for keys, remove blank keys, and paste new keys there
+- Visit https://www.realmofespionage.com/blog/wp-admin/install.php
+
+#########################
+####Wordpress 2016 Theme####
+#########################
+
+cd '/var/www/html/blog/wp-content/themes'
+sudo git clone -b master https://github.com/WordPress/twentysixteen.git twentysixteen
+
+- Select theme in WP settings
+
+#########################
+####MyBB Setup####
+#########################
+
+sudo chmod a+w -R '/var/www/html'
+- Run setup from browser
+
+#########################
+####Keep Software Up-to-date####
+#########################
+
+cd '/var/www/html' && sudo git pull
+cd '/var/www/html/blog' && sudo git pull
+cd '/var/www/html/blog/wp-content/themes/twentysixteen' && sudo git pull
+cd '/var/www/html/forums' && sudo git pull
+
+- Above combined
+cd '/var/www/html' && sudo git pull && cd '/var/www/html/blog' && sudo git pull && cd '/var/www/html/blog/wp-content/themes/twentysixteen' && sudo git pull && cd '/var/www/html/forums' && sudo git pull && sudo apt-get update && sudo apt-get dist-upgrade && sudo chmod a+w -R '/var/www/html' && sync
+
+#########################
+####GNU social Info####
+#########################
+
+- Use this to fix non-fancy profile (and anything else) URLs
+sudo php '/var/www/html/scripts/updateurls.php'
+
+#########################
+####Other Stuff####
+#########################
+
+sudo nano '/etc/apache2/conf-available/servername.conf'
+----------
+ServerName www.realmofespionage.com
+----------
+sudo a2enconf servername
+sudo service apache2 reload
+
+##################################################
+####Kraityn END####
+##################################################
+
+##################################################
+####Alira Start####
+##################################################
+
+#########################
+####Software####
+#########################
+
+sudo apt-get install mumble-server openvpn easy-rsa
+sudo dpkg-reconfigure mumble-server
+
+#########################
+####Certificate Setup####
+#########################
+
+sudo mkdir '/etc/ssl/custom'
+sudo nano '/etc/ssl/custom/cert.pem'
+
+- Add sub.class1.server.ca.pem + ssl.crt + ssl.key to cert.pem
+
+#########################
+####Mumble Server Setup####
+#########################
+
+sudo nano '/etc/mumble-server.ini'
+
+- Uncomment autoban
+welcometext="Welcome to the Realm of Espionage Mumble server!"
+serverpassword=roemumble
+registerName=RoE (Mumble)
+registerUrl=https://www.realmofespionage.com
+registerHostname=realmofespionage.com
+sslKey=/etc/ssl/custom/cert.pem
+
+#########################
+####OpenVPN Server Setup####
+#########################
+
+sudo chown espionage724:espionage724 '/etc/openvpn'
+gunzip -c '/usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz' > '/etc/openvpn/server.conf'
+sudo chown root:root '/etc/openvpn'
+
+sudo nano '/etc/openvpn/server.conf'
+
+dh dh1024.pem to dh dh2048.pem
+- Uncomment ;push "redirect-gateway def1 bypass-dhcp"
+push "dhcp-option DNS 104.237.144.172"
+push "dhcp-option DNS 74.207.232.103"
+push "dhcp-option DNS 104.245.39.112"
+- Uncomment ;user nobody and ;group nogroup
+
+sudo nano '/etc/sysctl.conf'
+- Uncomment #net.ipv4.ip_forward=1
+
+sudo cp -r '/usr/share/easy-rsa/' '/etc/openvpn'
+sudo mkdir '/etc/openvpn/easy-rsa/keys'
+
+sudo nano '/etc/openvpn/easy-rsa/vars'
+export KEY_COUNTRY="US"
+export KEY_PROVINCE="PA"
+export KEY_CITY="Charleroi"
+export KEY_ORG="Realm of Espionage"
+export KEY_EMAIL="espionage724@tutanota.com"
+export KEY_OU="OpenVPN"
+export KEY_NAME="server"
+
+sudo openssl dhparam -out '/etc/openvpn/dh2048.pem' 2048
+
+sudo passwd root
+
+cd '/etc/openvpn/easy-rsa'
+. ./vars
+./clean-all
+./build-ca
+./build-key-server server
+
+cp '/etc/openvpn/easy-rsa/keys/'{server.crt,server.key,ca.crt} '/etc/openvpn'
+
+service openvpn start
+
+./build-key client1
+./build-key client2
+./build-key client3
+./build-key client4
+./build-key client5
+./build-key client6
+cp '/usr/share/doc/openvpn/examples/sample-config-files/client.conf' '/etc/openvpn/easy-rsa/keys/client.ovpn'
+cd keys
+tar -cvf openvpn.tar client1.crt client1.key client2.crt client2.key client3.crt client3.key client4.crt client4.key client5.crt client5.key client6.crt client6.key client.ovpn '/etc/openvpn/ca.crt'
+cp openvpn.tar /home/espionage724
+chown espionage724:espionage724 /home/espionage724/openvpn.tar
+scp espionage724@192.168.1.154:/home/espionage724/openvpn.tar /home/espionage724
+
+##################################################
+####Alira END####
+##################################################
+
+##################################################
+####Oak Start####
+##################################################
+
+#########################
+####Software####
+#########################
+
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+sudo apt-get install build-essential gcc g++ automake git-core autoconf make patch libmysql++-dev libtool libssl-dev grep binutils zlibc libc6 libbz2-dev cmake
+
+#########################
+####Create User####
+#########################
+
+- May not be used; wait
+sudo useradd -m -k -U mangos
+
+#########################
+####Get programs from Git####
+#########################
+
+- Run from ~ (home directory)
+
+git clone git://github.com/cmangos/mangos-classic.git mangos
+git clone git://github.com/scriptdev2/scriptdev2-classic.git mangos/src/bindings/ScriptDev2
+git clone git://github.com/ACID-Scripts/Classic.git acid
+git clone git://github.com/classicdb/database.git classicdb
+
+#########################
+####Compile CMaNGOS####
+#########################
+
+- Run from ~ (home directory)
+- Change the 2 in "make -j2" to however many CPU cores exist
+
+mkdir run && mkdir build
+
+cd build
+cmake /home/espionage724/mangos -DCMAKE_INSTALL_PREFIX=/home/espionage724/run -DINCLUDE_BINDINGS_DIR=ScriptDev2 -DPCH=1 -DDEBUG=0 -DWARNINGS=0
+make -j2
+make install
+
+cd '/home/espionage724/run/etc'
+mv mangosd.conf.dist mangosd.conf
+mv realmd.conf.dist realmd.conf
+scriptdev2.conf.dist scriptdev2.conf
+cp '/home/espionage724/mangos/src/game/AuctionHouseBot/ahbot.conf.dist.in' '/home/espionage724/run/etc/ahbot.conf'
+
+- Create content folder on host
+scp espionage724@192.168.1.152:/home/espionage724/mangos/contrib/extractor_binary/* /home/espionage724/content
+
+mysql -h 192.168.1.153 -uroot -p < mangos/sql/create_mysql.sql
+mysql -h 192.168.1.153 -uroot -p < mangos/src/bindings/ScriptDev2/sql/scriptdev2_create_database.sql
+mysql -h 192.168.1.153 -uroot -p scriptdev2 < mangos/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql
+
+mysql -h 192.168.1.153 -uroot -p mangos < mangos/sql/mangos.sql
+mysql -h 192.168.1.153 -uroot -p characters < mangos/sql/characters.sql
+mysql -h 192.168.1.153 -uroot -p realmd < mangos/sql/realmd.sql
+
+cd classicdb
+./InstallFullDB.sh
+
+/home/espionage724/run/bin/mangosd -c /home/espionage724/run/etc/mangosd.conf -a /home/espionage724/run/etc/ahbot.conf
+/home/espionage724/run/bin/realmd -c /home/espionage724/run/etc/realmd.conf
+
+GRANT ALL PRIVILEGES ON mangos.* TO ‘mangos’@'192.168.1.152’;
+
+select User,Host from mysql.user;
+DROP USER 'username'@'localhost';
+SET PASSWORD FOR 'mangos'@'192.168.1.152' = PASSWORD('mangos');
+
+show databases;
+use DATABASEZ;
+show tables;
+show columns from TABLEZ;
+
+update `realmd`.`realmlist` set `name` = 'RoE (WoW)' where `id` = '1';
+update `realmd`.`realmlist` set `address` = '192.168.1.152' where `id` = '1';
