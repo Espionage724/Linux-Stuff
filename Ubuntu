@@ -21,7 +21,6 @@ Orlando
 ####fstab Tweaks####
 #########################
 
-sudo gedit '/etc/fstab'
 pkexec mousepad '/etc/fstab'
 
 --ext4--
@@ -31,7 +30,6 @@ relatime,data=writeback,nobarrier,commit=60
 ####EnviromentVariable Tweaks####
 #########################
 
-sudo gedit '/etc/profile.d/custom.sh'
 pkexec mousepad '/etc/profile.d/custom.sh'
 
 # Disable Vsync Globally
@@ -104,7 +102,6 @@ sudo systemctl mask colord
 ####Graphics (Hammerstorm)####
 #########################
 
-sudo gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 pkexec mousepad '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 
 Section "Device"
@@ -136,7 +133,6 @@ EndSection
 ####Graphics (Spinecrack)####
 #########################
 
-sudo gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 pkexec mousepad '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 
 Section "Device"
@@ -184,7 +180,6 @@ mediainfo-gui %f
 Icon: mediainfo
 File Pattern: *
 Appears if selection contains: Audio Files, Video Files
-
 
 #########################
 ####Firefox Settings####
@@ -237,6 +232,8 @@ http://ip2k.com/list.gz
 ####HOSTS####
 #########################
 
+- Do not use python script to replace HOSTS file (select no when asked)
+
 wget https://github.com/StevenBlack/hosts/archive/master.zip && unzip 'master.zip' && cd 'hosts-master' && chmod +x 'updateHostsFile.py' && python 'updateHostsFile.py' && sudo cp 'hosts' '/etc/hosts' && rm -R ~/hosts-master ~/master.zip && cd ~
 
 pkexec mousepad '/etc/hosts'
@@ -249,6 +246,7 @@ pkexec mousepad '/etc/hosts'
 
 - Don't do elevator if using Liquorix; test if it defaults to bfq, else, set bfq
 - Don't do GFXPAYLOAD with Liquorix; test if dm_crypt shows, else, do it
+- UEFI shim part only needed on machines with UEFI installations + SecureBoot disabled
 
 sudo apt-get purge shim shim-signed
 
@@ -282,7 +280,6 @@ Only configure OSD plugin
 - May not need 2nd command
 
 sudo update-ca-certificates -f
-sudo apt-get install --reinstall ca-certificates-java
 
 #########################
 ####Disable Apport####
@@ -409,11 +406,6 @@ ssl_sslv3=YES
 wget https://raw.githubusercontent.com/hotice/webupd8/master/org.gnome.nautilus.policy -O /tmp/org.gnome.nautilus.policy
 
 sudo cp /tmp/org.gnome.nautilus.policy /usr/share/polkit-1/actions/
-
---mousepad
-wget https://raw.githubusercontent.com/hotice/webupd8/master/org.gnome.mousepad.policy -O /tmp/org.gnome.mousepad.policy
-
-sudo cp /tmp/org.gnome.mousepad.policy /usr/share/polkit-1/actions/
 
 #########################
 ####DNS####
