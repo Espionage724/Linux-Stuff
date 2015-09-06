@@ -1,0 +1,4 @@
+@reboot /home/espionage724/realmd.sh
+@reboot /home/espionage724/mangosd.sh
+@reboot /home/espionage724/minetest.sh
+#@reboot /home/espionage724/cuberite.sh
