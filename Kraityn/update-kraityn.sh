@@ -1,6 +1,11 @@
 # Update GNU social
 cd '/var/www/html'
+sudo '/var/www/html/scripts/stopdaemons.sh'
 sudo git pull
+sudo php '/var/www/html/scripts/upgrade.php'
+sudo php '/var/www/html/scripts/checkschema.php'
+sudo php '/var/www/html/scripts/updateurls.php'
+sudo '/var/www/html/scripts/startdaemons.sh'
 
 # Update WordPress
 cd '/var/www/html/blog'
