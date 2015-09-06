@@ -1,8 +1,12 @@
-# Update GNU social
+# Update and do maintenance on GNU social
 cd '/var/www/html'
 sudo '/var/www/html/scripts/stopdaemons.sh'
 sudo git pull
 sudo php '/var/www/html/scripts/upgrade.php'
+sudo php '/var/www/html/scripts/remove_duplicate_file_urls.php' -y
+sudo php '/var/www/html/scripts/clean_thumbnails.php' -y
+sudo php '/var/www/html/scripts/clean_profiles.php' -y
+sudo php '/var/www/html/scripts/clean_file_table.php' -y
 sudo php '/var/www/html/scripts/checkschema.php'
 sudo php '/var/www/html/scripts/updateurls.php'
 sudo '/var/www/html/scripts/startdaemons.sh'
