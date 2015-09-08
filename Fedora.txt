@@ -171,7 +171,7 @@ EndSection
 sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-weather shotwell
 
 --Hammerstorm + Spinecrack--
-sudo dnf install wine perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn unar aria2 java-1.8.0-openjdk hdparm mediainfo mesa-libOpenCL
+sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn unar aria2 java-1.8.0-openjdk hdparm mediainfo mesa-libOpenCL
 
 --Hammerstorm--
 HandBrake-gui
@@ -294,6 +294,9 @@ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 - AM/PM Time Format
 - Set mpv as default Video player
 - Enable transparent backgroud (10 notches from left) on Terminal
+- Disable APM, AAA, Standy, and other performance-reducing stuff from gnome-disks (turn them on, then drag slider to turn off); enable write cache
+- Open Software at least once
+- Files > Preferences > Arrange items by type, Sort folders before files
 
 #########################
 ####Wine####
@@ -302,15 +305,13 @@ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 rm '/home/espionage724/Wine Prefixes/EyeQ/drive_c/users/Public/Start Menu/Programs/StartUp/MiniEYE-MiniREAD Launch.lnk'
 
 #########################
-####Icons####
+####Folders####
 #########################
 
+--Icons--
 ~/.local/share/icons/hicolor/
 
-#########################
-####Shortcuts####
-#########################
-
+--Shortcuts--
 ~/.local/share/applications
 
 #########################
