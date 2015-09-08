@@ -18,11 +18,31 @@ Orlando
 104.237.144.172,74.207.232.103,104.245.39.112
 
 #########################
+####Custom Keyboard Shortcuts####
+#########################
+
+- konsole shortcut not needed on non-KDE
+
+gnome-terminal
+gnome-terminal
+Ctrl + Alt + T
+
+konsole
+konsole
+Ctrl + Alt + T
+
+Master Password
+java -jar /home/espionage724/Documents/masterpassword-gui.jar
+Ctrl + Alt + Z
+
+#########################
 ####fstab Tweaks####
 #########################
 
 pkexec env DISPLAY=$DISPLAY gedit '/etc/fstab'
 kdesu kwrite '/etc/fstab'
+
+- Add to /, /home, and /boot (basically, all ext4 partitions)
 
 --ext4--
 relatime,data=writeback,nobarrier,commit=60
@@ -46,24 +66,6 @@ export LIBVA_DRIVER_NAME=vdpau
 export CLUTTER_VBLANK=none
 
 #########################
-####Custom Keyboard Shortcuts####
-#########################
-
-- konsole shortcut not needed on non-KDE
-
-gnome-terminal
-gnome-terminal
-Ctrl + Alt + T
-
-konsole
-konsole
-Ctrl + Alt + T
-
-Master Password
-java -jar /home/espionage724/Documents/masterpassword-gui.jar
-Ctrl + Alt + Z
-
-#########################
 ####mpv Setup####
 #########################
 
@@ -78,6 +80,8 @@ geometry=50%:50%
 ####Repos####
 #########################
 
+TODO: Figure out how to properly import keys
+
 --HandBrake---
 sudo dnf config-manager --add-repo http://negativo17.org/repos/fedora-handbrake.repo
 
@@ -89,12 +93,15 @@ sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-relea
 #########################
 
 - Only for GNOME/GDM setups
+- Uncomment "WaylandEnable=false"
 
 pkexec env DISPLAY=$DISPLAY gedit '/etc/gdm/custom.conf'
 
 #########################
 ####Allow XOrg Gamma####
 #########################
+
+- Do this only if you need to manually set gamma via xorg.conf
 
 sudo systemctl mask colord
 
@@ -134,6 +141,7 @@ EndSection
 #########################
 
 - Do primary monitor setup arrangement/primary
+- Only do if you use multi-monitor and GDM doesn't arrange them correctly (particuarly at login screen)
 
 sudo cp ~/.config/monitors.xml ~gdm/.config/
 
@@ -162,8 +170,11 @@ EndSection
 -- Removal --
 sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-weather shotwell
 
--- Hammerstorm + Spinecrack --
-sudo dnf install wine perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers HandBrake-gui libtxc_dxtn unar aria2 java-1.8.0-openjdk hdparm mediainfo mesa-libOpenCL
+--Hammerstorm + Spinecrack--
+sudo dnf install wine perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn unar aria2 java-1.8.0-openjdk hdparm mediainfo mesa-libOpenCL
+
+--Hammerstorm--
+HandBrake-gui
 
 --GNOME--
 gnome-tweak-tool gstreamer1-libav libva-vdpau-driver freetype-freeworld lm_sensors gimp
@@ -181,7 +192,13 @@ automake autoconf mesa-libGL-devel mesa-libGLU-devel glew-devel xorg-x11-server-
 ####Firefox Settings####
 #########################
 
---True--
+- Show Blank Page for New Tab Controls
+- Share nothing with Mozilla, set DuckDuckGo as default and remove others
+- Use Master Password (so saved passwords aren't in plaintext)
+- Use Do Not Track
+- When Firefox Starts, show tabs/windows from last time
+
+--True in about:config--
 media.fragmented-mp4.exposed
 media.fragmented-mp4.ffmpeg.enabled
 media.fragmented-mp4.gmp.enabled
@@ -191,11 +208,29 @@ media.mediasource.ignore_codecs
 privacy.trackingprotection.enabled
 
 #########################
+####HOSTS####
+#########################
+
+- Uses Steven Black's Combined Host File (updates sources too): https://github.com/StevenBlack/hosts
+- Do not use script to move HOSTS file (hit no when asked; command below takes care of that; script couldn't do it last I checked)
+
+wget https://github.com/StevenBlack/hosts/archive/master.zip && unzip 'master.zip' && cd 'hosts-master' && chmod +x 'updateHostsFile.py' && python 'updateHostsFile.py' && sudo cp 'hosts' '/etc/hosts' && rm -R ~/hosts-master ~/master.zip && cd ~
+
+#########################
+####Transmission Blocklist####
+#########################
+
+- Transmission > Preferences > Privacy > Enable blocklist:
+
+http://ip2k.com/list.gz
+
+#########################
 ####Sensors (GNOME)####
 #########################
 
 wget https://github.com/UshakovVasilii/gnome-shell-extension-freon/archive/master.zip
 - Install with gnome-tweak-tool
+- Can reboot or reload GNOME with Alt + F2 > "r" and return to gnome-tweak-tool and enable/set it up
 
 sudo sensors-detect
 
@@ -230,18 +265,6 @@ label temp1 "APU"
 journalctl -b _COMM=gdm-x-session > k.txt && gedit k.txt
 
 #########################
-####Bittorrent Blocklist####
-#########################
-
-http://ip2k.com/list.gz
-
-#########################
-####HOSTS####
-#########################
-
-wget https://github.com/StevenBlack/hosts/archive/master.zip && unzip 'master.zip' && cd 'hosts-master' && chmod +x 'updateHostsFile.py' && python 'updateHostsFile.py' && sudo cp 'hosts' '/etc/hosts' && rm -R ~/hosts-master ~/master.zip && cd ~
-
-#########################
 ####GRUB2 Tweaks####
 #########################
 
@@ -260,6 +283,17 @@ sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 
 --BIOS--
 sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+
+#########################
+####General Settings####
+#########################
+
+- Disable Search
+- Drop mouse pointer speed
+- Change Volume and Alert Volume
+- AM/PM Time Format
+- Set mpv as default Video player
+- Enable transparent backgroud (10 notches from left) on Terminal
 
 #########################
 ####Wine####
