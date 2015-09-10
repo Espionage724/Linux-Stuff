@@ -1,0 +1,20 @@
+Last metadata expiration check performed 0:27:03 ago on Thu Sep 10 10:15:14 2015.
+Environment Group: Web Server
+ Description: Server for serving static and dynamic internet content.
+ Mandatory Groups:
+   Basic Web Server
+   Core
+   Hardware Support
+   Standard
+ Optional Groups:
+   Guest Agents
+   HAProxy
+   Java Application Server
+   MariaDB (MySQL) Database
+   MongoDB
+   PHP
+   Perl for Web
+   PostgreSQL Database
+   Python
+   Ruby on Rails
+   Tomcat
