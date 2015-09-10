@@ -1,0 +1,26 @@
+Last metadata expiration check performed 0:27:23 ago on Thu Sep 10 10:15:14 2015.
+Environment Group: Infrastructure Server
+ Description: Server for operating network infrastructure services.
+ Mandatory Groups:
+   Container Management
+   Core
+   Hardware Support
+   Headless Management
+   Standard
+ Optional Groups:
+   Basic Web Server
+   DNS Name Server
+   Directory Server
+   Dogtag Certificate System
+   FTP Server
+   FreeIPA Server
+   Guest Agents
+   High Availability
+   Load Balancer
+   Mail Server
+   MariaDB (MySQL) Database
+   Network Servers
+   PostgreSQL Database
+   Printing Support
+   Virtualization
+   Windows File Server
