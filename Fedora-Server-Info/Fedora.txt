@@ -1,0 +1,29 @@
+Last metadata expiration check performed 0:26:52 ago on Thu Sep 10 10:15:14 2015.
+Environment Group: Fedora Server
+ Description: An integrated, easier to manage server.
+ Mandatory Groups:
+   Container Management
+   Core
+   Domain Membership
+   Fedora Server product core
+   Hardware Support for Server Systems
+   Headless Management
+   Standard
+ Optional Groups:
+   Basic Web Server
+   DNS Name Server
+   Directory Server
+   Dogtag Certificate System
+   FTP Server
+   FreeIPA Server
+   Guest Agents
+   Hardware Support
+   High Availability
+   Load Balancer
+   Mail Server
+   MariaDB (MySQL) Database
+   Network Servers
+   PostgreSQL Database
+   Printing Support
+   Virtualization
+   Windows File Server
