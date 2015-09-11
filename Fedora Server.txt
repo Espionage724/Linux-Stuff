@@ -125,6 +125,45 @@ sudo systemctl enable httpd
 
 sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext
 
+#########################
+####PHP Configuration####
+#########################
+
+sudo nano '/etc/php.ini'
+
+----------
+upload_max_filesize = 12M
+----------
+
+#########################
+####MariaDB Configuration####
+#########################
+
+mysql_secure_installation
+
+#########################
+####Apache Certificates####
+#########################
+
+- Copy/paste cert from host to files below
+
+sudo nano '/etc/ssl/certs/ssl.crt'
+sudo nano '/etc/ssl/certs/ssl.key'
+sudo nano '/etc/ssl/certs/sub.class1.server.ca.pem'
+
+sudo nano '/etc/httpd/conf.d/ssl.conf'
+
+----------
+#SSLCipherSuite PROFILE=SYSTEM
+SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM
+
+SSLCertificateFile /etc/pki/tls/certs/ssl.crt
+SSLCertificateKeyFile /etc/pki/tls/certs/ssl.key
+SSLCertificateChainFile /etc/pki/tls/certs/sub.class1.server.ca.pem
+----------
+
+sudo systemctl restart httpd
+
 ##################################################
 ####Kraityn End####
 ##################################################
