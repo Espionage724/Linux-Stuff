@@ -5,6 +5,7 @@ It comes from a Fedora 22 install, and may vary with older or newer versions (I'
 To get the information, run the following commands:
 
 sudo dnf grouplist
+
 sudo dnf groupinfo "NAME"
 
 "NAME" being the name of the group you want to query. Fedora Server specifically gives you the choice of Minimal Install, Fedora Server, Web Server, and Infrastructure Server.
