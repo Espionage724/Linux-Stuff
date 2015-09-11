@@ -75,7 +75,7 @@ git clone git://github.com/ACID-Scripts/Classic.git acid
 git clone git://github.com/classicdb/database.git classicdb
 
 #########################
-####Compile CMaNGOS####
+####Compile/Install CMaNGOS####
 #########################
 
 - Run from home directory
@@ -84,10 +84,23 @@ mkdir build run
 cmake /home/espionage724/mangos -DCMAKE_INSTALL_PREFIX=/home/espionage724/run -DINCLUDE_BINDINGS_DIR=ScriptDev2 -DPCH=1 -DDEBUG=0 -DWARNINGS=0
 make install
 
+#########################
+####Configure CMaNGOS####
+#########################
+
 mv '/home/espionage724/run/etc/scriptdev2.conf.dist' '/home/espionage724/run/etc/scriptdev2.conf'
 mv '/home/espionage724/run/etc/realmd.conf.dist' '/home/espionage724/run/etc/realmd.conf'
 mv '/home/espionage724/run/etc/mangosd.conf.dist' '/home/espionage724/run/etc/mangosd.conf'
 mv '/home/espionage724/mangos/src/game/AuctionHouseBot/ahbot.conf.dist.in' '/home/espionage724/run/etc/ahbot.conf'
+
+nano '/home/espionage724/run/etc/scriptdev2.conf'
+nano '/home/espionage724/run/etc/realmd.conf'
+nano '/home/espionage724/run/etc/mangosd.conf'
+nano '/home/espionage724/run/etc/ahbot.conf'
+
+#########################
+####Copy Content to CMaNGOS####
+#########################
 
 scp '/home/espionage724/Downloads/WoW Classic map-mmaps-vmaps-dbc 2015-2-1.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
 
@@ -123,7 +136,7 @@ sudo systemctl enable httpd
 
 - Web Server + Headless Management + PHP + MariaDB (MySQL) Database
 
-sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext
+sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git
 
 #########################
 ####PHP Configuration####
@@ -139,7 +152,13 @@ upload_max_filesize = 12M
 ####MariaDB Configuration####
 #########################
 
+sudo mysql_install_db
 mysql_secure_installation
+
+mysql -u root -p
+GRANT USAGE ON *.* TO 'espionage724'@'192.168.1.150' IDENTIFIED BY 'password';
+SET PASSWORD FOR 'espionage724'@'192.168.1.150' = PASSWORD('CHANGEME');
+FLUSH PRIVILEGES;
 
 #########################
 ####Apache Certificates####
