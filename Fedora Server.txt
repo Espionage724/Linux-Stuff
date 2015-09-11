@@ -60,7 +60,7 @@ sudo firewall-cmd --reload
 
 - Fedora Server + Headless Management
 
-sudo dnf install minetest git screen
+sudo dnf install minetest git screen cmake gcc patch autoconf mariadb-devel libtool zfstream gcc-c++
 
 #########################
 ####Get programs from Git####
@@ -72,6 +72,16 @@ git clone git://github.com/cmangos/mangos-classic.git mangos
 git clone git://github.com/scriptdev2/scriptdev2-classic.git mangos/src/bindings/ScriptDev2
 git clone git://github.com/ACID-Scripts/Classic.git acid
 git clone git://github.com/classicdb/database.git classicdb
+
+#########################
+####Compile CMaNGOS####
+#########################
+
+- Run from home directory
+
+mkdir build run
+cmake /home/espionage724/mangos -DCMAKE_INSTALL_PREFIX=/home/espionage724/run -DINCLUDE_BINDINGS_DIR=ScriptDev2 -DPCH=1 -DDEBUG=0 -DWARNINGS=0
+make install
 
 ##################################################
 ####Oak End####
