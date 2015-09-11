@@ -1,2 +1,4 @@
 # Linux-Stuff
-Various commands I use to set Linux machines up. Don't copy and paste these commands unless you know what you're doing.
+Various commands I use to set Linux machines up. Feel free to do whatever with them.
+
+These files will eventually get organized better, but for now, please excuse the mess.
