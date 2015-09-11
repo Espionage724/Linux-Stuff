@@ -139,6 +139,14 @@ sudo systemctl enable httpd
 sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git
 
 #########################
+####Enable .htaccess####
+#########################
+
+sudo nano '/etc/httpd/conf/httpd.conf'
+
+- AllowOverride All from AllowOverride None under "AllowOverride controls what directives may be placed in .htaccess files."
+
+#########################
 ####PHP Configuration####
 #########################
 
@@ -182,6 +190,16 @@ SSLCertificateChainFile /etc/pki/tls/certs/sub.class1.server.ca.pem
 ----------
 
 sudo systemctl restart httpd
+
+#########################
+####Download GNU social####
+#########################
+
+- Installs from master; change branch if needed
+
+cd '/var/www'
+sudo rm -R '/var/www/html/'
+sudo git clone -b nightly https://git.gnu.io/gnu/gnu-social.git html
 
 ##################################################
 ####Kraityn End####
