@@ -103,15 +103,27 @@ rm *.zip
 ##################################################
 
 #########################
+####firewalld Setup####
+#########################
+
+sudo firewall-cmd --permanent --add-service=https
+sudo firewall-cmd --permanent --add-service=mysql
+sudo firewall-cmd --reload
+
+#########################
+####Enable Services####
+#########################
+
+sudo systemctl enable mariadb
+sudo systemctl enable httpd
+
+#########################
 ####Software####
 #########################
 
 - Web Server + Headless Management + PHP + MariaDB (MySQL) Database
 
-
-
-sudo firewall-cmd --permanent --add-service=https
-sudo firewall-cmd --permanent --add-service=mysql
+sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext
 
 ##################################################
 ####Kraityn End####
