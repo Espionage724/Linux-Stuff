@@ -3,6 +3,19 @@
 ##################################################
 
 #########################
+####Random Notes####
+#########################
+
+- List all rules
+sudo firewall-cmd --list-all
+
+- Get list of firewalld services
+sudo firewall-cmd --get-service
+
+- Add service
+sudo firewall-cmd --add-service=SERVICE
+
+#########################
 ####Network####
 #########################
 
@@ -19,6 +32,13 @@ DNS: 104.237.144.172,74.207.232.103,104.245.39.112
 
 sudo dnf update
 
+#########################
+####HOSTS####
+#########################
+
+cp '/etc/hosts' '/home/espionage724/.hosts'
+wget https://github.com/StevenBlack/hosts/archive/master.zip && unzip 'master.zip' && cd 'hosts-master' && chmod +x 'updateHostsFile.py' && python 'updateHostsFile.py' && sudo cp 'hosts' '/etc/hosts' && rm -R ~/hosts-master ~/master.zip && cd ~
+
 ##################################################
 ####General End####
 ##################################################
@@ -32,11 +52,44 @@ sudo dnf update
 #########################
 
 sudo firewall-cmd --permanent --add-port=30000/udp
+sudo firewall-cmd --reload
 
 #########################
 ####Software####
 #########################
 
-- Fedora Server with Headless
+- Fedora Server + Headless Management
 
-sudo dnf install minetest
+sudo dnf install minetest git screen
+
+##################################################
+####Oak End####
+##################################################
+
+##################################################
+####Kraityn Start####
+##################################################
+
+#########################
+####Software####
+#########################
+
+- Web Server + Headless Management + PHP + MariaDB (MySQL) Database
+
+##################################################
+####Kraityn End####
+##################################################
+
+##################################################
+####Alira Start####
+##################################################
+
+#########################
+####Software####
+#########################
+
+- Fedora Server + Headless Management
+
+##################################################
+####Alira End####
+##################################################
