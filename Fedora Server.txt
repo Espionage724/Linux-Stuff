@@ -59,6 +59,7 @@ sudo firewall-cmd --reload
 #########################
 
 - Fedora Server + Headless Management
+- Software compiles CMaNGOS too
 
 sudo dnf install minetest git screen cmake gcc patch autoconf mariadb-devel libtool zfstream gcc-c++
 
@@ -83,6 +84,16 @@ mkdir build run
 cmake /home/espionage724/mangos -DCMAKE_INSTALL_PREFIX=/home/espionage724/run -DINCLUDE_BINDINGS_DIR=ScriptDev2 -DPCH=1 -DDEBUG=0 -DWARNINGS=0
 make install
 
+mv '/home/espionage724/run/etc/scriptdev2.conf.dist' '/home/espionage724/run/etc/scriptdev2.conf'
+mv '/home/espionage724/run/etc/realmd.conf.dist' '/home/espionage724/run/etc/realmd.conf'
+mv '/home/espionage724/run/etc/mangosd.conf.dist' '/home/espionage724/run/etc/mangosd.conf'
+mv '/home/espionage724/mangos/src/game/AuctionHouseBot/ahbot.conf.dist.in' '/home/espionage724/run/etc/ahbot.conf'
+
+scp '/home/espionage724/Downloads/WoW Classic map-mmaps-vmaps-dbc 2015-2-1.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+unzip *.zip
+rm *.zip
+
 ##################################################
 ####Oak End####
 ##################################################
@@ -96,6 +107,11 @@ make install
 #########################
 
 - Web Server + Headless Management + PHP + MariaDB (MySQL) Database
+
+
+
+sudo firewall-cmd --permanent --add-service=https
+sudo firewall-cmd --permanent --add-service=mysql
 
 ##################################################
 ####Kraityn End####
