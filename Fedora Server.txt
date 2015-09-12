@@ -154,6 +154,7 @@ sudo nano '/etc/php.ini'
 
 ----------
 upload_max_filesize = 12M
+date.timezone = America/New_York
 ----------
 
 #########################
@@ -198,8 +199,28 @@ sudo systemctl restart httpd
 - Installs from master; change branch if needed
 
 cd '/var/www'
-sudo rm -R '/var/www/html/'
 sudo git clone -b nightly https://git.gnu.io/gnu/gnu-social.git html
+
+#########################
+####GNU social Database Setup####
+#########################
+
+mysql -u root -p
+create database gnusocial;
+grant usage on gnusocial.* to 'gnusocial'@'localhost' identified by 'CHANGEME';
+set password for 'gnusocial'@'localhost' = password ('CHANGEME');
+grant all privileges on gnusocial.* to 'gnusocial'@'localhost';
+flush privileges;
+exit
+
+#########################
+####GNU social Setup####
+#########################
+
+sudo mkdir '/var/www/html/avatar' '/var/www/html/background' '/var/www/html/file'
+sudo cp '/var/www/html/htaccess.sample' '/var/www/html/.htaccess'
+sudo chown apache:apache -R '/var/www/html'
+sudo chcon -R -t httpd_sys_rw_content_t '/var/www/html'
 
 ##################################################
 ####Kraityn End####
