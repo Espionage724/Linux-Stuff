@@ -30,11 +30,16 @@ DNS: 104.237.144.172,74.207.232.103,104.245.39.112
 ####General Settings####
 #########################
 
+sudo dnf clean all
 sudo dnf update
+sync
+reboot
 
 #########################
 ####HOSTS####
 #########################
+
+- Yes update sources, no domain exclude, no replace (let command below handle it)
 
 cp '/etc/hosts' '/home/espionage724/.hosts'
 wget https://github.com/StevenBlack/hosts/archive/master.zip && unzip 'master.zip' && cd 'hosts-master' && chmod +x 'updateHostsFile.py' && python 'updateHostsFile.py' && sudo cp 'hosts' '/etc/hosts' && rm -R ~/hosts-master ~/master.zip && cd ~
