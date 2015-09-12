@@ -193,19 +193,49 @@ SSLCertificateChainFile /etc/pki/tls/certs/sub.class1.server.ca.pem
 sudo systemctl restart httpd
 
 #########################
+####Download Joomla####
+#########################
+
+sudo -u apache git clone -b staging https://github.com/joomla/joomla-cms.git '/var/www/html'
+
+#########################
+####Joomla Database Setup####
+#########################
+
+mysql -u root -p
+
+CREATE DATABASE joomla;
+CREATE USER joomla;
+SET PASSWORD FOR 'joomla' = PASSWORD ('CHANGEME');
+GRANT ALL PRIVILEGES ON joomla.* to 'joomla'@'localhost';
+GRANT USAGE ON joomla.* to 'joomla'@'localhost' IDENTIFIED BY 'CHANGEME';
+FLUSH PRIVILEGES;
+EXIT
+
+#########################
 ####Download GNU social####
 #########################
 
 - Installs from master; change branch if needed
 
-cd '/var/www'
-sudo git clone -b nightly https://git.gnu.io/gnu/gnu-social.git html
+sudo -u apache git clone -b nightly https://git.gnu.io/gnu/gnu-social.git '/var/www/html/social'
 
 #########################
 ####GNU social Database Setup####
 #########################
 
 mysql -u root -p
+
+- Untested
+CREATE DATABASE gnusocial;
+CREATE USER gnusocial;
+SET PASSWORD FOR 'gnusocial' = PASSWORD ('CHANGEME');
+GRANT ALL PRIVILEGES ON gnusocial.* to 'gnusocial'@'localhost';
+GRANT USAGE ON gnusocial.* to 'gnusocial'@'localhost' IDENTIFIED BY 'CHANGEME';
+FLUSH PRIVILEGES;
+EXIT
+
+- Old
 create database gnusocial;
 grant usage on gnusocial.* to 'gnusocial'@'localhost' identified by 'CHANGEME';
 set password for 'gnusocial'@'localhost' = password ('CHANGEME');
@@ -217,10 +247,32 @@ exit
 ####GNU social Setup####
 #########################
 
-sudo mkdir '/var/www/html/avatar' '/var/www/html/background' '/var/www/html/file'
-sudo cp '/var/www/html/htaccess.sample' '/var/www/html/.htaccess'
+sudo mkdir '/var/www/html/social/avatar' '/var/www/html/social/background' '/var/www/html/social/file'
+sudo cp '/var/www/html/social/htaccess.sample' '/var/www/html/social/.htaccess'
 sudo chown apache:apache -R '/var/www/html'
 sudo chcon -R -t httpd_sys_rw_content_t '/var/www/html'
+
+sudo -u apache nano '/var/www/html/config.php'
+
+----------
+(uncomment out schemacheck line)
+
+$config['mail']['domain'] = 'realmofespionage.com';
+$config['mail']['notifyfrom'] = 'accounts@realmofespionage.com';
+$config['mail']['backend'] = 'smtp';
+$config['mail']['params'] = array(
+'host' => 'smtp.comcast.net',
+'port' => 587,
+'auth' => true,
+'username' => 'USER',
+'password' => 'PASS'
+);
+
+addPlugin('EmailRegistration');
+addPlugin("GeoURL");
+addPlugin("ModPlus");
+addPlugin("ChooseTheme");
+----------
 
 ##################################################
 ####Kraityn End####
