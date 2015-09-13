@@ -186,6 +186,7 @@ init-connect='SET NAMES utf8mb4'
 collation-server = utf8mb4_unicode_ci
 character-set-server = utf8mb4
 character-set-client-handshake = FALSE
+innodb_buffer_pool_size = 1024M
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
