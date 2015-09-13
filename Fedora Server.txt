@@ -253,6 +253,8 @@ EXIT
 %%%%% Download and Setup GNU social
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+- GNU social will be root/social
+
 cd '/var/www'
 sudo -u apache git clone -b nightly https://git.gnu.io/gnu/gnu-social.git '/var/www/html/social'
 sudo -u apache mkdir '/var/www/html/social/avatar' '/var/www/html/social/background' '/var/www/html/social/file'
@@ -260,7 +262,8 @@ sudo -u apache mkdir '/var/www/html/social/avatar' '/var/www/html/social/backgro
 TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't do below
 - sudo cp '/var/www/html/social/htaccess.sample' '/var/www/html/social/.htaccess'
 
-sudo -u apache nano '/var/www/html/config.php'
+- Do following after site setup
+sudo -u apache nano '/var/www/html/social/config.php'
 
 -------------------------
 (uncomment out schemacheck line)
