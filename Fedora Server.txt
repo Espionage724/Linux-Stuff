@@ -164,6 +164,8 @@ sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache 
 %%%%% Enable .htaccess
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+- Can probably skip this if no .htaccess is being used anywhere
+
 sudo nano '/etc/httpd/conf/httpd.conf'
 
 - AllowOverride All from AllowOverride None under "AllowOverride controls what directives may be placed in .htaccess files."
@@ -381,6 +383,8 @@ sudo -u apache git clone -b master https://github.com/WordPress/twentysixteen.gi
 %%%%% CMaNGOS Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+- Untested currently
+
 mysql -u root -p
 
 CREATE DATABASE characters;
@@ -391,8 +395,16 @@ CREATE DATABASE scriptdev2;
 CREATE USER mangos;
 SET PASSWORD FOR 'mangos' = PASSWORD ('CHANGEME');
 
-GRANT USAGE ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'CHANGEME';
-GRANT ALL PRIVILEGES ON wordpress.* to 'wordpress'@'localhost';
+GRANT USAGE ON characters.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CHANGEME';
+GRANT USAGE ON mangos.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CHANGEME';
+GRANT USAGE ON realmd.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CHANGEME';
+GRANT USAGE ON scriptdev2.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CHANGEME';
+
+GRANT ALL PRIVILEGES ON characters.* to 'mangos'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON mangos.* to 'mangos'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON realmd.* to 'mangos'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON scriptdev2.* to 'mangos'@'192.168.1.152';
+
 FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
