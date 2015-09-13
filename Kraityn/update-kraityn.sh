@@ -11,7 +11,6 @@ sudo -u apache php '/var/www/html/social/scripts/remove_duplicate_file_urls.php'
 sudo -u apache php '/var/www/html/social/scripts/clean_thumbnails.php' -y
 sudo -u apache php '/var/www/html/social/scripts/clean_file_table.php' -y
 sudo -u apache php '/var/www/html/social/scripts/checkschema.php'
-sudo -u apache php '/var/www/html/social/scripts/updateurls.php'
 sudo -u apache '/var/www/html/social/scripts/startdaemons.sh'
 
 # Update WordPress
