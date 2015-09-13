@@ -2,7 +2,7 @@
 mysqlcheck -u root -p --auto-repair --optimize --all-databases
 
 # Clear caches (possibly)
-sudo service apache2 graceful
+sudo systemctl restart httpd
 
 # Write changes to disk
 sync
