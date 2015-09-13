@@ -138,13 +138,19 @@ sudo systemctl enable mariadb
 sudo systemctl enable httpd
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% SELinux Allows
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo setsebool -P httpd_can_sendmail 1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Software
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Web Server + Headless Management + PHP + MariaDB (MySQL) Database
 - Runs Joomla, GNU social, and MyBB
 
-sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git php-pecl-zip
+sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git php-pecl-zip php-pear-Mail
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Enable .htaccess
@@ -259,9 +265,6 @@ cd '/var/www'
 sudo -u apache git clone -b nightly https://git.gnu.io/gnu/gnu-social.git '/var/www/html/social'
 sudo -u apache mkdir '/var/www/html/social/avatar' '/var/www/html/social/background' '/var/www/html/social/file'
 
-TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't do below
-- sudo cp '/var/www/html/social/htaccess.sample' '/var/www/html/social/.htaccess'
-
 - Do following after site setup
 sudo -u apache nano '/var/www/html/social/config.php'
 
@@ -284,6 +287,55 @@ addPlugin("GeoURL");
 addPlugin("ModPlus");
 addPlugin("ChooseTheme");
 -------------------------
+
+TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't do below
+- sudo cp '/var/www/html/social/htaccess.sample' '/var/www/html/social/.htaccess'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% MyBB Database Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE DATABASE mybb;
+CREATE USER mybb;
+SET PASSWORD FOR 'mybb' = PASSWORD ('CHANGEME');
+GRANT ALL PRIVILEGES ON mybb.* to 'mybb'@'localhost';
+GRANT USAGE ON mybb.* to 'mybb'@'localhost' IDENTIFIED BY 'CHANGEME';
+FLUSH PRIVILEGES;
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Download and Setup MyBB
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- MyBB will be root/forums
+
+cd '/var/www'
+sudo -u apache git clone -b feature https://github.com/mybb/mybb.git '/var/www/html/forums'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% WordPress Database Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE DATABASE wordpress;
+CREATE USER wordpress;
+SET PASSWORD FOR 'wordpress' = PASSWORD ('CHANGEME');
+GRANT USAGE ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'CHANGEME';
+GRANT ALL PRIVILEGES ON wordpress.* to 'wordpress'@'localhost';
+FLUSH PRIVILEGES;
+FLUSH TABLES;
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Download and Setup WordPress + 2016 Theme
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+cd '/var/www'
+sudo -u apache git clone -b master https://github.com/WordPress/WordPress.git '/var/www/html/blog'
+sudo -u apache git clone -b master https://github.com/WordPress/twentysixteen.git '/var/www/html/blog/wp-content/themes'
 
 ####################################################################################################
 ##### Kraityn End
