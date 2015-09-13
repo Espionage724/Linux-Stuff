@@ -237,8 +237,6 @@ SSLCertificateKeyFile /etc/pki/tls/private/ssl.key
 SSLCertificateChainFile /etc/pki/tls/certs/sub.class1.server.ca.pem
 -------------------------
 
-sudo systemctl restart httpd
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Initial Apache Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -256,8 +254,8 @@ mysql -u root -p
 CREATE DATABASE joomla;
 CREATE USER joomla;
 SET PASSWORD FOR 'joomla' = PASSWORD ('CHANGEME');
-GRANT ALL PRIVILEGES ON joomla.* to 'joomla'@'localhost';
 GRANT USAGE ON joomla.* to 'joomla'@'localhost' IDENTIFIED BY 'CHANGEME';
+GRANT ALL PRIVILEGES ON joomla.* to 'joomla'@'localhost';
 FLUSH PRIVILEGES;
 EXIT
 
@@ -269,6 +267,7 @@ EXIT
 
 cd '/var/www'
 sudo -u apache git clone -b staging https://github.com/joomla/joomla-cms.git '/var/www/html'
+sudo systemctl start httpd
 
 TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't do below
 - sudo cp '/var/www/html/htaccess.txt' '/var/www/html/.htaccess'
@@ -282,8 +281,8 @@ mysql -u root -p
 CREATE DATABASE gnusocial;
 CREATE USER gnusocial;
 SET PASSWORD FOR 'gnusocial' = PASSWORD ('CHANGEME');
-GRANT ALL PRIVILEGES ON gnusocial.* to 'gnusocial'@'localhost';
 GRANT USAGE ON gnusocial.* to 'gnusocial'@'localhost' IDENTIFIED BY 'CHANGEME';
+GRANT ALL PRIVILEGES ON gnusocial.* to 'gnusocial'@'localhost';
 FLUSH PRIVILEGES;
 EXIT
 
@@ -336,8 +335,8 @@ mysql -u root -p
 CREATE DATABASE mybb;
 CREATE USER mybb;
 SET PASSWORD FOR 'mybb' = PASSWORD ('CHANGEME');
-GRANT ALL PRIVILEGES ON mybb.* to 'mybb'@'localhost';
 GRANT USAGE ON mybb.* to 'mybb'@'localhost' IDENTIFIED BY 'CHANGEME';
+GRANT ALL PRIVILEGES ON mybb.* to 'mybb'@'localhost';
 FLUSH PRIVILEGES;
 EXIT
 
