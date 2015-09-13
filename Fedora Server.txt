@@ -47,6 +47,14 @@ reboot
 cp '/etc/hosts' '/home/espionage724/.hosts'
 wget https://github.com/StevenBlack/hosts/archive/master.zip && unzip 'master.zip' && cd 'hosts-master' && chmod +x 'updateHostsFile.py' && python 'updateHostsFile.py' && sudo cp 'hosts' '/etc/hosts' && rm -R ~/hosts-master ~/master.zip && cd ~
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% SendGrid Info
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+SMTP
+smtp.sendgrid.net
+587/TLS
+
 ####################################################################################################
 ##### General End
 ####################################################################################################
