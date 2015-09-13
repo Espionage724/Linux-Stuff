@@ -144,7 +144,7 @@ sudo systemctl enable httpd
 - Web Server + Headless Management + PHP + MariaDB (MySQL) Database
 - Runs Joomla, GNU social, and MyBB
 
-sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git
+sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git php-pecl-zip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Enable .htaccess
@@ -163,6 +163,7 @@ sudo nano '/etc/php.ini'
 -------------------------
 upload_max_filesize = 12M
 date.timezone = America/New_York
+;output_buffering = 4096
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -203,6 +204,8 @@ sudo systemctl restart httpd
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Download Joomla
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Joomla will be root website
 
 cd '/var/www'
 sudo chown apache:apache -R '/var/www/html'
