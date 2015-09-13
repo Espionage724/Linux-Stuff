@@ -156,7 +156,7 @@ sudo setsebool -P httpd_can_sendmail 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Web Server + Headless Management + PHP + MariaDB (MySQL) Database
-- Runs Joomla, GNU social, and MyBB
+- Runs Joomla, GNU social, WordPress, and MyBB
 
 sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git php-pecl-zip php-pear-Mail
 
@@ -210,6 +210,7 @@ date.timezone = America/New_York
 sudo systemctl start mariadb
 mysql_secure_installation
 
+- Do this after all databases are created
 mysql -u root -p
 GRANT USAGE ON *.* TO 'espionage724'@'192.168.1.150' IDENTIFIED BY 'password';
 SET PASSWORD FOR 'espionage724'@'192.168.1.150' = PASSWORD('CHANGEME');
