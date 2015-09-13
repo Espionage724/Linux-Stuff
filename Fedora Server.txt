@@ -288,6 +288,10 @@ addPlugin("ModPlus");
 addPlugin("ChooseTheme");
 -------------------------
 
+License Title: Creative Commons Attribution-ShareAlike 4.0 International
+License URL: https://creativecommons.org/licenses/by-sa/4.0/
+License Image URL: https://licensebuttons.net/l/by-sa/4.0/80x15.png
+
 TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't do below
 - sudo cp '/var/www/html/social/htaccess.sample' '/var/www/html/social/.htaccess'
 
