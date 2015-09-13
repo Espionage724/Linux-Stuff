@@ -1,9 +1,9 @@
 ####################################################################################################
-General Start
+##### General Start
 ####################################################################################################
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Random Notes
+%%%%% Random Notes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - List all rules
@@ -16,7 +16,7 @@ sudo firewall-cmd --get-service
 sudo firewall-cmd --add-service=SERVICE
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Network
+%%%%% Network
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Set during install time
@@ -27,7 +27,7 @@ Gateway: 192.168.1.1
 DNS: 104.237.144.172,74.207.232.103,104.245.39.112
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-General Settings
+%%%%% General Settings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo dnf clean all
@@ -36,7 +36,7 @@ sync
 reboot
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-HOSTS
+%%%%% HOSTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Only run 1st command once just in-case stock hosts file has important info
@@ -46,22 +46,22 @@ cp '/etc/hosts' '/home/espionage724/.hosts'
 wget https://github.com/StevenBlack/hosts/archive/master.zip && unzip 'master.zip' && cd 'hosts-master' && chmod +x 'updateHostsFile.py' && python 'updateHostsFile.py' && sudo cp 'hosts' '/etc/hosts' && rm -R ~/hosts-master ~/master.zip && cd ~
 
 ####################################################################################################
-General End
+##### General End
 ####################################################################################################
 
 ####################################################################################################
-Oak Start
+##### Oak Start
 ####################################################################################################
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-firewalld Setup
+%%%%% firewalld Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-port=30000/udp
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Software
+%%%%% Software
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Fedora Server + Headless Management
@@ -70,7 +70,7 @@ Software
 sudo dnf install minetest git screen cmake gcc patch autoconf mariadb-devel libtool zfstream gcc-c++
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Get programs from Git
+%%%%% Get programs from Git
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Run from home folder
@@ -81,7 +81,7 @@ git clone git://github.com/ACID-Scripts/Classic.git acid
 git clone git://github.com/classicdb/database.git classicdb
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Compile/Install CMaNGOS
+%%%%% Compile/Install CMaNGOS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Run from home directory
@@ -91,7 +91,7 @@ cmake /home/espionage724/mangos -DCMAKE_INSTALL_PREFIX=/home/espionage724/run -D
 make install
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Configure CMaNGOS
+%%%%% Configure CMaNGOS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mv '/home/espionage724/run/etc/scriptdev2.conf.dist' '/home/espionage724/run/etc/scriptdev2.conf'
@@ -105,7 +105,7 @@ nano '/home/espionage724/run/etc/mangosd.conf'
 nano '/home/espionage724/run/etc/ahbot.conf'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Copy Content to CMaNGOS
+%%%%% Copy Content to CMaNGOS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 scp '/home/espionage724/Downloads/WoW Classic map-mmaps-vmaps-dbc 2015-2-1.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
@@ -114,15 +114,15 @@ unzip *.zip
 rm *.zip
 
 ####################################################################################################
-Oak End
+##### Oak End
 ####################################################################################################
 
 ####################################################################################################
-Kraityn Start
+##### Kraityn Start
 ####################################################################################################
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-firewalld Setup
+%%%%% firewalld Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-service=https
@@ -130,14 +130,14 @@ sudo firewall-cmd --permanent --add-service=mysql
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Enable Services
+%%%%% Enable Services
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo systemctl enable mariadb
 sudo systemctl enable httpd
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Software
+%%%%% Software
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Web Server + Headless Management + PHP + MariaDB (MySQL) Database
@@ -145,7 +145,7 @@ Software
 sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Enable .htaccess
+%%%%% Enable .htaccess
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo nano '/etc/httpd/conf/httpd.conf'
@@ -153,7 +153,7 @@ sudo nano '/etc/httpd/conf/httpd.conf'
 - AllowOverride All from AllowOverride None under "AllowOverride controls what directives may be placed in .htaccess files."
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-PHP Configuration
+%%%%% PHP Configuration
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo nano '/etc/php.ini'
@@ -164,7 +164,7 @@ date.timezone = America/New_York
 ----------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-MariaDB Configuration
+%%%%% MariaDB Configuration
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo mysql_install_db
@@ -177,7 +177,7 @@ SET PASSWORD FOR 'espionage724'@'192.168.1.150' = PASSWORD('CHANGEME');
 FLUSH PRIVILEGES;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Apache Certificates
+%%%%% Apache Certificates
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Copy/paste cert from host to files below
@@ -200,13 +200,13 @@ SSLCertificateChainFile /etc/pki/tls/certs/sub.class1.server.ca.pem
 sudo systemctl restart httpd
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Download Joomla
+%%%%% Download Joomla
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo -u apache git clone -b staging https://github.com/joomla/joomla-cms.git '/var/www/html'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Joomla Database Setup
+%%%%% Joomla Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
@@ -220,7 +220,7 @@ FLUSH PRIVILEGES;
 EXIT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Download GNU social
+%%%%% Download GNU social
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Installs from master; change branch if needed
@@ -228,7 +228,7 @@ Download GNU social
 sudo -u apache git clone -b nightly https://git.gnu.io/gnu/gnu-social.git '/var/www/html/social'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-GNU social Database Setup
+%%%%% GNU social Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
@@ -251,7 +251,7 @@ flush privileges;
 exit
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-GNU social Setup
+%%%%% GNU social Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo mkdir '/var/www/html/social/avatar' '/var/www/html/social/background' '/var/www/html/social/file'
@@ -282,19 +282,19 @@ addPlugin("ChooseTheme");
 ----------
 
 ####################################################################################################
-Kraityn End
+##### Kraityn End
 ####################################################################################################
 
 ####################################################################################################
-Alira Start
+##### Alira Start
 ####################################################################################################
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Software
+%%%%% Software
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Fedora Server + Headless Management
 
 ####################################################################################################
-Alira End
+##### Alira End
 ####################################################################################################
