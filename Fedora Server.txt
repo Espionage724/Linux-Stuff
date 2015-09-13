@@ -169,6 +169,25 @@ sudo nano '/etc/httpd/conf/httpd.conf'
 - AllowOverride All from AllowOverride None under "AllowOverride controls what directives may be placed in .htaccess files."
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% MariaDB Tweaks
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/my.cnf.d/custom.cnf'
+
+-------------------------
+[client]
+default-character-set=utf8
+
+[mysql]
+default-character-set=utf8
+
+[mysqld]
+collation-server = utf8_unicode_ci
+init-connect='SET NAMES utf8'
+character-set-server = utf8
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% PHP Configuration
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -355,6 +374,26 @@ EXIT
 cd '/var/www'
 sudo -u apache git clone -b master https://github.com/WordPress/WordPress.git '/var/www/html/blog'
 sudo -u apache git clone -b master https://github.com/WordPress/twentysixteen.git '/var/www/html/blog/wp-content/themes/twentysixteen'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% CMaNGOS Database Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE DATABASE characters;
+CREATE DATABASE mangos;
+CREATE DATABASE realmd;
+CREATE DATABASE scriptdev2;
+
+CREATE USER mangos;
+SET PASSWORD FOR 'mangos' = PASSWORD ('CHANGEME');
+
+GRANT USAGE ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'CHANGEME';
+GRANT ALL PRIVILEGES ON wordpress.* to 'wordpress'@'localhost';
+FLUSH PRIVILEGES;
+FLUSH TABLES;
+EXIT
 
 ####################################################################################################
 ##### Kraityn End
