@@ -169,9 +169,8 @@ date.timezone = America/New_York
 %%%%% MariaDB Configuration
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sudo mysql_install_db
 sudo systemctl start mariadb
-sudo mysql_secure_installation
+mysql_secure_installation
 
 mysql -u root -p
 GRANT USAGE ON *.* TO 'espionage724'@'192.168.1.150' IDENTIFIED BY 'password';
@@ -184,9 +183,9 @@ FLUSH PRIVILEGES;
 
 - Copy/paste cert from host to files below
 
-sudo nano '/etc/ssl/certs/ssl.crt'
-sudo nano '/etc/ssl/certs/ssl.key'
-sudo nano '/etc/ssl/certs/sub.class1.server.ca.pem'
+sudo nano '/etc/pki/tls/certs/ssl.crt'
+sudo nano '/etc/pki/tls/private/ssl.key'
+sudo nano '/etc/pki/tls/certs/sub.class1.server.ca.pem'
 
 sudo nano '/etc/httpd/conf.d/ssl.conf'
 
@@ -195,7 +194,7 @@ sudo nano '/etc/httpd/conf.d/ssl.conf'
 SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM
 
 SSLCertificateFile /etc/pki/tls/certs/ssl.crt
-SSLCertificateKeyFile /etc/pki/tls/certs/ssl.key
+SSLCertificateKeyFile /etc/pki/tls/private/ssl.key
 SSLCertificateChainFile /etc/pki/tls/certs/sub.class1.server.ca.pem
 -------------------------
 
@@ -205,6 +204,8 @@ sudo systemctl restart httpd
 %%%%% Download Joomla
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+cd '/var/www'
+sudo chown apache:apache -R '/var/www/html'
 sudo -u apache git clone -b staging https://github.com/joomla/joomla-cms.git '/var/www/html'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
