@@ -314,6 +314,13 @@ EXIT
 cd '/var/www'
 sudo -u apache git clone -b feature https://github.com/mybb/mybb.git '/var/www/html/forums'
 
+sudo -u apache nano '/var/www/html/forums/inc/config.php'
+Tools & Maintenance > UTF-8 Conversion > Convert All to 4-Byte UTF-8
+-------------------------
+Change: $config['database']['encoding'] = 'utf8';
+To: $config['database']['encoding'] = 'utf8mb4';
+-------------------------
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% WordPress Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -335,7 +342,7 @@ EXIT
 
 cd '/var/www'
 sudo -u apache git clone -b master https://github.com/WordPress/WordPress.git '/var/www/html/blog'
-sudo -u apache git clone -b master https://github.com/WordPress/twentysixteen.git '/var/www/html/blog/wp-content/themes'
+sudo -u apache git clone -b master https://github.com/WordPress/twentysixteen.git '/var/www/html/blog/wp-content/themes/twentysixteen'
 
 ####################################################################################################
 ##### Kraityn End
