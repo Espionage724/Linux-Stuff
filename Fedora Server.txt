@@ -115,10 +115,10 @@ make install
 %%%%% Configure CMaNGOS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-mv '/home/espionage724/run/etc/scriptdev2.conf.dist' '/home/espionage724/run/etc/scriptdev2.conf'
-mv '/home/espionage724/run/etc/realmd.conf.dist' '/home/espionage724/run/etc/realmd.conf'
-mv '/home/espionage724/run/etc/mangosd.conf.dist' '/home/espionage724/run/etc/mangosd.conf'
-mv '/home/espionage724/mangos/src/game/AuctionHouseBot/ahbot.conf.dist.in' '/home/espionage724/run/etc/ahbot.conf'
+cp '/home/espionage724/run/etc/scriptdev2.conf.dist' '/home/espionage724/run/etc/scriptdev2.conf'
+cp '/home/espionage724/run/etc/realmd.conf.dist' '/home/espionage724/run/etc/realmd.conf'
+cp '/home/espionage724/run/etc/mangosd.conf.dist' '/home/espionage724/run/etc/mangosd.conf'
+cp '/home/espionage724/mangos/src/game/AuctionHouseBot/ahbot.conf.dist.in' '/home/espionage724/run/etc/ahbot.conf'
 
 nano '/home/espionage724/run/etc/scriptdev2.conf'
 nano '/home/espionage724/run/etc/realmd.conf'
