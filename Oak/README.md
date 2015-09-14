@@ -1,3 +1,6 @@
+systemd
+- Folder containing systemd startup scripts
+
 mangosd.sh
 - Startup script for mangosd
 - Resides at /home/espionage724
