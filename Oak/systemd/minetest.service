@@ -1,0 +1,14 @@
+[Unit]
+Description=minetest
+After=network.target
+
+[Service]
+Type=forking
+User=espionage724
+Group=espionage724
+WorkingDirectory=/home/espionage724/run/bin
+ExecStart=/bin/bash /home/espionage724/minetest.sh start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
