@@ -252,11 +252,15 @@ sudo chcon -R -t httpd_sys_rw_content_t '/var/www/html'
 mysql -u root -p
 
 CREATE DATABASE joomla;
+
 CREATE USER joomla;
 SET PASSWORD FOR 'joomla' = PASSWORD ('CHANGEME');
+
 GRANT USAGE ON joomla.* to 'joomla'@'localhost' IDENTIFIED BY 'CHANGEME';
 GRANT ALL PRIVILEGES ON joomla.* to 'joomla'@'localhost';
+
 FLUSH PRIVILEGES;
+FLUSH TABLES;
 EXIT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -267,6 +271,7 @@ EXIT
 
 cd '/var/www'
 sudo -u apache git clone -b staging https://github.com/joomla/joomla-cms.git '/var/www/html'
+sync
 sudo systemctl start httpd
 
 TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't do below
@@ -279,11 +284,15 @@ TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't d
 mysql -u root -p
 
 CREATE DATABASE gnusocial;
+
 CREATE USER gnusocial;
 SET PASSWORD FOR 'gnusocial' = PASSWORD ('CHANGEME');
+
 GRANT USAGE ON gnusocial.* to 'gnusocial'@'localhost' IDENTIFIED BY 'CHANGEME';
 GRANT ALL PRIVILEGES ON gnusocial.* to 'gnusocial'@'localhost';
+
 FLUSH PRIVILEGES;
+FLUSH TABLES;
 EXIT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -294,6 +303,7 @@ EXIT
 
 cd '/var/www'
 sudo -u apache git clone -b nightly https://git.gnu.io/gnu/gnu-social.git '/var/www/html/social'
+sync
 sudo -u apache mkdir '/var/www/html/social/avatar' '/var/www/html/social/background' '/var/www/html/social/file'
 
 - Do following after site setup
@@ -336,11 +346,15 @@ TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't d
 mysql -u root -p
 
 CREATE DATABASE mybb;
+
 CREATE USER mybb;
 SET PASSWORD FOR 'mybb' = PASSWORD ('CHANGEME');
+
 GRANT USAGE ON mybb.* to 'mybb'@'localhost' IDENTIFIED BY 'CHANGEME';
 GRANT ALL PRIVILEGES ON mybb.* to 'mybb'@'localhost';
+
 FLUSH PRIVILEGES;
+FLUSH TABLES;
 EXIT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -351,6 +365,7 @@ EXIT
 
 cd '/var/www'
 sudo -u apache git clone -b feature https://github.com/mybb/mybb.git '/var/www/html/forums'
+sync
 
 - Do 4-Byte UTF-8 Support during forum setup
 
@@ -361,10 +376,13 @@ sudo -u apache git clone -b feature https://github.com/mybb/mybb.git '/var/www/h
 mysql -u root -p
 
 CREATE DATABASE wordpress;
+
 CREATE USER wordpress;
 SET PASSWORD FOR 'wordpress' = PASSWORD ('CHANGEME');
+
 GRANT USAGE ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'CHANGEME';
 GRANT ALL PRIVILEGES ON wordpress.* to 'wordpress'@'localhost';
+
 FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
@@ -376,6 +394,7 @@ EXIT
 cd '/var/www'
 sudo -u apache git clone -b master https://github.com/WordPress/WordPress.git '/var/www/html/blog'
 sudo -u apache git clone -b master https://github.com/WordPress/twentysixteen.git '/var/www/html/blog/wp-content/themes/twentysixteen'
+sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% CMaNGOS Database Setup
