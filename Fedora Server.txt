@@ -319,6 +319,9 @@ addPlugin("ModPlus");
 addPlugin("ChooseTheme");
 -------------------------
 
+- Run immediately after editing config.php above
+sudo -u apache php '/var/www/html/social/scripts/checkschema.php'
+
 License Title: Creative Commons Attribution-ShareAlike 4.0 International
 License URL: https://creativecommons.org/licenses/by-sa/4.0/
 License Image URL: https://licensebuttons.net/l/by-sa/4.0/80x15.png
@@ -349,12 +352,7 @@ EXIT
 cd '/var/www'
 sudo -u apache git clone -b feature https://github.com/mybb/mybb.git '/var/www/html/forums'
 
-sudo -u apache nano '/var/www/html/forums/inc/config.php'
-Tools & Maintenance > UTF-8 Conversion > Convert All to 4-Byte UTF-8
--------------------------
-Change: $config['database']['encoding'] = 'utf8';
-To: $config['database']['encoding'] = 'utf8mb4';
--------------------------
+- Do 4-Byte UTF-8 Support during forum setup
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% WordPress Database Setup
