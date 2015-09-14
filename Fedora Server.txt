@@ -252,13 +252,10 @@ sudo chcon -R -t httpd_sys_rw_content_t '/var/www/html'
 mysql -u root -p
 
 CREATE DATABASE joomla;
-
 CREATE USER joomla;
 SET PASSWORD FOR 'joomla' = PASSWORD ('CHANGEME');
-
 GRANT USAGE ON joomla.* to 'joomla'@'localhost' IDENTIFIED BY 'CHANGEME';
 GRANT ALL PRIVILEGES ON joomla.* to 'joomla'@'localhost';
-
 FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
@@ -284,13 +281,10 @@ TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't d
 mysql -u root -p
 
 CREATE DATABASE gnusocial;
-
 CREATE USER gnusocial;
 SET PASSWORD FOR 'gnusocial' = PASSWORD ('CHANGEME');
-
 GRANT USAGE ON gnusocial.* to 'gnusocial'@'localhost' IDENTIFIED BY 'CHANGEME';
 GRANT ALL PRIVILEGES ON gnusocial.* to 'gnusocial'@'localhost';
-
 FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
@@ -346,13 +340,10 @@ TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't d
 mysql -u root -p
 
 CREATE DATABASE mybb;
-
 CREATE USER mybb;
 SET PASSWORD FOR 'mybb' = PASSWORD ('CHANGEME');
-
 GRANT USAGE ON mybb.* to 'mybb'@'localhost' IDENTIFIED BY 'CHANGEME';
 GRANT ALL PRIVILEGES ON mybb.* to 'mybb'@'localhost';
-
 FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
@@ -376,13 +367,10 @@ sync
 mysql -u root -p
 
 CREATE DATABASE wordpress;
-
 CREATE USER wordpress;
 SET PASSWORD FOR 'wordpress' = PASSWORD ('CHANGEME');
-
 GRANT USAGE ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'CHANGEME';
 GRANT ALL PRIVILEGES ON wordpress.* to 'wordpress'@'localhost';
-
 FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
