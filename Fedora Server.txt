@@ -313,8 +313,8 @@ mysql -u root -p
 
 CREATE DATABASE joomla;
 CREATE USER joomla;
-SET PASSWORD FOR 'joomla' = PASSWORD ('CHANGEME');
-GRANT USAGE ON joomla.* to 'joomla'@'localhost' IDENTIFIED BY 'CHANGEME';
+SET PASSWORD FOR 'joomla' = PASSWORD ('CNG');
+GRANT USAGE ON joomla.* to 'joomla'@'localhost' IDENTIFIED BY 'CNG';
 GRANT ALL PRIVILEGES ON joomla.* to 'joomla'@'localhost';
 FLUSH PRIVILEGES;
 FLUSH TABLES;
@@ -342,8 +342,8 @@ mysql -u root -p
 
 CREATE DATABASE gnusocial;
 CREATE USER gnusocial;
-SET PASSWORD FOR 'gnusocial' = PASSWORD ('CHANGEME');
-GRANT USAGE ON gnusocial.* to 'gnusocial'@'localhost' IDENTIFIED BY 'CHANGEME';
+SET PASSWORD FOR 'gnusocial' = PASSWORD ('CNG');
+GRANT USAGE ON gnusocial.* to 'gnusocial'@'localhost' IDENTIFIED BY 'CNG';
 GRANT ALL PRIVILEGES ON gnusocial.* to 'gnusocial'@'localhost';
 FLUSH PRIVILEGES;
 FLUSH TABLES;
@@ -373,8 +373,8 @@ $config['mail']['params'] = array(
 'host' => 'smtp.sendgrid.net',
 'port' => 587,
 'auth' => true,
-'username' => 'CHANGEME',
-'password' => 'CHANGEME'
+'username' => 'CNG',
+'password' => 'CNG'
 );
 
 addPlugin('EmailRegistration');
@@ -401,8 +401,8 @@ mysql -u root -p
 
 CREATE DATABASE mybb;
 CREATE USER mybb;
-SET PASSWORD FOR 'mybb' = PASSWORD ('CHANGEME');
-GRANT USAGE ON mybb.* to 'mybb'@'localhost' IDENTIFIED BY 'CHANGEME';
+SET PASSWORD FOR 'mybb' = PASSWORD ('CNG');
+GRANT USAGE ON mybb.* to 'mybb'@'localhost' IDENTIFIED BY 'CNG';
 GRANT ALL PRIVILEGES ON mybb.* to 'mybb'@'localhost';
 FLUSH PRIVILEGES;
 FLUSH TABLES;
@@ -428,8 +428,8 @@ mysql -u root -p
 
 CREATE DATABASE wordpress;
 CREATE USER wordpress;
-SET PASSWORD FOR 'wordpress' = PASSWORD ('CHANGEME');
-GRANT USAGE ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'CHANGEME';
+SET PASSWORD FOR 'wordpress' = PASSWORD ('CNG');
+GRANT USAGE ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'CNG';
 GRANT ALL PRIVILEGES ON wordpress.* to 'wordpress'@'localhost';
 FLUSH PRIVILEGES;
 FLUSH TABLES;
@@ -458,12 +458,12 @@ CREATE DATABASE realmd;
 CREATE DATABASE scriptdev2;
 
 CREATE USER mangos;
-SET PASSWORD FOR 'mangos' = PASSWORD ('CHANGEME');
+SET PASSWORD FOR 'mangos' = PASSWORD ('CNG');
 
-GRANT USAGE ON characters.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CHANGEME';
-GRANT USAGE ON mangos.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CHANGEME';
-GRANT USAGE ON realmd.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CHANGEME';
-GRANT USAGE ON scriptdev2.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CHANGEME';
+GRANT USAGE ON characters.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CNG';
+GRANT USAGE ON mangos.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CNG';
+GRANT USAGE ON realmd.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CNG';
+GRANT USAGE ON scriptdev2.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CNG';
 
 GRANT ALL PRIVILEGES ON characters.* to 'mangos'@'192.168.1.152';
 GRANT ALL PRIVILEGES ON mangos.* to 'mangos'@'192.168.1.152';
