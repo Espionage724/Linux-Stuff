@@ -6,7 +6,7 @@ After=network.target
 Type=forking
 User=espionage724
 Group=espionage724
-WorkingDirectory=/home/espionage724/run/bin
+WorkingDirectory=/home/espionage724
 ExecStart=/bin/bash /home/espionage724/minetest.sh start
 Restart=always
 
