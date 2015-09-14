@@ -98,6 +98,7 @@ git clone git://github.com/classicdb/database.git classicdb
 
 cd '/home/espionage724'
 mkdir build run
+cd '/home/espionage724/build'
 cmake /home/espionage724/mangos -DCMAKE_INSTALL_PREFIX=/home/espionage724/run -DINCLUDE_BINDINGS_DIR=ScriptDev2 -DPCH=1 -DDEBUG=0 -DWARNINGS=0
 make install
 
@@ -128,7 +129,7 @@ rm *.zip
 %%%%% CManGOS Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Clean 
+- Clean ScriptDev2 Database
 mysql -u mangos -h 192.168.1.153 -p scriptdev2 < mangos/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql
 
 - Restore backups
