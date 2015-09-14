@@ -235,9 +235,13 @@ mysql_secure_installation
 
 - Do this after all databases are created
 mysql -u root -p
-GRANT USAGE ON *.* TO 'espionage724'@'192.168.1.150' IDENTIFIED BY 'password';
-SET PASSWORD FOR 'espionage724'@'192.168.1.150' = PASSWORD('CHANGEME');
+
+CREATE USER Espionage724;
+SET PASSWORD FOR 'Espionage724' = PASSWORD ('CNG');
+GRANT USAGE ON *.* to 'Espionage724'@'192.168.1.150' IDENTIFIED BY 'CNG';
+GRANT ALL PRIVILEGES ON *.* to 'Espionage724'@'192.168.1.150';
 FLUSH PRIVILEGES;
+EXIT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Apache Certificates
