@@ -162,7 +162,12 @@ mysql -u mangos -h 192.168.1.153 -p mangos < '/home/espionage724/mangos/sql/upda
 sudo nano '/etc/systemd/system/realmd.service'
 sudo nano '/etc/systemd/system/mangosd.service'
 sudo nano '/etc/systemd/system/minetest.service'
+
 sudo systemctl daemon-reload
+
+sudo systemctl enable realmd
+sudo systemctl enable mangosd
+sudo systemctl enable minetest
 
 ####################################################################################################
 ##### Oak End
