@@ -1,6 +1,5 @@
 # Update distro
-sudo apt-get update
-sudo apt-get dist-upgrade
+sudo dnf update
 
 # Write changes to disk
 sync
