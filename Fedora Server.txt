@@ -138,8 +138,11 @@ rm *.zip
 %%%%% CManGOS Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Clean ScriptDev2 Database
-mysql -u mangos -h 192.168.1.153 -p scriptdev2 < mangos/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql
+- Clean Databases
+mysql -u mangos -h 192.168.1.153 -p scriptdev2 < '/home/espionage724/mangos/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql'
+mysql -u mangos -h 192.168.1.153 -p characters < '/home/espionage724/mangos/sql/characters.sql'
+mysql -u mangos -h 192.168.1.153 -p realmd < '/home/espionage724/mangos/sql/realmd.sql'
+mysql -u mangos -h 192.168.1.153 -p mangos < '/home/espionage724/mangos/sql/mangos.sql'
 
 - Restore backups
 nano characters.sql
