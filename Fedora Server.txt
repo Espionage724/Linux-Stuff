@@ -87,6 +87,14 @@ sudo dnf install minetest git screen cmake gcc patch autoconf mariadb-devel libt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
+
+- WotLK
+git clone git://github.com/cmangos/mangos-wotlk.git mangos
+git clone git://github.com/scriptdev2/scriptdev2.git mangos/src/bindings/ScriptDev2
+git clone git://github.com/ACID-Scripts/WOTLK.git acid
+git clone git://github.com/unified-db/Database.git udb
+
+- Classic
 git clone git://github.com/cmangos/mangos-classic.git mangos
 git clone git://github.com/scriptdev2/scriptdev2-classic.git mangos/src/bindings/ScriptDev2
 git clone git://github.com/ACID-Scripts/Classic.git acid
