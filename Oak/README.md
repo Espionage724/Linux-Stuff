@@ -1,3 +1,6 @@
+Deprecated
+- Folder containing outdated and/or unused scripts
+
 systemd
 - Folder containing systemd startup scripts
 
