@@ -75,10 +75,10 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Fedora Server + Headless Management
-- Compile CMaNGOS
-- Runs Minetest Server
+- Compile and configures CMaNGOS
+- Runs Minetest server
 
-sudo dnf install minetest git screen cmake gcc patch autoconf mariadb-devel libtool zfstream gcc-c++
+sudo dnf install minetest git screen cmake gcc patch autoconf mariadb-devel libtool zfstream gcc-c++ mariadb
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Get programs from Git
@@ -121,6 +121,29 @@ scp '/home/espionage724/Downloads/WoW Classic map-mmaps-vmaps-dbc 2015-2-1.zip' 
 
 unzip *.zip
 rm *.zip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% CManGOS Database Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Clean 
+mysql -u mangos -h 192.168.1.153 -p scriptdev2 < mangos/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql
+
+- Restore backups
+nano characters.sql
+nano realmd.sql
+mysql -u mangos -h 192.168.1.153 -p characters < characters.sql
+mysql -u mangos -h 192.168.1.153 -p realmd < realmd.sql
+
+- Install ClassicDB
+cd '/home/espionage724/classicdb'
+./InstallFullDB.sh
+
+nano '/home/espionage724/classicdb/InstallFullDB.config'
+CORE_PATH="/home/espionage724/mangos"
+SD2_PATH="ScriptDev2"
+ACID_PATH="/home/espionage724/acid"
+MYSQL="mysql -h 192.168.1.153"
 
 ####################################################################################################
 ##### Oak End
