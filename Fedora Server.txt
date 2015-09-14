@@ -135,20 +135,16 @@ unzip *.zip
 rm *.zip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% CManGOS Database Setup
+%%%%% CManGOS Classic Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Deprecated; probably incomplete instructions
 
 - Clean Databases (Classic)
 mysql -u mangos -h 192.168.1.153 -p scriptdev2 < '/home/espionage724/mangos/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql'
 mysql -u mangos -h 192.168.1.153 -p characters < '/home/espionage724/mangos/sql/characters.sql'
 mysql -u mangos -h 192.168.1.153 -p realmd < '/home/espionage724/mangos/sql/realmd.sql'
 mysql -u mangos -h 192.168.1.153 -p mangos < '/home/espionage724/mangos/sql/mangos.sql'
-
-- Clean Databases (WotLK)
-mysql -u mangos -h 192.168.1.153 -p scriptdev2 < '/home/espionage724/mangos/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql'
-mysql -u mangos -h 192.168.1.153 -p characters < '/home/espionage724/mangos/sql/base/characters.sql'
-mysql -u mangos -h 192.168.1.153 -p realmd < '/home/espionage724/mangos/sql/base/realmd.sql'
-mysql -u mangos -h 192.168.1.153 -p mangos < '/home/espionage724/mangos/sql/base/mangos.sql'
 
 - Restore backups
 nano characters.sql
@@ -161,15 +157,50 @@ cd '/home/espionage724/classicdb'
 ./InstallFullDB.sh
 
 nano '/home/espionage724/classicdb/InstallFullDB.config'
+
+-------------------------
 CORE_PATH="/home/espionage724/mangos"
 SD2_PATH="ScriptDev2"
 ACID_PATH="/home/espionage724/acid"
 MYSQL="mysql -h 192.168.1.153"
+-------------------------
 
 - Database SQL Updates
 mysql -u mangos -h 192.168.1.153 -p mangos < '/home/espionage724/mangos/sql/updates/0.12.3/z2678_03_mangos.sql'
 mysql -u mangos -h 192.168.1.153 -p mangos < '/home/espionage724/mangos/sql/updates/0.12.3/z2680_01_mangos_battleground_template.sql'
 mysql -u mangos -h 192.168.1.153 -p mangos < '/home/espionage724/mangos/sql/updates/0.12.3/z2681_01_mangos_mangos_string.sql'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% CManGOS WotLK Database Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Clean Databases
+mysql -u mangos -h 192.168.1.153 -p scriptdev2 < '/home/espionage724/mangos/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql'
+mysql -u mangos -h 192.168.1.153 -p characters < '/home/espionage724/mangos/sql/base/characters.sql'
+mysql -u mangos -h 192.168.1.153 -p realmd < '/home/espionage724/mangos/sql/base/realmd.sql'
+mysql -u mangos -h 192.168.1.153 -p mangos < '/home/espionage724/mangos/sql/base/mangos.sql'
+mysql -u mangos -h 192.168.1.153 -p scriptdev2 < '/home/espionage724/mangos/src/bindings/ScriptDev2/sql/scriptdev2_script_full.sql'
+
+- Install UDB
+chmod +x '/home/espionage724/udb/InstallFullDB.sh'
+cd '/home/espionage724/udb'
+./InstallFullDB.sh
+
+nano '/home/espionage724/udb/InstallFullDB.config'
+
+-------------------------
+MANGOS_DBHOST="192.168.1.153"
+CORE_PATH="/home/espionage724/mangos"
+ACID_PATH="/home/espionage724/acid"
+-------------------------
+
+nano '/home/espionage724/udb/InstallFullDB.sh'
+
+-------------------------
+CONFIG_FILE="./InstallFullUDB.config
+-------------------------
+
+./InstallFullDB.sh
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Systemd Startup
