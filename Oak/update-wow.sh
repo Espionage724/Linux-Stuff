@@ -1,6 +1,6 @@
-# Warning
-echo "MAKE SURE THAT REALMD AND MANGOSD ARE STOPPED, you have 15 seconds to cancel the script (Ctrl + C)"
-sleep 15
+# Stop realmd and mangosd
+sudo systemctl stop realmd
+sudo systemctl stop mangosd
 
 # Update CMaNGOS
 cd '/home/espionage724/mangos'
@@ -43,4 +43,6 @@ cd '/home/espionage724/udb'
 sync
 
 # Finish up
+sudo systemctl start realmd
+sudo systemctl start mangosd
 cd '/home/espionage724'
