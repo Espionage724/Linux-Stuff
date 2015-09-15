@@ -70,6 +70,8 @@ smtp.sendgrid.net
 sudo firewall-cmd --permanent --add-port=30000/udp
 sudo firewall-cmd --permanent --add-port=3724/tcp
 sudo firewall-cmd --permanent --add-port=8085/tcp
+sudo firewall-cmd --permanent --add-port=3724/udb
+sudo firewall-cmd --permanent --add-port=8085/udb
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -523,8 +525,33 @@ EXIT
 - Fedora Server + Headless Management
 - Runs Mumble Server and OpenVPN Server
 
-dnf copr enable lkiesow/mumble
-dnf install murmur
+sudo dnf copr enable lkiesow/mumble
+sudo dnf install murmur
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Firewall Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo firewall-cmd --permanent --add-service=murmur
+sudo firewall-cmd --reload
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Murmur Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl start murmur
+sudo -u mumble-server nano '/etc/mumble-server.ini'
+
+-------------------------
+- Uncomment autoban
+welcometext="Welcome to the Realm of Espionage Mumble server!"
+serverpassword=password
+registerName=RoE (Mumble)
+registerUrl=https://www.realmofespionage.com
+registerHostname=realmofespionage.com
+-------------------------
+
+sudo systemctl restart murmur
 
 ####################################################################################################
 ##### Alira End
