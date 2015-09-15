@@ -523,6 +523,9 @@ EXIT
 - Fedora Server + Headless Management
 - Runs Mumble Server and OpenVPN Server
 
+dnf copr enable lkiesow/mumble
+dnf install murmur
+
 ####################################################################################################
 ##### Alira End
 ####################################################################################################
