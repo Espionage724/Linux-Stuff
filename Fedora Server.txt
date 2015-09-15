@@ -339,32 +339,34 @@ SSLCertificateChainFile /etc/pki/tls/certs/sub.class1.server.ca.pem
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 cd '/var/www'
+sudo rm -R '/var/www/html'
+sudo mkdir '/var/www/html'
 sudo chown apache:apache -R '/var/www/html'
 sudo chcon -R -t httpd_sys_rw_content_t '/var/www/html'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Drupal Database Setup
+%%%%% Joomla Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
 
-CREATE DATABASE drupal;
-CREATE USER drupal;
-SET PASSWORD FOR 'drupal' = PASSWORD ('CNG');
-GRANT USAGE ON drupal.* to 'drupal'@'localhost' IDENTIFIED BY 'CNG';
-GRANT ALL PRIVILEGES ON drupal.* to 'drupal'@'localhost';
+CREATE DATABASE joomla;
+CREATE USER joomla;
+SET PASSWORD FOR 'joomla' = PASSWORD ('X');
+GRANT USAGE ON joomla.* to 'joomla'@'localhost' IDENTIFIED BY 'X';
+GRANT ALL PRIVILEGES ON joomla.* to 'joomla'@'localhost';
 FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Download and Setup Drupal
+%%%%% Download and Setup Joomla
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Drupal will be root
+- Joomla will be root
 
 cd '/var/www'
-sudo -u apache git clone -b 8.0.x http://git.drupal.org/project/drupal.git '/var/www/html'
+sudo -u apache git clone -b master https://github.com/joomla/joomla-cms.git '/var/www/html'
 sync
 sudo systemctl start httpd
 
@@ -376,8 +378,8 @@ mysql -u root -p
 
 CREATE DATABASE gnusocial;
 CREATE USER gnusocial;
-SET PASSWORD FOR 'gnusocial' = PASSWORD ('CNG');
-GRANT USAGE ON gnusocial.* to 'gnusocial'@'localhost' IDENTIFIED BY 'CNG';
+SET PASSWORD FOR 'gnusocial' = PASSWORD ('X');
+GRANT USAGE ON gnusocial.* to 'gnusocial'@'localhost' IDENTIFIED BY 'X';
 GRANT ALL PRIVILEGES ON gnusocial.* to 'gnusocial'@'localhost';
 FLUSH PRIVILEGES;
 FLUSH TABLES;
@@ -435,8 +437,8 @@ mysql -u root -p
 
 CREATE DATABASE mybb;
 CREATE USER mybb;
-SET PASSWORD FOR 'mybb' = PASSWORD ('CNG');
-GRANT USAGE ON mybb.* to 'mybb'@'localhost' IDENTIFIED BY 'CNG';
+SET PASSWORD FOR 'mybb' = PASSWORD ('X');
+GRANT USAGE ON mybb.* to 'mybb'@'localhost' IDENTIFIED BY 'X';
 GRANT ALL PRIVILEGES ON mybb.* to 'mybb'@'localhost';
 FLUSH PRIVILEGES;
 FLUSH TABLES;
@@ -462,8 +464,8 @@ mysql -u root -p
 
 CREATE DATABASE wordpress;
 CREATE USER wordpress;
-SET PASSWORD FOR 'wordpress' = PASSWORD ('CNG');
-GRANT USAGE ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'CNG';
+SET PASSWORD FOR 'wordpress' = PASSWORD ('X');
+GRANT USAGE ON wordpress.* to 'wordpress'@'localhost' IDENTIFIED BY 'X';
 GRANT ALL PRIVILEGES ON wordpress.* to 'wordpress'@'localhost';
 FLUSH PRIVILEGES;
 FLUSH TABLES;
@@ -482,8 +484,6 @@ sync
 %%%%% CMaNGOS Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Untested currently
-
 mysql -u root -p
 
 CREATE DATABASE characters;
@@ -492,12 +492,12 @@ CREATE DATABASE realmd;
 CREATE DATABASE scriptdev2;
 
 CREATE USER mangos;
-SET PASSWORD FOR 'mangos' = PASSWORD ('CNG');
+SET PASSWORD FOR 'mangos' = PASSWORD ('X');
 
-GRANT USAGE ON characters.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CNG';
-GRANT USAGE ON mangos.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CNG';
-GRANT USAGE ON realmd.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CNG';
-GRANT USAGE ON scriptdev2.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'CNG';
+GRANT USAGE ON characters.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON mangos.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON realmd.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON scriptdev2.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'X';
 
 GRANT ALL PRIVILEGES ON characters.* to 'mangos'@'192.168.1.152';
 GRANT ALL PRIVILEGES ON mangos.* to 'mangos'@'192.168.1.152';
