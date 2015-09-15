@@ -553,6 +553,18 @@ registerHostname=realmofespionage.com
 
 sudo systemctl restart murmur
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Murmur SuperUser
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/var/log/mumble-server/mumble-server.log'
+- Look for "Password for 'SuperUser' set to"
+- Register desired username on server
+- Connect to server as SuperUser with password above
+- Edit Server from Mumble Client
+- Add desired user to admin user group
+- Disconnect and re-login with desired username
+
 ####################################################################################################
 ##### Alira End
 ####################################################################################################
