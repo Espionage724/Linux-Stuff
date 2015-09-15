@@ -260,8 +260,6 @@ sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache 
 %%%%% Enable .htaccess
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Can probably skip this if no .htaccess is being used anywhere
-
 sudo nano '/etc/httpd/conf/httpd.conf'
 
 - AllowOverride All from AllowOverride None under "AllowOverride controls what directives may be placed in .htaccess files."
@@ -306,7 +304,6 @@ date.timezone = America/New_York
 sudo systemctl start mariadb
 mysql_secure_installation
 
-- Do this after all databases are created
 mysql -u root -p
 
 CREATE USER Espionage724;
@@ -346,33 +343,30 @@ sudo chown apache:apache -R '/var/www/html'
 sudo chcon -R -t httpd_sys_rw_content_t '/var/www/html'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Joomla Database Setup
+%%%%% Drupal Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
 
-CREATE DATABASE joomla;
-CREATE USER joomla;
-SET PASSWORD FOR 'joomla' = PASSWORD ('CNG');
-GRANT USAGE ON joomla.* to 'joomla'@'localhost' IDENTIFIED BY 'CNG';
-GRANT ALL PRIVILEGES ON joomla.* to 'joomla'@'localhost';
+CREATE DATABASE drupal;
+CREATE USER drupal;
+SET PASSWORD FOR 'drupal' = PASSWORD ('CNG');
+GRANT USAGE ON drupal.* to 'drupal'@'localhost' IDENTIFIED BY 'CNG';
+GRANT ALL PRIVILEGES ON drupal.* to 'drupal'@'localhost';
 FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Download and Setup Joomla
+%%%%% Download and Setup Drupal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Joomla will be root
+- Drupal will be root
 
 cd '/var/www'
-sudo -u apache git clone -b staging https://github.com/joomla/joomla-cms.git '/var/www/html'
+sudo -u apache git clone -b 8.0.x http://git.drupal.org/project/drupal.git '/var/www/html'
 sync
 sudo systemctl start httpd
-
-TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't do below
-- sudo cp '/var/www/html/htaccess.txt' '/var/www/html/.htaccess'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% GNU social Database Setup
