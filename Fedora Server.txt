@@ -130,21 +130,25 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor /home/esp
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/connection_patcher /home/espionage724/Downloads
 
 - Extract files
-TODO: Add commands here once extractors get done
+cd '/home/espionage724/Wine Prefixes/World of Warcraft WoD/drive_c/Program Files (x86)/World of Warcraft'
+mkdir vmaps mmaps
+'/home/espionage724/Downloads/mapextractor'
+'/home/espionage724/Downloads/vmap4extractor'
+'/home/espionage724/Downloads/vmap4assembler' Buildings vmaps
+'/home/espionage724/Downloads/mmaps_generator'
+
+- Compress dbc, maps, mmaps, and vmaps folders, and send them to server
+TODO: scp
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% TrinityCore Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Put TDB_full_world and TDB_full_hofiexes onto server
-scp '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724
-scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'  espionage724@192.168.1.152:/home/espionage724
+scp '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'  espionage724@192.168.1.152:/home/espionage724/run/bin
 
-- Import them
-mysql -u trinity -h 192.168.1.153 -p world < TDB_full_world_6.02_2015_07_14.sql
-mysql -u trinity -h 192.168.1.153 -p hotfixes < TDB_full_hotfixes_6.02_2015_07_14.sql
-
-- For now, assume server will handle SQL updates without intervention :p
+- For now, assume server will handle everything
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Fix Minetest
