@@ -130,6 +130,10 @@ cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/et
 nano '/home/espionage724/run/etc/bnetserver.conf'
 nano '/home/espionage724/run/etc/worldserver.conf'
 
+-------------------------
+Updates.MySqlCLIPath = "/usr/bin/mysql"
+-------------------------
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Extract Content From Main Computer
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -167,7 +171,7 @@ sync
 scp '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
 scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'  espionage724@192.168.1.152:/home/espionage724/run/bin
 
-- For now, assume server will handle everything
+- Server will handle all initial database importing and updates :)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Fix Minetest
