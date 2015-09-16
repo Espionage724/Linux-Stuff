@@ -205,6 +205,13 @@ CONFIG_FILE="./InstallFullUDB.config
 ./InstallFullDB.sh
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Fix Minetest
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Should power to the machine go out and Minetest is running, it'll likely corrupt and not start back up
+rm '/home/espionage724/.minetest/worlds/world/env_meta.txt'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Systemd Startup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
