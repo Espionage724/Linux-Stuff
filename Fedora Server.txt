@@ -107,22 +107,30 @@ make -j4
 make install
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Configure CMaNGOS
+%%%%% Configure TrinityCore
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-cp '/home/espionage724/run/etc/scriptdev2.conf.dist' '/home/espionage724/run/etc/scriptdev2.conf'
-cp '/home/espionage724/run/etc/realmd.conf.dist' '/home/espionage724/run/etc/realmd.conf'
-cp '/home/espionage724/run/etc/mangosd.conf.dist' '/home/espionage724/run/etc/mangosd.conf'
-cp '/home/espionage724/mangos/src/game/AuctionHouseBot/ahbot.conf.dist.in' '/home/espionage724/run/etc/ahbot.conf'
+cp '/home/espionage724/run/etc/bnetserver.conf.dist' '/home/espionage724/run/etc/bnetserver.conf'
+cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
 
-nano '/home/espionage724/run/etc/scriptdev2.conf'
-nano '/home/espionage724/run/etc/realmd.conf'
-nano '/home/espionage724/run/etc/mangosd.conf'
-nano '/home/espionage724/run/etc/ahbot.conf'
+nano '/home/espionage724/run/etc/bnetserver.conf'
+nano '/home/espionage724/run/etc/worldserver.conf'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Copy Content to CMaNGOS
+%%%%% Extract Content From Main Computer
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Get files from server
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4extractor /home/espionage724/Downloads
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4assembler /home/espionage724/Downloads
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/mmaps_generator /home/espionage724/Downloads
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor /home/espionage724/Downloads
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/connection_patcher /home/espionage724/Downloads
+
+- Extract files
+TODO: Add commands here once extractors get done
+
+- 
 
 scp '/home/espionage724/Downloads/WoW Classic map-mmaps-vmaps-dbc 2015-2-1.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
 
@@ -130,36 +138,18 @@ unzip *.zip
 rm *.zip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% CManGOS WotLK Database Setup
+%%%%% TrinityCore Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Clean Databases
-mysql -u mangos -h 192.168.1.153 -p scriptdev2 < '/home/espionage724/mangos/src/bindings/ScriptDev2/sql/scriptdev2_create_structure_mysql.sql'
-mysql -u mangos -h 192.168.1.153 -p characters < '/home/espionage724/mangos/sql/base/characters.sql'
-mysql -u mangos -h 192.168.1.153 -p realmd < '/home/espionage724/mangos/sql/base/realmd.sql'
-mysql -u mangos -h 192.168.1.153 -p mangos < '/home/espionage724/mangos/sql/base/mangos.sql'
-mysql -u mangos -h 192.168.1.153 -p scriptdev2 < '/home/espionage724/mangos/src/bindings/ScriptDev2/sql/scriptdev2_script_full.sql'
+- Put TDB_full_world and TDB_full_hofiexes onto server
+scp '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724
+scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'  espionage724@192.168.1.152:/home/espionage724
 
-- Install UDB
-chmod +x '/home/espionage724/udb/InstallFullDB.sh'
-cd '/home/espionage724/udb'
-./InstallFullDB.sh
+- Import them
+mysql -u trinity -h 192.168.1.153 -p world < TDB_full_world_6.02_2015_07_14.sql
+mysql -u trinity -h 192.168.1.153 -p hotfixes < TDB_full_hotfixes_6.02_2015_07_14.sql
 
-nano '/home/espionage724/udb/InstallFullDB.config'
-
--------------------------
-MANGOS_DBHOST="192.168.1.153"
-CORE_PATH="/home/espionage724/mangos"
-ACID_PATH="/home/espionage724/acid"
--------------------------
-
-nano '/home/espionage724/udb/InstallFullDB.sh'
-
--------------------------
-CONFIG_FILE="./InstallFullUDB.config
--------------------------
-
-./InstallFullDB.sh
+- For now, assume server will handle SQL updates without intervention :p
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Fix Minetest
