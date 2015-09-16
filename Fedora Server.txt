@@ -526,13 +526,14 @@ EXIT
 - Runs Mumble Server and OpenVPN Server
 
 sudo dnf copr enable lkiesow/mumble
-sudo dnf install murmur
+sudo dnf install murmur openvpn easy-rsa
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Firewall Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-service=murmur
+sudo firewall-cmd --permanent --add-service=openvpn
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
