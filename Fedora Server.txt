@@ -96,13 +96,13 @@ cd '/home/espionage724'
 git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Compile/Install CMaNGOS
+%%%%% Compile/Install TrinityCore
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
 mkdir build run
 cd '/home/espionage724/build'
-cmake /home/espionage724/mangos -DCMAKE_INSTALL_PREFIX=/home/espionage724/run -DINCLUDE_BINDINGS_DIR=ScriptDev2 -DPCH=1 -DDEBUG=0 -DWARNINGS=0
+cmake /home/espionage724/trinitycore -DTOOLS=1 -DCMAKE_INSTALL_PREFIX=/home/espionage724/run -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0
 make -j4
 make install
 
