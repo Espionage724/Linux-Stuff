@@ -447,28 +447,28 @@ sudo -u apache git clone -b master https://github.com/WordPress/twentysixteen.gi
 sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% CMaNGOS Database Setup
+%%%%% TrinityCore Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
 
+CREATE DATABASE auth;
 CREATE DATABASE characters;
-CREATE DATABASE mangos;
-CREATE DATABASE realmd;
-CREATE DATABASE scriptdev2;
+CREATE DATABASE world;
+CREATE DATABASE hotfixes;
 
-CREATE USER mangos;
-SET PASSWORD FOR 'mangos' = PASSWORD ('X');
+CREATE USER trinity;
+SET PASSWORD FOR 'trinity' = PASSWORD ('X');
 
-GRANT USAGE ON characters.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'X';
-GRANT USAGE ON mangos.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'X';
-GRANT USAGE ON realmd.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'X';
-GRANT USAGE ON scriptdev2.* to 'mangos'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON auth.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON characters.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON world.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON hotfixes.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
 
-GRANT ALL PRIVILEGES ON characters.* to 'mangos'@'192.168.1.152';
-GRANT ALL PRIVILEGES ON mangos.* to 'mangos'@'192.168.1.152';
-GRANT ALL PRIVILEGES ON realmd.* to 'mangos'@'192.168.1.152';
-GRANT ALL PRIVILEGES ON scriptdev2.* to 'mangos'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON auth.* to 'trinity'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON characters.* to 'trinity'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON world.* to 'trinity'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON hotfixes.* to 'trinity'@'192.168.1.152';
 
 FLUSH PRIVILEGES;
 FLUSH TABLES;
