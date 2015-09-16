@@ -67,6 +67,8 @@ smtp.sendgrid.net
 %%%%% Firewall Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+TODO: Redo for TrinityCore
+
 sudo firewall-cmd --permanent --add-port=30000/udp
 sudo firewall-cmd --permanent --add-port=3724/tcp
 sudo firewall-cmd --permanent --add-port=8085/tcp
@@ -129,13 +131,6 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/connection_patcher /ho
 
 - Extract files
 TODO: Add commands here once extractors get done
-
-- 
-
-scp '/home/espionage724/Downloads/WoW Classic map-mmaps-vmaps-dbc 2015-2-1.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
-
-unzip *.zip
-rm *.zip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% TrinityCore Database Setup
@@ -365,8 +360,8 @@ $config['mail']['params'] = array(
 'host' => 'smtp.sendgrid.net',
 'port' => 587,
 'auth' => true,
-'username' => 'CNG',
-'password' => 'CNG'
+'username' => 'X',
+'password' => 'X'
 );
 
 addPlugin('EmailRegistration');
@@ -519,6 +514,12 @@ sudo nano '/var/log/mumble-server/mumble-server.log'
 - Edit Server from Mumble Client
 - Add desired user to admin user group
 - Disconnect and re-login with desired username
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% OpenVPN Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+TODO: Set OpenVPN up
 
 ####################################################################################################
 ##### Alira End
