@@ -98,6 +98,18 @@ cd '/home/espionage724'
 git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Configure MariaDB Client
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Needed for TrinityCore to connect to remote MySQL server
+sudo nano '/etc/my.cnf.d/client.cnf'
+
+-------------------------
+[client]
+host = 192.168.1.153
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Compile/Install TrinityCore
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -130,6 +142,7 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor /home/esp
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/connection_patcher /home/espionage724/Downloads
 
 - Extract files
+- mmaps took around 3 hours on a FX-8350
 cd '/home/espionage724/Wine Prefixes/World of Warcraft WoD/drive_c/Program Files (x86)/World of Warcraft'
 mkdir vmaps mmaps
 '/home/espionage724/Downloads/mapextractor'
@@ -138,7 +151,13 @@ mkdir vmaps mmaps
 '/home/espionage724/Downloads/mmaps_generator'
 
 - Compress dbc, maps, mmaps, and vmaps folders, and send them to server
-TODO: scp
+- zip was 2GB
+scp '/home/espionage724/Wine Prefixes/World of Warcraft WoD/drive_c/Program Files (x86)/World of Warcraft/WoD-content.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+- Extract on server
+cd '/home/espionage724/run/bin'
+unzip WoD-content.zip
+sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% TrinityCore Database Setup
