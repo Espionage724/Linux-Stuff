@@ -180,7 +180,7 @@ scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'  espionage
 %%%%% Fix Minetest
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Should power to the machine go out and Minetest is running, it'll likely corrupt and not start back up
+- Fixes "EnvArgsEnd not found!"
 rm '/home/espionage724/.minetest/worlds/world/env_meta.txt'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -189,15 +189,15 @@ rm '/home/espionage724/.minetest/worlds/world/env_meta.txt'
 
 - See https://github.com/Espionage724/Linux-Stuff/tree/master/Oak/systemd for content
 
-sudo nano '/etc/systemd/system/realmd.service'
 sudo nano '/etc/systemd/system/bnetserver.service'
 sudo nano '/etc/systemd/system/worldserver.service'
+sudo nano '/etc/systemd/system/minetest.service'
 
 sudo systemctl daemon-reload
 
 sudo systemctl enable bnetserver
-sudo systemctl enable bnetserver
 sudo systemctl enable worldserver
+sudo systemctl enable minetest
 
 ####################################################################################################
 ##### Oak End
