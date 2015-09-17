@@ -67,13 +67,13 @@ smtp.sendgrid.net
 %%%%% Firewall Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-TODO: Redo for TrinityCore
+- Unsure if TC/WoW uses anything UDP, but can connect fine
 
 sudo firewall-cmd --permanent --add-port=30000/udp
-sudo firewall-cmd --permanent --add-port=3724/tcp
+sudo firewall-cmd --permanent --add-port=1118/tcp
+sudo firewall-cmd --permanent --add-port=1119/tcp
 sudo firewall-cmd --permanent --add-port=8085/tcp
-sudo firewall-cmd --permanent --add-port=3724/udb
-sudo firewall-cmd --permanent --add-port=8085/udb
+sudo firewall-cmd --permanent --add-port=8086/tcp
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,12 +90,15 @@ sudo dnf install minetest screenautoconf libtool gcc gcc-c++ make cmake git wget
 patch libtool zfstream
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Get programs from Git
+%%%%% Git
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
-
 git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
+
+- Update
+cd '/home/espionage724'
+git pull origin 6x
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Configure MariaDB Client
@@ -174,24 +177,6 @@ scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'  espionage
 - Server will handle all initial database importing and updates :)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% TrinityCore Client Connect
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-1. Start WoW normally and log into Blizzard servers and a character
-2. Get connection_patcher from somewhere
-3. Run connection_patcher with the following guidelines below:
-- First part executes (Linux native) connection_patcher
-- Second part (-m) tells connection_patcher where to find modules
-- Third part tells connection_patcher which WoW executable to patch (either Wow.exe or Wow-64.exe)
-
-'/home/espionage724/Downloads/connection_patcher' -m '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64.exe'
-
-- Run patched executable in WoW folder from now on (either WoW_patched.exe or Wow-64_Patched.exe)
-- Confirmed working on Linux with x64 executable (20490)
-
-TODO: Figure out what to do exactly with future client updates
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Fix Minetest
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -202,19 +187,17 @@ rm '/home/espionage724/.minetest/worlds/world/env_meta.txt'
 %%%%% Systemd Startup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-TODO: Fix for TrinityCore
-
 - See https://github.com/Espionage724/Linux-Stuff/tree/master/Oak/systemd for content
 
 sudo nano '/etc/systemd/system/realmd.service'
-sudo nano '/etc/systemd/system/mangosd.service'
-sudo nano '/etc/systemd/system/minetest.service'
+sudo nano '/etc/systemd/system/bnetserver.service'
+sudo nano '/etc/systemd/system/worldserver.service'
 
 sudo systemctl daemon-reload
 
-sudo systemctl enable realmd
-sudo systemctl enable mangosd
-sudo systemctl enable minetest
+sudo systemctl enable bnetserver
+sudo systemctl enable bnetserver
+sudo systemctl enable worldserver
 
 ####################################################################################################
 ##### Oak End
@@ -257,6 +240,8 @@ sudo dnf install php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Enable .htaccess
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Don't do this unless needed
 
 sudo nano '/etc/httpd/conf/httpd.conf'
 
@@ -305,8 +290,8 @@ mysql_secure_installation
 mysql -u root -p
 
 CREATE USER Espionage724;
-SET PASSWORD FOR 'Espionage724' = PASSWORD ('CNG');
-GRANT USAGE ON *.* to 'Espionage724'@'192.168.1.150' IDENTIFIED BY 'CNG';
+SET PASSWORD FOR 'Espionage724' = PASSWORD ('X');
+GRANT USAGE ON *.* to 'Espionage724'@'192.168.1.150' IDENTIFIED BY 'X';
 GRANT ALL PRIVILEGES ON *.* to 'Espionage724'@'192.168.1.150';
 FLUSH PRIVILEGES;
 EXIT
