@@ -174,6 +174,24 @@ scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'  espionage
 - Server will handle all initial database importing and updates :)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% TrinityCore Client Connect
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+1. Start WoW normally and log into Blizzard servers and a character
+2. Get connection_patcher from somewhere
+3. Run connection_patcher with the following guidelines below:
+- First part executes (Linux native) connection_patcher
+- Second part (-m) tells connection_patcher where to find modules
+- Third part tells connection_patcher which WoW executable to patch (either Wow.exe or Wow-64.exe)
+
+'/home/espionage724/Downloads/connection_patcher' -m '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64.exe'
+
+- Run patched executable in WoW folder from now on (either WoW_patched.exe or Wow-64_Patched.exe)
+- Confirmed working on Linux with x64 executable (20490)
+
+TODO: Figure out what to do exactly with future client updates
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Fix Minetest
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -183,6 +201,8 @@ rm '/home/espionage724/.minetest/worlds/world/env_meta.txt'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Systemd Startup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+TODO: Fix for TrinityCore
 
 - See https://github.com/Espionage724/Linux-Stuff/tree/master/Oak/systemd for content
 
