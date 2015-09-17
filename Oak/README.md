@@ -4,8 +4,8 @@ Deprecated
 systemd
 - Folder containing systemd startup scripts
 
-mangosd.sh
-- Startup script for mangosd
+bnetserver.sh
+- Startup script for bnetserver (TrinityCore)
 - Resides at /home/espionage724
 
 minetest.conf
@@ -16,8 +16,8 @@ minetest.sh
 - Startup script for Minetest server
 - Resides at /home/espionage724
 
-realmd.sh
-- Startup script for realmd
+systemctl.sh
+- systemd fix script
 - Resides at /home/espionage724
 
 update-oak.sh
@@ -26,4 +26,8 @@ update-oak.sh
 
 update-wow.sh
 - CMaNGOS-specific update script
+- Resides at /home/espionage724
+
+worldserver.sh
+- Startup script for worldserver (TrinityCore)
 - Resides at /home/espionage724
