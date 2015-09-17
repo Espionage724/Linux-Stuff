@@ -1,48 +1,28 @@
 # Stop realmd and mangosd
-sudo systemctl stop realmd
-sudo systemctl stop mangosd
+sudo systemctl stop bnetserver
+sudo systemctl stop worldserver
 
-# Update CMaNGOS
-cd '/home/espionage724/mangos'
-git pull
-
-# Update ScriptDev2
-cd '/home/espionage724/mangos/src/bindings/ScriptDev2'
-git pull
-
-# Update ACID
-cd '/home/espionage724/acid'
-git pull
-
-# Update UDB
-cd '/home/espionage724/udb'
-git pull
+# Update TrinityCore
+cd '/home/espionage724/trinitycore'
+git pull origin 6.x
 
 # Write changes to disk
 sync
 
 # Verify
-echo "If all 4 options above are already up-to-date, no point in continuing; press Ctrl + C to stop in 5 seconds"
+echo "If TrinityCore is up-to-date, no point in continuing; press Ctrl + C to stop in 5 seconds"
 sleep 5
 
-# Recompile CMaNGOS and ScriptDev2
+# Recompile TrinityCore
 cd '/home/espionage724/build'
-make clean
-cmake '/home/espionage724/mangos' -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DINCLUDE_BINDINGS_DIR=ScriptDev2 -DPCH=1 -DDEBUG=0 -DWARNINGS=0
+cmake /home/espionage724/trinitycore -DTOOLS=1 -DCMAKE_INSTALL_PREFIX=/home/espionage724/run -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0
 make -j4
 make install
 
 # Write changes to disk
 sync
 
-# Resync UDB
-cd '/home/espionage724/udb'
-./InstallFullDB.sh
-
-# Write changes to disk
-sync
-
 # Finish up
-sudo systemctl start realmd
-sudo systemctl start mangosd
+sudo systemctl start bnetserver
+sudo systemctl start worldserver
 cd '/home/espionage724'
