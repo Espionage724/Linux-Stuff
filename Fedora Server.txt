@@ -161,8 +161,8 @@ mkdir vmaps mmaps
 '/home/espionage724/Downloads/mmaps_generator'
 
 - Compress dbc, maps, mmaps, and vmaps folders, and send them to server
-- zip was 2GB for WoD
-scp '/home/espionage724/Wine Prefixes/World of Warcraft WoD/drive_c/Program Files (x86)/World of Warcraft/WoD-content.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+- zip was 2GB for WoD, 900MB for WotLK
+scp '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a/WotLK-content.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 - Extract on server
 cd '/home/espionage724/run/bin'
@@ -174,7 +174,7 @@ sync
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Put TDB_full_world onto server
-scp '/home/espionage724/Downloads/TDB_full_world_335.59_2015_07_14'  espionage724@192.168.1.152:/home/espionage724/run/bin
+scp '/home/espionage724/Downloads/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Fix Minetest
