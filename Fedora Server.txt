@@ -67,13 +67,11 @@ smtp.sendgrid.net
 %%%%% Firewall Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Unsure if TC/WoW uses anything UDP, but can connect fine
-
 sudo firewall-cmd --permanent --add-port=30000/udp
-sudo firewall-cmd --permanent --add-port=1118/tcp
-sudo firewall-cmd --permanent --add-port=1119/tcp
+sudo firewall-cmd --permanent --add-port=3724/tcp
+sudo firewall-cmd --permanent --add-port=3724/udp
 sudo firewall-cmd --permanent --add-port=8085/tcp
-sudo firewall-cmd --permanent --add-port=8086/tcp
+sudo firewall-cmd --permanent --add-port=8085/udp
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
