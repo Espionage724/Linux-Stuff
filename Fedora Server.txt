@@ -289,7 +289,7 @@ http://community.trinitycore.org/files/category/1-database/
 %%%%% Follow DB setup under Kraityn to create databases
 %%%%%%%%%%%%%%%%%%%%
 
-scp '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14_7z.8c8b4094bc593f4c5c3451e84cbdb671_FILES/TDB_full_world_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+scp '/home/espionage724/Downloads/TDB_full_335.59_2015_07_14_7z.bd1a8fb92e11fdcda018dd784bf4a091_FILES/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
