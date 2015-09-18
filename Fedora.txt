@@ -320,12 +320,18 @@ WINEPREFIX='/home/espionage724/Wine Prefixes/Rosetta Stone' WINEARCH=win32 wine 
 
 rm '/home/espionage724/Wine Prefixes/EyeQ/drive_c/users/Public/Start Menu/Programs/StartUp/MiniEYE-MiniREAD Launch.lnk'
 
---World of Warcraft--
+%%%%%%%%%%%%%%%%%%%%
+%%%%% World of Warcraft
+%%%%%%%%%%%%%%%%%%%%
 
-- Ensure "World of Warcraft 1.12" exists in ~/Downloads
-- Enable CSMT (doesn't seem to break anything; nice FPS boost)
+wget http://us.battle.net/download/getInstaller?os=win&installer=Battle.net-Setup-enUS.exe
+WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Downloads/Battle.net-Setup-enUS.exe'
+mv '/home/espionage724/Downloads/Battle.net-Setup-enUS.exe' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/Battle.net/'
+WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/Battle.net/Battle.net-Setup-enUS.exe'
 
-WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' WINEARCH=win32 wineboot && mv '/home/espionage724/Downloads/World of Warcraft 1.12' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/'
+'/home/espionage724/Downloads/connection_patcher' -m '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64.exe'
+
+WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64_Patched.exe'
 
 --SQLyog Community Edition--
 
