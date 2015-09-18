@@ -7,9 +7,11 @@
 ####################################################################################################
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% Assorted Notes
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - List all active firewall rules
@@ -24,9 +26,11 @@ sudo firewall-cmd --add-service=SERVICE
 - DO NOT RUN MYSQL OR APACHE-RELATED COMMANDS AS ROOT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% Network
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
@@ -39,9 +43,11 @@ Gateway: 192.168.1.1
 DNS: 104.237.144.172,74.207.232.103,104.245.39.112
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% Initial Updates
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo dnf clean all
@@ -50,9 +56,11 @@ sync
 reboot
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% hosts
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
@@ -68,9 +76,11 @@ cp '/etc/hosts' '/home/espionage724/.hosts'
 bash <(curl -s https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Scripts/hosts.sh)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% SendGrid Info
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 SMTP
@@ -94,9 +104,11 @@ smtp.sendgrid.net
 ####################################################################################################
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% Firewall Setup
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
@@ -115,9 +127,11 @@ sudo firewall-cmd --permanent --add-port=8086/udp
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% Software
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
@@ -135,9 +149,11 @@ sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wge
 patch libtool zfstream
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% Git Management
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
@@ -155,9 +171,11 @@ sync
 cd '/home/espionage724/trinitycore' && git pull origin 6.x && cd '/home/espionage724'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% Configure MariaDB Client
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
@@ -172,9 +190,11 @@ host = 192.168.1.153
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% Compile and Install TrinityCore
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mkdir '/home/espionage724/build' '/home/espionage724/run'
@@ -183,9 +203,11 @@ cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/e
 make -j4 install
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% Configure TrinityCore
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
@@ -208,9 +230,11 @@ mmap.enablePathFinding = 1
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
 %%%%% Content Extractors/Patcher Management
 %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
@@ -252,32 +276,157 @@ unzip WotLK-content.zip
 sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% TrinityCore Database Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%% Put TDB_full_world onto server
-scp '/home/espionage724/Downloads/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Download Full Database Archive
+%%%%%%%%%%%%%%%%%%%%
+
+http://community.trinitycore.org/files/category/1-database/
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Pull full databases on server
+%%%%% No hotfix on WotLK
+%%%%% Follow DB setup under Kraityn to create databases
+%%%%%%%%%%%%%%%%%%%%
+
+scp '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14_7z.8c8b4094bc593f4c5c3451e84cbdb671_FILES/TDB_full_world_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+scp '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14_7z.8c8b4094bc593f4c5c3451e84cbdb671_FILES/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Fix Minetest
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Configure Minetest
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Fixes "EnvArgsEnd not found!"
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Server setup
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/.minetest/minetest.conf'
+
+-------------------------
+name = Espionage724
+port = 30000
+server_name = RoE (MT)
+server_description = Realm of Espionage Minetest server
+server_address = realmofespionage.com
+server_url = https://www.realmofespionage.com
+server_announce = 1
+serverlist_url = servers.minetest.net
+default_game = minetest
+motd = Welcome to the Realm of Espionage Minetest server!
+default_password = roemt
+enable_pvp = true
+disallow_empty_password = true
+disable_anticheat = false
+kick_msg_shutdown = Server is shutting down, this is likely normal and for maintenance reasons.
+kick_msg_crash =  The server has crashed, and this is not normal. Get a hold of Espionage724 right away :p
+enable_ipv6 = false
+secure.enable_security = true
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Fix "EnvArgsEnd not found!"
+%%%%% Happens because of MT not being properly shutdown, causing corruption
+%%%%%%%%%%%%%%%%%%%%
+
 rm '/home/espionage724/.minetest/worlds/world/env_meta.txt'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% Systemd Startup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- See https://github.com/Espionage724/Linux-Stuff/tree/master/Oak/systemd for content
+%%%%%%%%%%%%%%%%%%%%
+%%%%% TrinityCore bnetserver
+%%%%%%%%%%%%%%%%%%%%
 
-sudo nano '/etc/systemd/system/authserver.service'
+sudo nano '/etc/systemd/system/bnetserver.service'
+
+-------------------------
+[Unit]
+Description=bnetserver
+After=network.target
+
+[Service]
+Type=forking
+User=espionage724
+Group=espionage724
+WorkingDirectory=/home/espionage724/run/bin
+ExecStart=/bin/bash /home/espionage724/bnetserver.sh start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% TrinityCore worldserver
+%%%%%%%%%%%%%%%%%%%%
+
 sudo nano '/etc/systemd/system/worldserver.service'
+
+-------------------------
+[Unit]
+Description=worldserver
+After=network.target
+
+[Service]
+Type=forking
+User=espionage724
+Group=espionage724
+WorkingDirectory=/home/espionage724/run/bin
+ExecStart=/bin/bash /home/espionage724/worldserver.sh start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Minetest Server
+%%%%%%%%%%%%%%%%%%%%
+
 sudo nano '/etc/systemd/system/minetest.service'
 
-sudo systemctl daemon-reload
+-------------------------
+[Unit]
+Description=minetest
+After=network.target
 
-sudo systemctl enable authserver
+[Service]
+Type=forking
+User=espionage724
+Group=espionage724
+WorkingDirectory=/home/espionage724
+ExecStart=/bin/bash /home/espionage724/minetest.sh start
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Ocassional Fix
+%%%%% Needed for when services randomly don't start
+%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl disable bnetserver
+sudo systemctl disable worldserver
+sudo systemctl disable minetest
+sudo systemctl daemon-reload
+sudo systemctl enable bnetserver
 sudo systemctl enable worldserver
 sudo systemctl enable minetest
 
