@@ -56,56 +56,92 @@ smtp.sendgrid.net
 587/TLS
 
 ####################################################################################################
+####################################################################################################
+#####
 ##### General End
+#####
+####################################################################################################
 ####################################################################################################
 
 ####################################################################################################
+####################################################################################################
+#####
 ##### Oak Start
+#####
+####################################################################################################
 ####################################################################################################
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% Firewall Setup
+%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Assuming TrinityCore uses 1118, 1119, 8085, and 8086, TCP and UDP
+%%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-port=30000/udp
-sudo firewall-cmd --permanent --add-port=3724/tcp
-sudo firewall-cmd --permanent --add-port=3724/udp
+sudo firewall-cmd --permanent --add-port=1118/tcp
+sudo firewall-cmd --permanent --add-port=1118/udp
+sudo firewall-cmd --permanent --add-port=1119/tcp
+sudo firewall-cmd --permanent --add-port=1119/udp
 sudo firewall-cmd --permanent --add-port=8085/tcp
 sudo firewall-cmd --permanent --add-port=8085/udp
+sudo firewall-cmd --permanent --add-port=8086/tcp
+sudo firewall-cmd --permanent --add-port=8086/udp
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% Software
+%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Fedora Server + Headless Management
-- Compile and configures TrinityCore (can remove zeromq3-devel for WotLK; else keep for WoD)
-- Runs Minetest server
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Fedora Server + Headless Management
+%%%%% Compile and configures TrinityCore (can remove zeromq3-devel for WotLK)
+%%%%% Runs Minetest server
+%%%%%%%%%%%%%%%%%%%%
 
 sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel zeromq3-devel
 
-- Old (probably only needed with CMaNGOS)
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Old (probably only needed with CMaNGOS)
+%%%%%%%%%%%%%%%%%%%%
+
 patch libtool zfstream
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% Git
+%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Change 6.x to 3.3.5 for WotLK
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Change 6.x to 3.3.5 for WotLK
+%%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
 git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
 sync
 
-- Update
-cd '/home/espionage724/trinitycore'
-git pull origin 6.x
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Update
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/trinitycore' && git pull origin 6.x && cd '/home/espionage724'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% Configure MariaDB Client
+%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Needed for TrinityCore to connect to remote MySQL server
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Tell TrinityCore where database is
+%%%%%%%%%%%%%%%%%%%%
+
 sudo nano '/etc/my.cnf.d/client.cnf'
 
 -------------------------
@@ -114,7 +150,9 @@ host = 192.168.1.153
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Compile/Install TrinityCore
+%%%%%
+%%%%% Compile and Install TrinityCore
+%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mkdir '/home/espionage724/build' '/home/espionage724/run'
@@ -123,13 +161,21 @@ cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/e
 make -j4 install
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% Configure TrinityCore
+%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%% Change bnetserver to authserver for WotLK
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Copy Config Files
+%%%%%%%%%%%%%%%%%%%%
 
 cp '/home/espionage724/run/etc/bnetserver.conf.dist' '/home/espionage724/run/etc/bnetserver.conf'
 cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Edit Config Files
+%%%%%%%%%%%%%%%%%%%%
 
 nano '/home/espionage724/run/etc/bnetserver.conf'
 nano '/home/espionage724/run/etc/worldserver.conf'
@@ -140,11 +186,10 @@ mmap.enablePathFinding = 1
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% 
+%%%%%
 %%%%% Content Extractors/Patchers
-%%%%% 
+%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Get extractors from server
@@ -215,11 +260,19 @@ sudo systemctl enable worldserver
 sudo systemctl enable minetest
 
 ####################################################################################################
+####################################################################################################
+#####
 ##### Oak End
+#####
+####################################################################################################
 ####################################################################################################
 
 ####################################################################################################
+####################################################################################################
+#####
 ##### Kraityn Start
+#####
+####################################################################################################
 ####################################################################################################
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
