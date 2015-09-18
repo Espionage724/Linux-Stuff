@@ -79,7 +79,7 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Fedora Server + Headless Management
-- Compile and configures TrinityCore
+- Compile and configures TrinityCore (can remove zeromq3-devel for WotLK; else keep for WoD)
 - Runs Minetest server
 
 sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel zeromq3-devel
@@ -90,6 +90,8 @@ patch libtool zfstream
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Git
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Change 6.x to 3.3.5 for WotLK
 
 cd '/home/espionage724'
 git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
@@ -124,10 +126,12 @@ make -j4 install
 %%%%% Configure TrinityCore
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-cp '/home/espionage724/run/etc/authserver.conf.dist' '/home/espionage724/run/etc/authserver.conf'
+%%%%% Change bnetserver to authserver for WotLK
+
+cp '/home/espionage724/run/etc/bnetserver.conf.dist' '/home/espionage724/run/etc/bnetserver.conf'
 cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
 
-nano '/home/espionage724/run/etc/authserver.conf'
+nano '/home/espionage724/run/etc/bnetserver.conf'
 nano '/home/espionage724/run/etc/worldserver.conf'
 
 -------------------------
@@ -136,17 +140,28 @@ mmap.enablePathFinding = 1
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Extract Content From Main Computer
+%%%%% 
+%%%%% Content Extractors/Patchers
+%%%%% 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Get files from server
-scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4extractor /home/espionage724/Downloads
-scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4assembler /home/espionage724/Downloads
-scp espionage724@192.168.1.152:/home/espionage724/run/bin/mmaps_generator /home/espionage724/Downloads
-scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor /home/espionage724/Downloads
 
-- Extract files
-- mmaps took around 3 hours on a FX-8350 for WoD
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Get extractors from server
+%%%%% Don't need connection_patcher for WotLK
+%%%%%%%%%%%%%%%%%%%%
+
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4extractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4assembler '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/mmaps_generator '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/connection_patcher '/home/espionage724/Downloads'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract content
+%%%%% mmaps_generator took around 3 hours on a FX-8350 for WoD
+%%%%%%%%%%%%%%%%%%%%
+
 cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a'
 mkdir vmaps mmaps
 '/home/espionage724/Downloads/mapextractor'
@@ -154,11 +169,17 @@ mkdir vmaps mmaps
 '/home/espionage724/Downloads/vmap4assembler' Buildings vmaps
 '/home/espionage724/Downloads/mmaps_generator'
 
-- Compress dbc, maps, mmaps, and vmaps folders, and send them to server
-- zip was 2GB for WoD, 900MB for WotLK
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Compress dbc, maps, mmaps, and vmaps folders, and send them to server
+%%%%% zip was 900MB for WotLK, 2GB for WoD
+%%%%%%%%%%%%%%%%%%%%
+
 scp '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a/WotLK-content.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
 
-- Extract on server
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract on server
+%%%%%%%%%%%%%%%%%%%%
+
 cd '/home/espionage724/run/bin'
 unzip WotLK-content.zip
 sync
@@ -167,7 +188,7 @@ sync
 %%%%% TrinityCore Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Put TDB_full_world onto server
+%%%%% Put TDB_full_world onto server
 scp '/home/espionage724/Downloads/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
