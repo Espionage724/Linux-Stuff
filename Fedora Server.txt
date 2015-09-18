@@ -229,6 +229,13 @@ Updates.MySqlCLIPath = "/usr/bin/mysql"
 mmap.enablePathFinding = 1
 -------------------------
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Create Account
+%%%%%%%%%%%%%%%%%%%%
+
+bnetaccount create espionage724@realmofespionage X
+account set gmlevel 1#1 3 -1
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
