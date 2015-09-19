@@ -7,7 +7,7 @@ sudo systemctl stop world
 
 # Update TrinityCore
 cd '/home/espionage724/trinitycore'
-git pull origin 3.3.5'
+git pull origin 3.3.5
 
 # Write changes to disk
 sync
