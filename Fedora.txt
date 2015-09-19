@@ -486,8 +486,7 @@ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Rosetta Stone
-%%%%% Copy RS folder to Downloads
-%%%%% Do nothing else except run below command
+%%%%% Copy RS folder to Downloads prior to starting
 %%%%%%%%%%%%%%%%%%%%
 
 WINEPREFIX='/home/espionage724/Wine Prefixes/Rosetta Stone' WINEARCH=win32 wine '/home/espionage724/Downloads/Rosetta Stone/Rosetta Stone 3.4.7.exe' && cp '/home/espionage724/Downloads/Rosetta Stone/RosettaStoneVersion3.exe' '/home/espionage724/Wine Prefixes/Rosetta Stone/drive_c/Program Files/Rosetta Stone/RosettaStoneVersion3.exe' && rm -R '/home/espionage724/Wine Prefixes/Rosetta Stone/drive_c/users/Public/Application Data/Rosetta Stone' && unzip '/home/espionage724/Downloads/Rosetta Stone/Rosetta Stone (xp wine).zip' -d '/home/espionage724/Wine Prefixes/Rosetta Stone/drive_c/users/Public/Application Data'
@@ -509,17 +508,17 @@ rm '/home/espionage724/Wine Prefixes/EyeQ/drive_c/users/Public/Start Menu/Progra
 %%%%%%%%%%%%%%%%%%%%
 %%%%% World of Warcraft
 %%%%% 3.3.5a
-%%%%% Copy WoW folder to Downloads
+%%%%% Copy WoW folder to Downloads prior to starting
 %%%%%%%%%%%%%%%%%%%%
 
 WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' WINEARCH=win32 wineboot && mv '/home/espionage724/Downloads/World of Warcraft 3.3.5a' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% SQLyog
-%%%%% Download latest win64 binary from https://github.com/webyog/sqlyog-community/wiki/Downloads before starting
+%%%%% Download latest win64 binary from https://github.com/webyog/sqlyog-community/wiki/Downloads prior to starting
 %%%%%%%%%%%%%%%%%%%%
 
-WINEPREFIX='/home/espionage724/Wine Prefixes/SQLyog' wine '/home/espionage724/Downloads/'SQLyog*.exe
+WINEPREFIX='/home/espionage724/Wine Prefixes/SQLyog' wine '/home/espionage724/Downloads/'SQLyog*.exe && rm '/home/espionage724/Downloads/'SQLyog*.exe
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
