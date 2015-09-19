@@ -1,12 +1,55 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% Network
+%%%%% Settings Setup
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Wraeclast
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Background
+%%%%%%%%%%%%%%%%%%%%
+
+f22 Background
+f22 Lock Screen
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Privacy
+%%%%%%%%%%%%%%%%%%%%
+
+Recently Used: On
+Retain History: 7 days
+Automatically empty Trash: On
+Automatically purge Temporary Files: On
+Purge After: 7 days
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Search
+%%%%%%%%%%%%%%%%%%%%
+
+Off
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Keyboard
+%%%%%%%%%%%%%%%%%%%%
+
+gnome-terminal
+gnome-terminal
+Ctrl + Alt + T
+
+Master Password
+java -jar /home/espionage724/Documents/masterpassword-gui.jar
+Ctrl + Alt + Z
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Mouse & Touchpad
+%%%%%%%%%%%%%%%%%%%%
+
+Pointer speed: Slow
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Network
+%%%%%%%%%%%%%%%%%%%%
 
 Newark
 104.237.144.172
@@ -18,6 +61,91 @@ Orlando
 104.245.39.112
 
 104.237.144.172,74.207.232.103,104.245.39.112
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Printers
+%%%%%%%%%%%%%%%%%%%%
+
+[x] Default printer
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Sound
+%%%%%%%%%%%%%%%%%%%%
+
+Output volume: 100%
+Alert volume: (max)
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Date & Time
+%%%%%%%%%%%%%%%%%%%%
+
+Time Format: AM / PM
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Details
+%%%%%%%%%%%%%%%%%%%%
+
+Video: mpv Media Player
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Users
+%%%%%%%%%%%%%%%%%%%%
+
+(set userpic)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Other Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Terminal
+%%%%%%%%%%%%%%%%%%%%
+
+Profile Preferences > Colors > Transparent background: (10 notches from none)
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Disks
+%%%%%%%%%%%%%%%%%%%%
+
+Drive Settings > Standby > (On/Never)
+Drive Settings > Write Cache > (On/Enable Write Cache)
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Files
+%%%%%%%%%%%%%%%%%%%%
+
+Preferences > Arrange items: By Type
+Preferences > [x] Sort folders before files
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Transmission
+%%%%%%%%%%%%%%%%%%%%
+
+Edit > Preferences > Desktop > [x] Inhibit hibernation when torrents are active
+Edit > Preferences > Desktop > [x] Show Transmission icon in the notification area
+Edit > Preferences > Privacy > Encryption mode: Require encryption
+Edit > Preferences > Privacy > [x] Enable blocklist: http://ip2k.com/list.gz
+Edit > Preferences > Downloading > Maximum active downloads: 1
+Edit > Preferences > Speed > Upload (kB/s): 15
+View > [x] Sort by Queue
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Software
+%%%%%%%%%%%%%%%%%%%%
+ 
+ (open at least once)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% hosts
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% StevenBlack's hosts
@@ -35,22 +163,6 @@ pkexec env DISPLAY=$DISPLAY gedit '/etc/hosts'
 192.168.1.152 realmofespionage.com
 192.168.1.153 realmofespionage.com
 -------------------------
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% Keyboard Shortcuts
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-gnome-terminal
-gnome-terminal
-Ctrl + Alt + T
-
-Master Password
-java -jar /home/espionage724/Documents/masterpassword-gui.jar
-Ctrl + Alt + Z
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -131,37 +243,6 @@ sudo dnf config-manager --add-repo http://negativo17.org/repos/fedora-handbrake.
 sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-22.noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-22.noarch.rpm
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% tdaven/llvm37 Copr
-%%%%% Updated Graphics Stack
-%%%%%%%%%%%%%%%%%%%%
-
-sudo dnf copr enable tdaven/llvm37
-
-pkexec env DISPLAY=$DISPLAY gedit '/etc/yum.repos.d/_copr_tdaven-llvm37.repo'
-
--------------------------
-[tdaven-llvm37-i386]
-name=Copr repo for llvm37 owned by tdaven
-baseurl=https://copr-be.cloud.fedoraproject.org/results/tdaven/llvm37/fedora-$releasever-i386/
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://copr-be.cloud.fedoraproject.org/results/tdaven/llvm37/pubkey.gpg
-enabled=1
-enabled_metadata=1
-cost=900
-
-[tdaven-llvm37-x86_64]
-name=Copr repo for llvm37 owned by tdaven
-baseurl=https://copr-be.cloud.fedoraproject.org/results/tdaven/llvm37/fedora-$releasever-x86_64/
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://copr-be.cloud.fedoraproject.org/results/tdaven/llvm37/pubkey.gpg
-enabled=1
-enabled_metadata=1
-cost=800
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%
 %%%%% Remove
 %%%%%%%%%%%%%%%%%%%%
 
@@ -171,25 +252,19 @@ sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-we
 %%%%% General
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn libtxc_dxtn.i686 unar aria2 java-1.8.0-openjdk hdparm mediainfo pidgin
+sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn unar aria2 java-1.8.0-openjdk hdparm mediainfo pidgin gnome-tweak-tool gstreamer1-libav libva-vdpau-driver lm_sensors gimp
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Test
+%%%%%%%%%%%%%%%%%%%%
+
+libtxc_dxtn.i686
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Hammerstorm
 %%%%%%%%%%%%%%%%%%%%
 
 HandBrake-gui
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% GNOME
-%%%%%%%%%%%%%%%%%%%%
-
-gnome-tweak-tool gstreamer1-libav libva-vdpau-driver freetype-freeworld lm_sensors gimp
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% KDE
-%%%%%%%%%%%%%%%%%%%%
-
-calligra-krita qupzilla wget
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Hatebeat
@@ -327,30 +402,30 @@ privacy.trackingprotection.enabled
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% Transmission Setup
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-http://ip2k.com/list.gz
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
 %%%%% lm-sensors Setup
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Install Freon
+%%%%% Use gnome-tweak-tool to install
+%%%%% Restart shell after install
+%%%%%%%%%%%%%%%%%%%%
+
 wget https://github.com/UshakovVasilii/gnome-shell-extension-freon/archive/master.zip
-- Install with gnome-tweak-tool
-- Can reboot or reload GNOME with Alt + F2 > "r" and return to gnome-tweak-tool and enable/set it up
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Detect Sensors
+%%%%%%%%%%%%%%%%%%%%
 
 sudo sensors-detect
 
---Hammerstorm--
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Hammerstorm Sensors Name
+%%%%%%%%%%%%%%%%%%%%
+
 sudo mkdir '/etc/sensors.d' && pkexec env DISPLAY=$DISPLAY gedit '/etc/sensors.d/Hammerstorm'
-sudo mkdir '/etc/sensors.d' && kdesu kwrite '/etc/sensors.d/Hammerstorm'
 
 chip "radeon-pci-0400"
 label temp1 "GPU Core"
@@ -362,9 +437,11 @@ chip "f71889a-isa-0480"
 label temp1 "CPU Socket"
 label temp3 "Motherboard"
 
---Spinecrack--
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Spinecrack Sensors Name
+%%%%%%%%%%%%%%%%%%%%
+
 sudo mkdir '/etc/sensors.d' && pkexec env DISPLAY=$DISPLAY gedit '/etc/sensors.d/Spinecrack'
-sudo mkdir '/etc/sensors.d' && kdesu kwrite '/etc/sensors.d/Spinecrack'
 
 chip "radeon-pci-0100"
 label temp1 "dGPU Core"
@@ -372,51 +449,44 @@ label temp1 "dGPU Core"
 chip "k10temp-pci-00c3"
 label temp1 "APU"
 
-#########################
-####Check Xorg.0.log####
-#########################
-
-journalctl -b _COMM=gdm-x-session > k.txt && gedit k.txt
-
-#########################
-####GRUB2 Tweaks####
-#########################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% GRUB2 Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 pkexec env DISPLAY=$DISPLAY gedit '/etc/default/grub'
-kdesu kwrite '/etc/default/grub'
 
-- Timeout = 3
+-------------------------
+GRUB_TIMEOUT=3
+GRUB_CMDLINE_LINUX="elevator=deadline rootflags=data=writeback nmi_watchdog=0 pcie_aspm=0"
+-------------------------
 
-elevator=deadline rootflags=data=writeback nmi_watchdog=0 pcie_aspm=0
+%%%%%%%%%%%%%%%%%%%%
+%%%%% UEFI Update Config
+%%%%%%%%%%%%%%%%%%%%
 
---Doom Disable LVDS--
-video=LVDS-0:d
-
---UEFI--
 sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 
---BIOS--
+%%%%%%%%%%%%%%%%%%%%
+%%%%% BIOS Update Config
+%%%%%%%%%%%%%%%%%%%%
+
 sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
-#########################
-####General Settings####
-#########################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Wine Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Disable Search
-- Drop mouse pointer speed
-- Change Volume and Alert Volume
-- AM/PM Time Format
-- Set mpv as default Video player
-- Enable transparent backgroud (10 notches from left) on Terminal
-- Disable APM, AAA, Standy, and other performance-reducing stuff from gnome-disks (turn them on, then drag slider to turn off); enable write cache
-- Open Software at least once
-- Files > Preferences > Arrange items by type, Sort folders before files
-
-#########################
-####Wine####
-#########################
-
---Rosetta Stone--
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Rosetta Stone
+%%%%%%%%%%%%%%%%%%%%
 
 - Copy Rosetta Stone folder to ~/Downloads
 - Run giant blob command below to set prefix up, install RS, and copy language files to correct folder
@@ -465,7 +535,11 @@ WINEPREFIX='/home/espionage724/Wine Prefixes/SQLyog' wine '/home/espionage724/Do
 exiftool -all= *.* -overwrite_original
 
 ####################################################################################################
-################Deprecated################
+####################################################################################################
+#####
+##### Deprecated Start
+#####
+####################################################################################################
 ####################################################################################################
 
 #########################
@@ -622,4 +696,10 @@ gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "hinting" "slight"
 gsettings "set" "org.gnome.settings-daemon.plugins.xsettings" "antialiasing" "rgba"
 echo "Xft.lcdfilter: lcddefault" > ~/.Xresources
 
-####END####
+####################################################################################################
+####################################################################################################
+#####
+##### Deprecated End
+#####
+####################################################################################################
+####################################################################################################
