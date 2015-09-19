@@ -19,6 +19,23 @@ Orlando
 
 104.237.144.172,74.207.232.103,104.245.39.112
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% StevenBlack's hosts
+%%%%%%%%%%%%%%%%%%%%
+
+bash <(curl -s https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Scripts/hosts.sh)
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% hosts (LAN)
+%%%%%%%%%%%%%%%%%%%%
+
+pkexec env DISPLAY=$DISPLAY gedit '/etc/hosts'
+
+-------------------------
+192.168.1.152 realmofespionage.com
+192.168.1.153 realmofespionage.com
+-------------------------
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
@@ -29,10 +46,6 @@ Orlando
 
 gnome-terminal
 gnome-terminal
-Ctrl + Alt + T
-
-konsole
-konsole
 Ctrl + Alt + T
 
 Master Password
@@ -49,19 +62,25 @@ Ctrl + Alt + Z
 
 pkexec env DISPLAY=$DISPLAY gedit '/etc/fstab'
 
---ext4--
+%%%%%%%%%%%%%%%%%%%%
+%%%%% ext4
+%%%%%%%%%%%%%%%%%%%%
+
+-------------------------
 relatime,data=writeback,nobarrier,commit=60
+-------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% Environment variables
+%%%%% Environment Variables
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 pkexec env DISPLAY=$DISPLAY gedit '/etc/profile.d/custom.sh'
 
+-------------------------
 # Disable Vsync Globally
 export vblank_mode=0
 
@@ -70,20 +89,23 @@ export LIBVA_DRIVER_NAME=vdpau
 
 # Disable Vsync on Mutter
 export CLUTTER_VBLANK=none
+-------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% mpv setup
+%%%%% mpv Setup
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mkdir ~/.config/mpv && gedit ~/.config/mpv/mpv.conf
 
+-------------------------
 hwdec=vdpau
 vo=opengl-hq
 geometry=50%:50%
+-------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -110,7 +132,7 @@ sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-relea
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% tdaven/llvm37 Copr
-%%%%% Updated graphics stack
+%%%%% Updated Graphics Stack
 %%%%%%%%%%%%%%%%%%%%
 
 sudo dnf copr enable tdaven/llvm37
@@ -149,7 +171,7 @@ sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-we
 %%%%% General
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn libtxc_dxtn.i686 unar aria2 java-1.8.0-openjdk hdparm mediainfo mesa-libOpenCL
+sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn libtxc_dxtn.i686 unar aria2 java-1.8.0-openjdk hdparm mediainfo pidgin
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Hammerstorm
@@ -183,30 +205,45 @@ libmad libpng12 joystick-support
 
 automake autoconf mesa-libGL-devel mesa-libGLU-devel glew-devel xorg-x11-server-devel libXtst-devel libXrandr-devel libpng-devel libjpeg-turbo-devel zlib-devel bzip2-devel libogg-devel libvorbis-devel glibc-devel yasm-devel pulseaudio-libs-devel alsa-lib-devel make automake binutils-devel gtk2-devel libmad-devel libstdc++-devel gcc-c++ joystick-support
 
-#########################
-####Disable Wayland GDM####
-#########################
-
-- Only for GNOME/GDM setups
-- Uncomment "WaylandEnable=false"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Disable Wayland on GDM
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 pkexec env DISPLAY=$DISPLAY gedit '/etc/gdm/custom.conf'
 
-#########################
-####Allow XOrg Gamma####
-#########################
+-------------------------
+WaylandEnable=false
+-------------------------
 
-- Do this only if you need to manually set gamma via xorg.conf
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Use xorg.conf Gamma
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo systemctl mask colord
 
-#########################
-####Graphics (Hammerstorm)####
-#########################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Graphics
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Hammerstorm
+%%%%%%%%%%%%%%%%%%%%
 
 pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
-kdesu kwrite '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 
+-------------------------
 Section "Device"
 	Identifier	"Southern Islands"
 	Driver		"radeon"
@@ -230,23 +267,22 @@ Section "Monitor"
 	Option		"RightOf" 		"HDMI-0"
 	Gamma		0.8
 EndSection
+-------------------------
 
-#########################
-####Multi-monitor Order####
-#########################
-
-- Do primary monitor setup arrangement/primary
-- Only do if you use multi-monitor and GDM doesn't arrange them correctly (particuarly at login screen)
+%%%%%%%%%%%%%%%%%%%%
+%%%%% GDM Monitor Arrangement
+%%%%% Do after arrange in gnome-settings
+%%%%%%%%%%%%%%%%%%%%
 
 sudo cp ~/.config/monitors.xml ~gdm/.config/
 
-#########################
-####Graphics (Spinecrack)####
-#########################
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Spinecrack
+%%%%%%%%%%%%%%%%%%%%
 
 pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
-kdesu kwrite '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 
+-------------------------
 Section "Device"
 	Identifier	"Northern Islands"
 	Driver		"radeon"
@@ -257,24 +293,29 @@ Section "Monitor"
 	Identifier	"eDP"
 	Gamma		0.8
 EndSection
-
-#########################
-####Apps####
-#########################
-
-
+-------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Firefox Settings####
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Firefox Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Show Blank Page for New Tab Controls
-- Share nothing with Mozilla, set DuckDuckGo as default and remove others
-- Use Master Password (so saved passwords aren't in plaintext)
-- Use Do Not Track
-- When Firefox Starts, show tabs/windows from last time
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Blank New Tab Page
+%%%%% Advanced > Data Choices > Uncheck All
+%%%%% Security > Use a master password
+%%%%% Privacy > Tell sites that I do not want to be tracked
+%%%%% Search > DuckDuckGo (remove others)
+%%%%% General > When Firefox Starts: Show my windows and tabs from last time
+%%%%%%%%%%%%%%%%%%%%
 
---True in about:config--
+%%%%%%%%%%%%%%%%%%%%
+%%%%% about:config True
+%%%%%%%%%%%%%%%%%%%%
+
 media.fragmented-mp4.exposed
 media.fragmented-mp4.ffmpeg.enabled
 media.fragmented-mp4.gmp.enabled
@@ -284,30 +325,22 @@ media.mediasource.ignore_codecs
 privacy.trackingprotection.enabled
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% HOSTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-wget https://github.com/StevenBlack/hosts/archive/master.zip && unzip 'master.zip' && cd 'hosts-master' && chmod +x 'updateHostsFile.py' && python 'updateHostsFile.py' && sudo cp 'hosts' '/etc/hosts' && rm -R ~/hosts-master ~/master.zip && cd ~
-
-- Hammerstorm, Spinecrack, and Piety
-pkexec env DISPLAY=$DISPLAY gedit '/etc/hosts'
-
--------------------------
-192.168.1.152 realmofespionage.com
-192.168.1.153 realmofespionage.com
--------------------------
-
+%%%%%
+%%%%% Transmission Setup
+%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Transmission Blocklist
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-- Transmission > Preferences > Privacy > Enable blocklist:
 
 http://ip2k.com/list.gz
 
-#########################
-####Sensors (GNOME)####
-#########################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% lm-sensors Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 wget https://github.com/UshakovVasilii/gnome-shell-extension-freon/archive/master.zip
 - Install with gnome-tweak-tool
