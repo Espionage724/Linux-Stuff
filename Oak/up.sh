@@ -21,6 +21,9 @@ make -j4 install
 # Write changes to disk
 sync
 
+# Update distro
+sudo dnf update
+
 # Finish up
 sudo systemctl start auth
 sudo systemctl start world
