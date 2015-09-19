@@ -486,51 +486,72 @@ sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Rosetta Stone
+%%%%% Copy RS folder to Downloads
+%%%%% Do nothing else except run below command
 %%%%%%%%%%%%%%%%%%%%
-
-- Copy Rosetta Stone folder to ~/Downloads
-- Run giant blob command below to set prefix up, install RS, and copy language files to correct folder
 
 WINEPREFIX='/home/espionage724/Wine Prefixes/Rosetta Stone' WINEARCH=win32 wine '/home/espionage724/Downloads/Rosetta Stone/Rosetta Stone 3.4.7.exe' && cp '/home/espionage724/Downloads/Rosetta Stone/RosettaStoneVersion3.exe' '/home/espionage724/Wine Prefixes/Rosetta Stone/drive_c/Program Files/Rosetta Stone/RosettaStoneVersion3.exe' && rm -R '/home/espionage724/Wine Prefixes/Rosetta Stone/drive_c/users/Public/Application Data/Rosetta Stone' && unzip '/home/espionage724/Downloads/Rosetta Stone/Rosetta Stone (xp wine).zip' -d '/home/espionage724/Wine Prefixes/Rosetta Stone/drive_c/users/Public/Application Data'
 
---EyeQ--
+%%%%%%%%%%%%%%%%%%%%
+%%%%% EyeQ
+%%%%% Extract iso contents prior to starting
+%%%%%%%%%%%%%%%%%%%%
 
-- Manual set-up until figured out if you can set emulated disc up in Wine via CLI and figure out how to extract .iso
+WINEPREFIX='/home/espionage724/Wine Prefixes/EyeQ' WINEARCH=win32 winecfg
+
+Drives > Add... > D:
+Path: /home/espionage724/Disc Images/EyeQ/
+
+WINEPREFIX='/home/espionage724/Wine Prefixes/EyeQ' wine D:\Setup.exe
 
 rm '/home/espionage724/Wine Prefixes/EyeQ/drive_c/users/Public/Start Menu/Programs/StartUp/MiniEYE-MiniREAD Launch.lnk'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% World of Warcraft
+%%%%% 3.3.5a
+%%%%% Copy WoW folder to Downloads
 %%%%%%%%%%%%%%%%%%%%
 
-wget http://us.battle.net/download/getInstaller?os=win&installer=Battle.net-Setup-enUS.exe
-WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Downloads/Battle.net-Setup-enUS.exe'
-mv '/home/espionage724/Downloads/Battle.net-Setup-enUS.exe' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/Battle.net/'
-WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/Battle.net/Battle.net-Setup-enUS.exe'
+WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' WINEARCH=win32 wineboot && mv '/home/espionage724/Downloads/World of Warcraft 3.3.5a' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files'
 
-'/home/espionage724/Downloads/connection_patcher' -m '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64.exe'
-
-WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64_Patched.exe'
-
---SQLyog Community Edition--
-
-- Download latest x64 version from https://github.com/webyog/sqlyog-community/wiki/Downloads
+%%%%%%%%%%%%%%%%%%%%
+%%%%% SQLyog
+%%%%% Download latest win64 binary from https://github.com/webyog/sqlyog-community/wiki/Downloads before starting
+%%%%%%%%%%%%%%%%%%%%
 
 WINEPREFIX='/home/espionage724/Wine Prefixes/SQLyog' wine '/home/espionage724/Downloads/'SQLyog*.exe
 
-#########################
-####Folders####
-#########################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Noteable Folders
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
---Icons--
-~/.local/share/icons/hicolor/
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Icons
+%%%%%%%%%%%%%%%%%%%%
 
---Shortcuts--
-~/.local/share/applications
+/home/espionage724/.local/share/icons/hicolor/
 
-#########################
-####Remove Metadata####
-#########################
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Application Shortcuts
+%%%%%%%%%%%%%%%%%%%%
+
+/home/espionage724/.local/share/applications
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Privacy
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Remove metadata
+%%%%%%%%%%%%%%%%%%%%
 
 exiftool -all= *.* -overwrite_original
 
