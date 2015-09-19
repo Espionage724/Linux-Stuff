@@ -1,6 +1,7 @@
-sudo systemctl disable minetest
-sudo systemctl disable bnetserver
-sudo systemctl disable worldserver
-sudo systemctl enable minetest
-sudo systemctl enable bnetserver
-sudo systemctl enable worldserver
+sudo systemctl disable mt
+sudo systemctl disable auth
+sudo systemctl disable world
+sudo systemctl daemon-reload
+sudo systemctl enable mt
+sudo systemctl enable auth
+sudo systemctl enable world
