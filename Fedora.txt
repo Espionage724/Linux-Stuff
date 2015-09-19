@@ -606,6 +606,27 @@ Path=/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/Wo
 Icon=WotLK.0
 -------------------------
 
+wget https://slimgur.com/images/2015/09/19/dde8d0b76cbc06fce8f80e59969011d0.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/WoW.0.png'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% SQLyog
+%%%%%%%%%%%%%%%%%%%%
+
+rm -R '/home/espionage724/.local/share/applications/wine/Programs/SQLyog Community - 64 bit'
+mkdir '/home/espionage724/.local/share/applications/wine/Programs/SQLyog'
+
+gedit '/home/espionage724/.local/share/applications/wine/Programs/SQLyog/SQLyog.desktop'
+
+-------------------------
+[Desktop Entry]
+Name=SQLyog
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/SQLyog' wine '/home/espionage724/Wine Prefixes/SQLyog/drive_c/Program Files/SQLyog Community/SQLyogCommunity.exe'
+Type=Application
+StartupNotify=true
+Path=/home/espionage724/Wine Prefixes/SQLyog/drive_c/Program Files/SQLyog Community
+Icon=3A9C_SQLyogCommunity.0
+-------------------------
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
