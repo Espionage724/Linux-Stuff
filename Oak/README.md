@@ -4,30 +4,34 @@ Deprecated
 systemd
 - Folder containing systemd startup scripts
 
-bnetserver.sh
-- Startup script for bnetserver (TrinityCore)
+auth.sh
+- Startup script for authserver (TrinityCore)
 - Resides at /home/espionage724
 
 minetest.conf
 - Minetest server configuration
 - Resides at /home/espionage724/.minetest
 
-minetest.sh
+mt.sh
 - Startup script for Minetest server
+- Resides at /home/espionage724
+
+start.sh
+- auth, world, and mt systemd start script
+- Resides at /home/espionage724
+
+stop.sh
+- auth, world, and mt systemd stop script
 - Resides at /home/espionage724
 
 systemctl.sh
 - systemd fix script
 - Resides at /home/espionage724
 
-update-oak.sh
-- General update script
+up.sh
+- General and TrinityCore update script
 - Resides at /home/espionage724
 
-update-wow.sh
-- CMaNGOS-specific update script
-- Resides at /home/espionage724
-
-worldserver.sh
+world.sh
 - Startup script for worldserver (TrinityCore)
 - Resides at /home/espionage724
