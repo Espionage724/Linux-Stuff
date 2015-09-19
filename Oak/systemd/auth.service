@@ -1,5 +1,5 @@
 [Unit]
-Description=bnetserver
+Description=TrinityCore authserver
 After=network.target
 
 [Service]
@@ -7,7 +7,7 @@ Type=forking
 User=espionage724
 Group=espionage724
 WorkingDirectory=/home/espionage724/run/bin
-ExecStart=/bin/bash /home/espionage724/bnetserver.sh start
+ExecStart=/bin/bash /home/espionage724/auth.sh start
 Restart=always
 
 [Install]
