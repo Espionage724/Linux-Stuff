@@ -1,3 +1,6 @@
+# Update distro
+sudo dnf update
+
 # Stop authserver and worldserver
 sudo systemctl stop auth
 sudo systemctl stop world
@@ -20,9 +23,6 @@ make -j4 install
 
 # Write changes to disk
 sync
-
-# Update distro
-sudo dnf update
 
 # Finish up
 sudo systemctl start auth
