@@ -523,6 +523,92 @@ WINEPREFIX='/home/espionage724/Wine Prefixes/SQLyog' wine '/home/espionage724/Do
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
+%%%%% Launchers
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Rosetta Stone
+%%%%%%%%%%%%%%%%%%%%
+
+rm -R '/home/espionage724/.local/share/applications/wine/Programs/Rosetta Stone/Rosetta Stone Version 3'
+
+gedit '/home/espionage724/.local/share/applications/wine/Programs/Rosetta Stone/Rosetta Stone.desktop'
+
+-------------------------
+[Desktop Entry]
+Name=Rosetta Stone
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/Rosetta Stone' wine '/home/espionage724/Wine Prefixes/Rosetta Stone/drive_c/Program Files/Rosetta Stone/RosettaStoneVersion3.exe'
+Type=Application
+StartupNotify=true
+Path=/home/espionage724/Wine Prefixes/Rosetta Stone/drive_c/Program Files/Rosetta Stone
+Icon=D36F_MainIcon.0
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% EyeQ
+%%%%%%%%%%%%%%%%%%%%
+
+rm '/home/espionage724/.local/share/applications/wine/Programs/eyeQ'/*.desktop
+
+gedit '/home/espionage724/.local/share/applications/wine/Programs/eyeQ/eyeQ.desktop'
+
+-------------------------
+[Desktop Entry]
+Name=eyeQ
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/EyeQ' wine '/home/espionage724/Wine Prefixes/EyeQ/drive_c/Program Files/Infinite Mind LC/eyeQ/eyeQ.exe'
+Type=Application
+StartupNotify=true
+Path=/home/espionage724/Wine Prefixes/EyeQ/drive_c/Program Files/Infinite Mind LC/eyeQ
+Icon=8D24_eyeQ.0
+-------------------------
+
+gedit '/home/espionage724/.local/share/applications/wine/Programs/eyeQ/MiniEYE Exercises.desktop'
+
+-------------------------
+[Desktop Entry]
+Name=MiniEYE Exercises
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/EyeQ' wine '/home/espionage724/Wine Prefixes/EyeQ/drive_c/Program Files/Infinite Mind LC/eyeQ/MiniEYE.exe'
+Type=Application
+StartupNotify=true
+Path=/home/espionage724/Wine Prefixes/EyeQ/drive_c/Program Files/Infinite Mind LC/eyeQ
+Icon=0383_MiniEYE.0
+-------------------------
+
+gedit '/home/espionage724/.local/share/applications/wine/Programs/eyeQ/MiniREAD Exercises.desktop'
+
+-------------------------
+[Desktop Entry]
+Name=MiniREAD Exercises
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/EyeQ' wine '/home/espionage724/Wine Prefixes/EyeQ/drive_c/Program Files/Infinite Mind LC/eyeQ/MiniREAD.exe'
+Type=Application
+StartupNotify=true
+Path=/home/espionage724/Wine Prefixes/EyeQ/drive_c/Program Files/Infinite Mind LC/eyeQ
+Icon=9E88_MiniREAD.0
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% World of Warcraft
+%%%%%%%%%%%%%%%%%%%%
+
+mkdir '/home/espionage724/.local/share/applications/wine/Programs/World of Warcraft'
+
+gedit '/home/espionage724/.local/share/applications/wine/Programs/World of Warcraft/World of Warcraft.desktop'
+
+-------------------------
+[Desktop Entry]
+Name=World of Warcraft
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a/Wow.exe'
+Type=Application
+StartupNotify=true
+Path=/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a/
+Icon=WotLK.0
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% Noteable Folders
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
