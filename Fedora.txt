@@ -1,10 +1,12 @@
-#########################
-####DNS####
-#########################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Network
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Wraeclast
-
---Fusl's OpenNIC Tier2 DNS Servers East Coast--
 
 Newark
 104.237.144.172
@@ -17,11 +19,13 @@ Orlando
 
 104.237.144.172,74.207.232.103,104.245.39.112
 
-#########################
-####Custom Keyboard Shortcuts####
-#########################
-
-- konsole shortcut not needed on non-KDE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Keyboard Shortcuts
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 gnome-terminal
 gnome-terminal
@@ -35,58 +39,149 @@ Master Password
 java -jar /home/espionage724/Documents/masterpassword-gui.jar
 Ctrl + Alt + Z
 
-#########################
-####fstab Tweaks####
-#########################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% fstab
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 pkexec env DISPLAY=$DISPLAY gedit '/etc/fstab'
-kdesu kwrite '/etc/fstab'
-
-- Add to /, /home, and /boot (basically, all ext4 partitions)
 
 --ext4--
 relatime,data=writeback,nobarrier,commit=60
 
-#########################
-####EnviromentVariable Tweaks####
-#########################
-
-- Mutter var not needed on non-GNOME DE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Environment variables
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 pkexec env DISPLAY=$DISPLAY gedit '/etc/profile.d/custom.sh'
-kdesu kwrite '/etc/profile.d/custom.sh'
 
 # Disable Vsync Globally
 export vblank_mode=0
 
-# VA-API-to-VDPAU (radeon)
+# VA-API to VDPAU (radeon)
 export LIBVA_DRIVER_NAME=vdpau
 
 # Disable Vsync on Mutter
 export CLUTTER_VBLANK=none
 
-#########################
-####mpv Setup####
-#########################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% mpv setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mkdir ~/.config/mpv && gedit ~/.config/mpv/mpv.conf
-mkdir ~/.config/mpv && kwrite ~/.config/mpv/mpv.conf
 
 hwdec=vdpau
 vo=opengl-hq
 geometry=50%:50%
 
-#########################
-####Repos####
-#########################
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 TODO: Figure out how to properly import keys
 
---HandBrake---
+%%%%%%%%%%%%%%%%%%%%
+%%%%% HandBrake Repo
+%%%%% Only needed on Hammerstorm
+%%%%%%%%%%%%%%%%%%%%
+
 sudo dnf config-manager --add-repo http://negativo17.org/repos/fedora-handbrake.repo
 
---RPM Fusion--
+%%%%%%%%%%%%%%%%%%%%
+%%%%% RPM Fusion Repo
+%%%%%%%%%%%%%%%%%%%%
+
 sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-22.noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-22.noarch.rpm
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% tdaven/llvm37 Copr
+%%%%% Updated graphics stack
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf copr enable tdaven/llvm37
+
+pkexec env DISPLAY=$DISPLAY gedit '/etc/yum.repos.d/_copr_tdaven-llvm37.repo'
+
+-------------------------
+[tdaven-llvm37-i386]
+name=Copr repo for llvm37 owned by tdaven
+baseurl=https://copr-be.cloud.fedoraproject.org/results/tdaven/llvm37/fedora-$releasever-i386/
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://copr-be.cloud.fedoraproject.org/results/tdaven/llvm37/pubkey.gpg
+enabled=1
+enabled_metadata=1
+cost=900
+
+[tdaven-llvm37-x86_64]
+name=Copr repo for llvm37 owned by tdaven
+baseurl=https://copr-be.cloud.fedoraproject.org/results/tdaven/llvm37/fedora-$releasever-x86_64/
+skip_if_unavailable=True
+gpgcheck=1
+gpgkey=https://copr-be.cloud.fedoraproject.org/results/tdaven/llvm37/pubkey.gpg
+enabled=1
+enabled_metadata=1
+cost=800
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Remove
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-weather shotwell
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% General
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn libtxc_dxtn.i686 unar aria2 java-1.8.0-openjdk hdparm mediainfo mesa-libOpenCL
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Hammerstorm
+%%%%%%%%%%%%%%%%%%%%
+
+HandBrake-gui
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% GNOME
+%%%%%%%%%%%%%%%%%%%%
+
+gnome-tweak-tool gstreamer1-libav libva-vdpau-driver freetype-freeworld lm_sensors gimp
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% KDE
+%%%%%%%%%%%%%%%%%%%%
+
+calligra-krita qupzilla wget
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Hatebeat
+%%%%% OpenITG
+%%%%%%%%%%%%%%%%%%%%
+
+libmad libpng12 joystick-support
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Hatebeat
+%%%%% StepMania 5 Compile
+%%%%%%%%%%%%%%%%%%%%
+
+automake autoconf mesa-libGL-devel mesa-libGLU-devel glew-devel xorg-x11-server-devel libXtst-devel libXrandr-devel libpng-devel libjpeg-turbo-devel zlib-devel bzip2-devel libogg-devel libvorbis-devel glibc-devel yasm-devel pulseaudio-libs-devel alsa-lib-devel make automake binutils-devel gtk2-devel libmad-devel libstdc++-devel gcc-c++ joystick-support
 
 #########################
 ####Disable Wayland GDM####
@@ -167,26 +262,7 @@ EndSection
 ####Apps####
 #########################
 
--- Removal --
-sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-weather shotwell
 
---Hammerstorm + Spinecrack--
-sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn unar aria2 java-1.8.0-openjdk hdparm mediainfo mesa-libOpenCL
-
---Hammerstorm--
-HandBrake-gui
-
---GNOME--
-gnome-tweak-tool gstreamer1-libav libva-vdpau-driver freetype-freeworld lm_sensors gimp
-
---KDE--
-calligra-krita qupzilla wget
-
--- Hatebeat (OpenITG/SM3.95) --
-libmad libpng12 joystick-support
-
--- Hatebeat (StepMania 5 Compile) --
-automake autoconf mesa-libGL-devel mesa-libGLU-devel glew-devel xorg-x11-server-devel libXtst-devel libXrandr-devel libpng-devel libjpeg-turbo-devel zlib-devel bzip2-devel libogg-devel libvorbis-devel glibc-devel yasm-devel pulseaudio-libs-devel alsa-lib-devel make automake binutils-devel gtk2-devel libmad-devel libstdc++-devel gcc-c++ joystick-support
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Firefox Settings####
