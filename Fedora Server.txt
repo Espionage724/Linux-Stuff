@@ -342,86 +342,22 @@ rm '/home/espionage724/.minetest/worlds/world/env_meta.txt'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% TrinityCore bnetserver
+%%%%% TrinityCore authserver
 %%%%%%%%%%%%%%%%%%%%
 
-sudo nano '/etc/systemd/system/bnetserver.service'
-
--------------------------
-[Unit]
-Description=bnetserver
-After=network.target
-
-[Service]
-Type=forking
-User=espionage724
-Group=espionage724
-WorkingDirectory=/home/espionage724/run/bin
-ExecStart=/bin/bash /home/espionage724/bnetserver.sh start
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
--------------------------
+sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/systemd/auth.service -O '/etc/systemd/system/auth.service'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% TrinityCore worldserver
 %%%%%%%%%%%%%%%%%%%%
 
-sudo nano '/etc/systemd/system/worldserver.service'
-
--------------------------
-[Unit]
-Description=worldserver
-After=network.target
-
-[Service]
-Type=forking
-User=espionage724
-Group=espionage724
-WorkingDirectory=/home/espionage724/run/bin
-ExecStart=/bin/bash /home/espionage724/worldserver.sh start
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
--------------------------
+sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/systemd/world.service -O '/etc/systemd/system/world.service'
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Minetest Server
+%%%%% minetestserver
 %%%%%%%%%%%%%%%%%%%%
 
-sudo nano '/etc/systemd/system/minetest.service'
-
--------------------------
-[Unit]
-Description=minetest
-After=network.target
-
-[Service]
-Type=forking
-User=espionage724
-Group=espionage724
-WorkingDirectory=/home/espionage724
-ExecStart=/bin/bash /home/espionage724/minetest.sh start
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Ocassional Fix
-%%%%% Needed for when services randomly don't start
-%%%%%%%%%%%%%%%%%%%%
-
-sudo systemctl disable bnetserver
-sudo systemctl disable worldserver
-sudo systemctl disable minetest
-sudo systemctl daemon-reload
-sudo systemctl enable bnetserver
-sudo systemctl enable worldserver
-sudo systemctl enable minetest
+sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/systemd/mt.service -O '/etc/systemd/system/mt.service'
 
 ####################################################################################################
 ####################################################################################################
