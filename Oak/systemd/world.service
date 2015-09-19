@@ -1,5 +1,5 @@
 [Unit]
-Description=worldserver
+Description=TrinityCore worldserver
 After=network.target
 
 [Service]
@@ -7,7 +7,7 @@ Type=forking
 User=espionage724
 Group=espionage724
 WorkingDirectory=/home/espionage724/run/bin
-ExecStart=/bin/bash /home/espionage724/worldserver.sh start
+ExecStart=/bin/bash /home/espionage724/world.sh start
 Restart=always
 
 [Install]
