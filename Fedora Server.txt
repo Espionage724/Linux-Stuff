@@ -664,6 +664,18 @@ FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% SOAP
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE USER soap;
+SET PASSWORD FOR 'soap' = PASSWORD ('X');
+GRANT SELECT, UPDATE on auth.account to 'soap'@'%' IDENTIFIED BY 'X';
+FLUSH PRIVILEGES;
+EXIT
+
 ####################################################################################################
 ####################################################################################################
 #####
