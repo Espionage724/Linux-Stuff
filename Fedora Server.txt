@@ -112,14 +112,16 @@ smtp.sendgrid.net
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Assuming TrinityCore uses 3724 and 8085, TCP and UDP
+%%%%% 30000 is Minetest
+%%%%% 3724 is authserver
+%%%%% 8085 is worldserver
+%%%%% 7879 is SOAP
 %%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-port=30000/udp
 sudo firewall-cmd --permanent --add-port=3724/tcp
-sudo firewall-cmd --permanent --add-port=3724/udp
 sudo firewall-cmd --permanent --add-port=8085/tcp
-sudo firewall-cmd --permanent --add-port=8085/udp
+sudo firewall-cmd --permanent --add-port=7879/tcp
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -225,6 +227,11 @@ mmap.enablePathFinding = 1
 
 account create Espionage724 X
 account set gmlevel Espionage724 3 -1
+
+account create soap X
+account set gmlevel soap 3 -1
+rbac account grant soap 219 -1
+rbac account grant soap 228 -1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -395,6 +402,7 @@ sudo systemctl enable httpd
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo setsebool -P httpd_can_sendmail 1
+sudo setsebool -P httpd_can_network_connect 1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Software
