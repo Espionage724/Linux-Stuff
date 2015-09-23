@@ -17,8 +17,10 @@ echo "If TrinityCore is up-to-date, no point in continuing; press Ctrl + C to st
 sleep 5
 
 # Recompile TrinityCore
+rm -R '/home/espionage724/build'
+mkdir '/home/espionage724/build'
 cd '/home/espionage724/build'
-cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0
+cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0
 make -j4 install
 
 # Write changes to disk
