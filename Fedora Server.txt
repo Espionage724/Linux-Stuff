@@ -190,7 +190,13 @@ host = 192.168.1.153
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Initial
+%%%%% ccache + distcc
+%%%%%%%%%%%%%%%%%%%%
+
+ccache --max-size=8G
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Initial Compile
 %%%%%%%%%%%%%%%%%%%%
 
 mkdir '/home/espionage724/build' '/home/espionage724/run'
