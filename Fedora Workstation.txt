@@ -132,6 +132,13 @@ View > [x] Sort by Queue
 %%%%%%%%%%%%%%%%%%%%
  
  (open at least once)
+ 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Firewall
+%%%%%%%%%%%%%%%%%%%%
+
+sudo firewall-cmd --permanent --add-port=3632/tcp
+sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -243,7 +250,7 @@ sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-we
 %%%%% General
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn.x86_64 libtxc_dxtn.i686 unar aria2 java-1.8.0-openjdk hdparm mediainfo pidgin gnome-tweak-tool lm_sensors gimp
+sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn.x86_64 libtxc_dxtn.i686 unar aria2 java-1.8.0-openjdk hdparm mediainfo pidgin gnome-tweak-tool lm_sensors gimp gcc gcc-c++ distcc-server
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Hammerstorm
