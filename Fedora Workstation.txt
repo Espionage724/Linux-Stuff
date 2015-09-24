@@ -386,6 +386,17 @@ media.mediasource.enabled
 media.mediasource.webm.enabled
 media.mediasource.ignore_codecs
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Addons
+%%%%%%%%%%%%%%%%%%%%
+
+https://addons.mozilla.org/en-US/firefox/addon/disable-hello-pocket-reader/versions/
+https://www.eff.org/files/https-everywhere-latest.xpi
+https://www.eff.org/files/privacy-badger-latest.xpi
+https://addons.mozilla.org/en-US/firefox/addon/gnotifier/versions/
+https://addons.mozilla.org/en-US/firefox/addon/gnome-theme-tweak/versions/
+https://addons.mozilla.org/en-US/firefox/addon/adwaita/versions/
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
