@@ -131,10 +131,11 @@ View > [x] Sort by Queue
 %%%%% Software
 %%%%%%%%%%%%%%%%%%%%
  
- (open at least once)
+(open at least once)
  
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Firewall
+%%%%% 3632 is distcc-server (and only needed on Hammerstorm)
 %%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-port=3632/tcp
@@ -430,6 +431,7 @@ sudo sensors-detect
 
 sudo mkdir '/etc/sensors.d' && pkexec env DISPLAY=$DISPLAY gedit '/etc/sensors.d/Hammerstorm'
 
+-------------------------
 chip "radeon-pci-0400"
 label temp1 "GPU Core"
 
@@ -439,6 +441,7 @@ label temp1 "CPU Core"
 chip "f71889a-isa-0480"
 label temp1 "CPU Socket"
 label temp3 "Motherboard"
+-------------------------
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Spinecrack Sensors Name
@@ -446,11 +449,32 @@ label temp3 "Motherboard"
 
 sudo mkdir '/etc/sensors.d' && pkexec env DISPLAY=$DISPLAY gedit '/etc/sensors.d/Spinecrack'
 
+-------------------------
 chip "radeon-pci-0100"
 label temp1 "dGPU Core"
 
 chip "k10temp-pci-00c3"
 label temp1 "APU"
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% distcc-server Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+pkexec env DISPLAY=$DISPLAY gedit '/usr/lib/systemd/system/distccd.service'
+
+-------------------------
+Remove $OPTIONS
+--allow 192.168.1.152
+-------------------------
+
+sudo systemctl daemon-reload
+sudo systemctl enable distccd
+sudo systemctl start distccd
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
