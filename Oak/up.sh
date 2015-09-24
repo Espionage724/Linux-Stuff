@@ -20,8 +20,8 @@ sleep 5
 rm -R '/home/espionage724/build'
 mkdir '/home/espionage724/build'
 cd '/home/espionage724/build'
-env CC="ccache gcc" CXX="ccache g++" cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DU$
-make -j4 install
+CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0
+DISTCC_HOSTS='192.168.1.150/10 localhost/2' make -j12 install
 
 # Write changes to disk
 sync
