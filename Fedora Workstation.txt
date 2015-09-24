@@ -378,21 +378,13 @@ EndSection
 
 privacy.trackingprotection.enabled
 
-- Old and shouldn't do
-media.fragmented-mp4.exposed
-media.fragmented-mp4.ffmpeg.enabled
-media.fragmented-mp4.gmp.enabled
-media.mediasource.enabled
-media.mediasource.webm.enabled
-media.mediasource.ignore_codecs
-
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Addons
 %%%%%%%%%%%%%%%%%%%%
 
+https://www.eff.org/https-everywhere
+https://www.eff.org/privacybadger
 https://addons.mozilla.org/en-US/firefox/addon/disable-hello-pocket-reader/versions/
-https://www.eff.org/files/https-everywhere-latest.xpi
-https://www.eff.org/files/privacy-badger-latest.xpi
 https://addons.mozilla.org/en-US/firefox/addon/gnotifier/versions/
 https://addons.mozilla.org/en-US/firefox/addon/gnome-theme-tweak/versions/
 https://addons.mozilla.org/en-US/firefox/addon/adwaita/versions/
@@ -459,7 +451,7 @@ pkexec env DISPLAY=$DISPLAY gedit '/etc/default/grub'
 
 -------------------------
 GRUB_TIMEOUT=3
-GRUB_CMDLINE_LINUX="elevator=deadline rootflags=data=writeback nmi_watchdog=0 pcie_aspm=0"
+elevator=deadline rootflags=data=writeback nmi_watchdog=0 pcie_aspm=0
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
