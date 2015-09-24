@@ -190,9 +190,6 @@ pkexec env DISPLAY=$DISPLAY gedit '/etc/profile.d/custom.sh'
 # Disable Vsync Globally
 export vblank_mode=0
 
-# VA-API to VDPAU (radeon)
-export LIBVA_DRIVER_NAME=vdpau
-
 # Disable Vsync on Mutter
 export CLUTTER_VBLANK=none
 -------------------------
@@ -237,32 +234,6 @@ sudo dnf config-manager --add-repo http://negativo17.org/repos/fedora-handbrake.
 sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-22.noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-22.noarch.rpm
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% griever/wine-staging Copr
-%%%%%%%%%%%%%%%%%%%%
-
-pkexec env DISPLAY=$DISPLAY gedit '/etc/yum.repos.d/_copr_griever-wine-staging.repo'
-
--------------------------
-[griever-wine-staging-i386]
-name=Copr repo for wine-staging owned by griever (i386)
-baseurl=https://copr-be.cloud.fedoraproject.org/results/griever/wine-staging/fedora-$releasever-i386/
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://copr-be.cloud.fedoraproject.org/results/griever/wine-staging/pubkey.gpg
-enabled=1
-enabled_metadata=1
-
-[griever-wine-staging-x86_64]
-name=Copr repo for wine-staging owned by griever (x86_64)
-baseurl=https://copr-be.cloud.fedoraproject.org/results/griever/wine-staging/fedora-$releasever-x86_64/
-skip_if_unavailable=True
-gpgcheck=1
-gpgkey=https://copr-be.cloud.fedoraproject.org/results/griever/wine-staging/pubkey.gpg
-enabled=1
-enabled_metadata=1
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%
 %%%%% Remove
 %%%%%%%%%%%%%%%%%%%%
 
@@ -272,13 +243,7 @@ sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-we
 %%%%% General
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn unar aria2 java-1.8.0-openjdk hdparm mediainfo pidgin gnome-tweak-tool gstreamer1-libav libva-vdpau-driver lm_sensors gimp
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Test
-%%%%%%%%%%%%%%%%%%%%
-
-libtxc_dxtn.i686
+sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn.x86_64 libtxc_dxtn.i686 unar aria2 java-1.8.0-openjdk hdparm mediainfo pidgin gnome-tweak-tool lm_sensors gimp
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Hammerstorm
@@ -411,13 +376,15 @@ EndSection
 %%%%% about:config True
 %%%%%%%%%%%%%%%%%%%%
 
+privacy.trackingprotection.enabled
+
+- Old and shouldn't do
 media.fragmented-mp4.exposed
 media.fragmented-mp4.ffmpeg.enabled
 media.fragmented-mp4.gmp.enabled
 media.mediasource.enabled
 media.mediasource.webm.enabled
 media.mediasource.ignore_codecs
-privacy.trackingprotection.enabled
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
