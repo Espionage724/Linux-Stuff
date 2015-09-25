@@ -122,7 +122,7 @@ Preferences > [x] Sort folders before files
 Edit > Preferences > Desktop > [x] Inhibit hibernation when torrents are active
 Edit > Preferences > Desktop > [x] Show Transmission icon in the notification area
 Edit > Preferences > Privacy > Encryption mode: Require encryption
-Edit > Preferences > Privacy > [x] Enable blocklist: http://ip2k.com/list.gz
+Edit > Preferences > Privacy > [x] Enable blocklist: http://john.bitsurge.net/public/biglist.p2p.gz
 Edit > Preferences > Downloading > Maximum active downloads: 1
 Edit > Preferences > Speed > Upload (kB/s): 15
 View > [x] Sort by Queue
