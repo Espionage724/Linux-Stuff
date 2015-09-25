@@ -316,24 +316,21 @@ pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 Section "Device"
 	Identifier	"Southern Islands"
 	Driver		"radeon"
-	Option		"SwapBuffersWait"	"false"
+	Option		"ZaphodHeads"	"DisplayPort-0,HDMI-0,DVI-0"
 EndSection
 
 Section "Monitor"
 	Identifier	"DisplayPort-0"
-	Option		"LeftOf" 		"HDMI-0"
 	Gamma		0.8
 EndSection
 
 Section "Monitor"
-	Identifier "HDMI-0"
+	Identifier	"HDMI-0"
 	Gamma		0.8
-	Option		"Primary" 		"true"
 EndSection
 
 Section "Monitor"
 	Identifier	"DVI-0"
-	Option		"RightOf" 		"HDMI-0"
 	Gamma		0.8
 EndSection
 -------------------------
@@ -361,7 +358,7 @@ pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 Section "Device"
 	Identifier	"Northern Islands"
 	Driver		"radeon"
-	Option		"SwapBuffersWait"	"false"
+	Option		"AccelMethod"	"glamor"
 EndSection
 
 Section "Monitor"
