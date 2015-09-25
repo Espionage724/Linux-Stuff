@@ -129,10 +129,11 @@ View > [x] Sort by Queue
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Software
+%%%%% Run after adding repos
 %%%%%%%%%%%%%%%%%%%%
  
-(open at least once)
- 
+gsettings set org.gnome.software require-appdata false
+
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Firewall
 %%%%% 3632 is distcc-server (and only needed on Hammerstorm)
