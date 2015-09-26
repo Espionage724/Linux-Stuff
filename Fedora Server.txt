@@ -226,12 +226,29 @@ cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/et
 %%%%%%%%%%%%%%%%%%%%
 
 nano '/home/espionage724/run/etc/authserver.conf'
+
+-------------------------
+Updates.EnableDatabases = 1
+Updates.MySqlCLIPath = "/usr/bin/mysql"
+-------------------------
+
 nano '/home/espionage724/run/etc/worldserver.conf'
 
 -------------------------
-Updates.MySqlCLIPath = "/usr/bin/mysql"
 mmap.enablePathFinding = 1
-- Change SOAP port from 7878 to 7879
+MaxCoreStuckTime = 10
+RealmZone = 2
+DBC.Locale = 0
+Motd = "Welcome to the Realm of Espionage World of Warcraft private server!"
+Server.LoginInfo = 1
+Updates.EnableDatabases = 7
+Updates.MySqlCLIPath = "/usr/bin/mysql"
+Warden.Enabled = 1
+Warden.ClientCheckFailAction = 1
+ChatFakeMessagePreventing = 1
+ChatStrictLinkChecking.Severity = 2
+SOAP.Enabled = 1
+SOAP.Port = 7879
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
