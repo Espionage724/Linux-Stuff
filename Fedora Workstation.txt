@@ -316,7 +316,6 @@ pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 Section "Device"
 	Identifier	"Southern Islands"
 	Driver		"radeon"
-	Option		"ZaphodHeads"	"DisplayPort-0,HDMI-0,DVI-0"
 EndSection
 
 Section "Monitor"
@@ -336,15 +335,9 @@ EndSection
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% GDM Monitor Arrangement and Spacing
+%%%%% GDM Monitor Arrangement
 %%%%% Do after arrange in gnome-settings
 %%%%%%%%%%%%%%%%%%%%
-
-gedit '/home/espionage724/.config/monitors.xml'
-
--------------------------
-x Values: DisplayPort=0 HDMI=1720 DVI=3440
--------------------------
 
 sudo cp ~/.config/monitors.xml ~gdm/.config/
 
@@ -467,7 +460,7 @@ pkexec env DISPLAY=$DISPLAY gedit '/usr/lib/systemd/system/distccd.service'
 
 -------------------------
 Remove $OPTIONS
---allow 192.168.1.152 --jobs 8
+--allow 192.168.1.152
 -------------------------
 
 sudo systemctl daemon-reload
@@ -624,10 +617,10 @@ gedit '/home/espionage724/.local/share/applications/wine/Programs/World of Warcr
 -------------------------
 [Desktop Entry]
 Name=World of Warcraft
-Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft/Wow_Patched.exe' -uid enUS
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a/Wow.exe'
 Type=Application
 StartupNotify=true
-Path=/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft/
+Path=/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a
 Icon=WoW.0
 -------------------------
 
