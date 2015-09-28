@@ -261,8 +261,8 @@ account set gmlevel 1#1 3 -1
 
 bnetaccount create soap@realmofespionage X
 account set gmlevel 2#1 3 -1
-rbac account grant soap 219 -1
-rbac account grant soap 228 -1
+rbac account grant 2#1 219 -1
+rbac account grant 2#1 228 -1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -302,12 +302,19 @@ mkdir vmaps mmaps
 scp '/home/espionage724/Downloads/WoD-TC-content-2015-09-16.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Extract on server
+%%%%% Extract Content on server
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/run/bin'
 unzip 'WoD-TC-content-2015-09-16.zip'
 sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% content_patcher
+%%%%% Be logged into WoW before running
+%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/Downloads/connection_patcher' -m '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft/Wow.exe'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
