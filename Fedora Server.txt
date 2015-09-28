@@ -238,10 +238,9 @@ nano '/home/espionage724/run/etc/worldserver.conf'
 mmap.enablePathFinding = 1
 MaxCoreStuckTime = 10
 RealmZone = 2
-DBC.Locale = 0
-Motd = "Welcome to the Realm of Espionage World of Warcraft private server!"
+Motd = "Welcome to the Realm of Espionage World of Warcraft server!"
 Server.LoginInfo = 1
-Updates.EnableDatabases = 7
+Updates.EnableDatabases = 15
 Updates.MySqlCLIPath = "/usr/bin/mysql"
 Warden.Enabled = 1
 Warden.ClientCheckFailAction = 1
@@ -255,11 +254,11 @@ SOAP.Port = 7879
 %%%%% Create Account
 %%%%%%%%%%%%%%%%%%%%
 
-account create Espionage724 X
-account set gmlevel Espionage724 3 -1
+bnetaccount create Espionage724@realmofespionage X
+account set gmlevel 1#1 3 -1
 
-account create soap X
-account set gmlevel soap 3 -1
+bnetaccount create soap@realmofespionage X
+account set gmlevel 2#1 3 -1
 rbac account grant soap 219 -1
 rbac account grant soap 228 -1
 
@@ -279,6 +278,7 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4extractor '/home/
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4assembler '/home/espionage724/Downloads'
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/mmaps_generator '/home/espionage724/Downloads'
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/connection_patcher '/home/espionage724/Downloads'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract content
@@ -297,14 +297,14 @@ mkdir vmaps mmaps
 %%%%% zip was 900MB for WotLK, 2GB for WoD
 %%%%%%%%%%%%%%%%%%%%
 
-scp '/home/espionage724/Downloads/WotLK-TC-content-2015-09-17.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+scp '/home/espionage724/Downloads/WoD-TC-content-2015-09-16.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract on server
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/run/bin'
-unzip 'WotLK-TC-content-2015-09-17.zip'
+unzip 'WoD-TC-content-2015-09-16.zip'
 sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -322,11 +322,12 @@ sync
 http://community.trinitycore.org/files/category/1-database/
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Pull full databases on server
-%%%%% Follow DB setup under Kraityn to create databases
+%%%%% Pull full databases and hotfixes on server
+%%%%% Follow DB setup under Kraityn to create databases prior to starting server
 %%%%%%%%%%%%%%%%%%%%
 
-scp '/home/espionage724/Downloads/TDB_full_335.59_2015_07_14_7z.bd1a8fb92e11fdcda018dd784bf4a091_FILES/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+scp '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14_7z.8c8b4094bc593f4c5c3451e84cbdb671_FILES/TDB_full_world_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+scp '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14_7z.8c8b4094bc593f4c5c3451e84cbdb671_FILES/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
