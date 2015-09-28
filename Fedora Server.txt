@@ -113,14 +113,14 @@ smtp.sendgrid.net
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% 30000 is Minetest
-%%%%% 1118 is bnetserver
-%%%%% 8085 is worldserver
-%%%%% 8086 is worldserver (instances?)
+%%%%% 1118 and 1119 are bnetserver
+%%%%% 8085 and 8086 are worldserver
 %%%%% 7879 is SOAP
 %%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-port=30000/udp
 sudo firewall-cmd --permanent --add-port=1118/tcp
+sudo firewall-cmd --permanent --add-port=1119/tcp
 sudo firewall-cmd --permanent --add-port=8085/tcp
 sudo firewall-cmd --permanent --add-port=8086/tcp
 sudo firewall-cmd --permanent --add-port=7879/tcp
