@@ -153,14 +153,14 @@ sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wge
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
-git clone -b 3.3.5 https://github.com/TrinityCore/TrinityCore.git trinitycore
+git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
 sync
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Update TrinityCore
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724/trinitycore' && git pull origin 3.3.5 && cd '/home/espionage724'
+cd '/home/espionage724/trinitycore' && git pull origin 6.x && cd '/home/espionage724'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -196,7 +196,7 @@ host = 192.168.1.153
 mkdir '/home/espionage724/build' '/home/espionage724/run'
 cd '/home/espionage724/build'
 CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
-DISTCC_HOSTS='192.168.1.150/10 localhost/2' make -j12 install
+DISTCC_HOSTS='192.168.1.150/6 localhost/2' make -j8 install
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Recompile After Update
@@ -218,14 +218,14 @@ DISTCC_HOSTS='192.168.1.150/10 localhost/2' make -j12 install
 %%%%% Copy Config Files
 %%%%%%%%%%%%%%%%%%%%
 
-cp '/home/espionage724/run/etc/authserver.conf.dist' '/home/espionage724/run/etc/authserver.conf'
+cp '/home/espionage724/run/etc/bnetserver.conf.dist' '/home/espionage724/run/etc/bnetserver.conf'
 cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Edit Config Files
 %%%%%%%%%%%%%%%%%%%%
 
-nano '/home/espionage724/run/etc/authserver.conf'
+nano '/home/espionage724/run/etc/bnetserver.conf'
 
 -------------------------
 Updates.EnableDatabases = 1
@@ -678,6 +678,7 @@ mysql -u root -p
 CREATE DATABASE auth;
 CREATE DATABASE characters;
 CREATE DATABASE world;
+CREATE DATABASE hotfixes;
 
 CREATE USER trinity;
 SET PASSWORD FOR 'trinity' = PASSWORD ('X');
@@ -685,10 +686,12 @@ SET PASSWORD FOR 'trinity' = PASSWORD ('X');
 GRANT USAGE ON auth.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
 GRANT USAGE ON characters.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
 GRANT USAGE ON world.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON hotfixes.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
 
 GRANT ALL PRIVILEGES ON auth.* to 'trinity'@'192.168.1.152';
 GRANT ALL PRIVILEGES ON characters.* to 'trinity'@'192.168.1.152';
 GRANT ALL PRIVILEGES ON world.* to 'trinity'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON hotfixes.* to 'trinity'@'192.168.1.152';
 
 FLUSH PRIVILEGES;
 FLUSH TABLES;
