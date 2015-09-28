@@ -140,7 +140,7 @@ sudo firewall-cmd --reload
 %%%%% Runs Minetest server
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel distcc zeromq3-devel
+sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel ccache zeromq3-devel
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -197,16 +197,16 @@ host = 192.168.1.153
 
 mkdir '/home/espionage724/build' '/home/espionage724/run'
 cd '/home/espionage724/build'
-CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
-DISTCC_HOSTS='192.168.1.150/6 localhost/2' make -j8 install
+CC='ccache gcc' CXX='ccache g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
+make -j4 install
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Recompile After Update
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724' && rm -R '/home/espionage724/build' && mkdir '/home/espionage724/build' && cd '/home/espionage724/build'
-CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
-DISTCC_HOSTS='192.168.1.150/10 localhost/2' make -j12 install
+CC='ccache gcc' CXX='ccache g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
+make -j4 install
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -259,10 +259,10 @@ SOAP.Port = 7879
 bnetaccount create Espionage724@realmofespionage X
 account set gmlevel 1#1 3 -1
 
-bnetaccount create soap@realmofespionage X
-account set gmlevel 2#1 3 -1
-rbac account grant 2#1 219 -1
-rbac account grant 2#1 228 -1
+account create soap X
+account set gmlevel soap 3 -1
+rbac account grant soap 219 -1
+rbac account grant soap 228 -1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
