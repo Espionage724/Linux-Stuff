@@ -113,14 +113,16 @@ smtp.sendgrid.net
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% 30000 is Minetest
-%%%%% 3724 is authserver
+%%%%% 1118 is bnetserver
 %%%%% 8085 is worldserver
+%%%%% 8086 is worldserver (instances?)
 %%%%% 7879 is SOAP
 %%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-port=30000/udp
-sudo firewall-cmd --permanent --add-port=3724/tcp
+sudo firewall-cmd --permanent --add-port=1118/tcp
 sudo firewall-cmd --permanent --add-port=8085/tcp
+sudo firewall-cmd --permanent --add-port=8086/tcp
 sudo firewall-cmd --permanent --add-port=7879/tcp
 sudo firewall-cmd --reload
 
@@ -138,7 +140,7 @@ sudo firewall-cmd --reload
 %%%%% Runs Minetest server
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel distcc
+sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel distcc zeromq3-devel
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
