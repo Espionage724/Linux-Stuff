@@ -9,6 +9,7 @@ Group=espionage724
 WorkingDirectory=/home/espionage724/run/bin
 ExecStart=/bin/bash /home/espionage724/mt.sh start
 Restart=always
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
