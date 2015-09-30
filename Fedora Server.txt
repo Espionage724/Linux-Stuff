@@ -235,10 +235,14 @@ Updates.MySqlCLIPath = "/usr/bin/mysql"
 nano '/home/espionage724/run/etc/worldserver.conf'
 
 -------------------------
+GridUnload = 0
+PlayerSave.Stats.MinLevel = 10
 mmap.enablePathFinding = 1
 MaxCoreStuckTime = 10
 RealmZone = 2
 DBC.Locale = 0
+HeroicCharactersPerRealm = 10
+CharacterCreating.MinLevelForHeroicCharacter = 0
 Motd = "Welcome to the Realm of Espionage World of Warcraft server!"
 Server.LoginInfo = 1
 Updates.EnableDatabases = 7
