@@ -402,6 +402,22 @@ sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/
 
 sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/systemd/mt.service -O '/etc/systemd/system/mt.service'
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Xonotic
+%%%%%%%%%%%%%%%%%%%%
+
+sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/systemd/xonotic.service -O '/etc/systemd/system/xonotic.service'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% General
+%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl daemon-reload
+sudo systemctl enable auth
+sudo systemctl enable world
+sudo systemctl enable mt
+sudo systemctl enable xonotic
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
