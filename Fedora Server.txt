@@ -720,8 +720,16 @@ sync
 - Do 4-Byte UTF-8 Support during forum setup
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% WordPress Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% WordPress
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Database
+%%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
 
@@ -734,9 +742,9 @@ FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Download and Setup WordPress + 2016 Theme
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Files
+%%%%%%%%%%%%%%%%%%%%
 
 cd '/var/www'
 sudo -u apache git clone -b master https://github.com/WordPress/WordPress.git '/var/www/html/blog'
@@ -744,8 +752,16 @@ sudo -u apache git clone -b master https://github.com/WordPress/twentysixteen.gi
 sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% TrinityCore Database Setup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% TrinityCore
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Databases
+%%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
 
@@ -769,7 +785,7 @@ FLUSH TABLES;
 EXIT
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% SOAP
+%%%%% SOAP Database
 %%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
@@ -797,7 +813,11 @@ EXIT
 ####################################################################################################
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Fedora Server + Headless Management
@@ -807,7 +827,11 @@ sudo dnf copr enable lkiesow/mumble
 sudo dnf install murmur openvpn easy-rsa
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Firewall Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Firewall
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-service=murmur
@@ -815,10 +839,32 @@ sudo firewall-cmd --permanent --add-service=openvpn
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Murmur Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% murmur
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% systemd
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/usr/lib/systemd/system/murmur.service'
+
+-------------------------
+Restart=always
+RestartSec=5
+-------------------------
+
+sudo systemctl daemon-reload
+sudo systemctl enable murmur
 sudo systemctl start murmur
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Configuration
+%%%%%%%%%%%%%%%%%%%%
+
 sudo -u mumble-server nano '/etc/mumble-server.ini'
 
 -------------------------
@@ -832,9 +878,9 @@ registerHostname=realmofespionage.com
 
 sudo systemctl restart murmur
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% Murmur SuperUser
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+%%%%% SuperUser
+%%%%%%%%%%%%%%%%%%%%
 
 sudo nano '/var/log/mumble-server/mumble-server.log'
 - Look for "Password for 'SuperUser' set to"
@@ -845,7 +891,11 @@ sudo nano '/var/log/mumble-server/mumble-server.log'
 - Disconnect and re-login with desired username
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%% OpenVPN Setup
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% OpenVPN
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 TODO: Set OpenVPN up
