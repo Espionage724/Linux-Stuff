@@ -17,10 +17,6 @@ sudo -u apache '/var/www/html/social/scripts/startdaemons.sh'
 cd '/var/www/html/blog'
 sudo -u apache git pull origin master
 
-# Update 2016 WordPress Theme
-cd '/var/www/html/blog/wp-content/themes/twentysixteen'
-sudo -u apache git pull origin master
-
 # Update MyBB
 cd '/var/www/html/forums'
 sudo -u apache git pull origin feature
