@@ -393,6 +393,7 @@ https://addons.mozilla.org/en-US/firefox/addon/disable-hello-pocket-reader/versi
 https://addons.mozilla.org/en-US/firefox/addon/gnotifier/versions/
 https://addons.mozilla.org/en-US/firefox/addon/gnome-theme-tweak/versions/
 https://addons.mozilla.org/en-US/firefox/addon/adwaita/versions/
+https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/versions/
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
