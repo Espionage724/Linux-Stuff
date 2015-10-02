@@ -408,6 +408,14 @@ sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+cd '/home/espionage724'
+wget http://dl.xonotic.org/xonotic-0.8.1.zip
+unzip xonotic-0.8.1.zip
+
+cp '/home/espionage724/Xonotic/server/server.cfg' '/home/espionage724/.xonotic/data/server.cfg'
+nano '/home/espionage724/.xonotic/data/server.cfg'
+
+-------------------------
 sv_public 1
 sv_status_privacy 15
 hostname "Realm of Espionage Xonotic Server ($g_xonoticversion)"
@@ -418,7 +426,7 @@ skill 9
 minplayers 16
 bot_prefix [BOT]
 g_maplist_check_waypoints 1
-
+-------------------------
 
 ####################################################################################################
 ####################################################################################################
