@@ -34,4 +34,8 @@ up.sh
 
 world.sh
 - Startup script for worldserver (TrinityCore)
+- Resides at /home/
+
+xonotic.sh
+- Startup script for Xonotic
 - Resides at /home/espionage724
