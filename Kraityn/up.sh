@@ -29,3 +29,4 @@ sync
 
 # Finish up
 cd '/home/espionage724/'
+history -c
