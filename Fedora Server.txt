@@ -748,8 +748,16 @@ EXIT
 
 cd '/var/www'
 sudo -u apache git clone -b master https://github.com/WordPress/WordPress.git '/var/www/html/blog'
-sudo -u apache git clone -b master https://github.com/WordPress/twentysixteen.git '/var/www/html/blog/wp-content/themes/twentysixteen'
 sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Disable Google Fonts
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/var/www/html/blog/wp-content/plugins'
+sudo -u apache wget 'https://raw.githubusercontent.com/dimadin/disable-google-fonts/master/disable-google-fonts.php'
+
+- Enable plugin afterwards
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
