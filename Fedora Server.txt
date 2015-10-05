@@ -296,7 +296,7 @@ mkdir vmaps mmaps
 '/home/espionage724/Downloads/mapextractor'
 '/home/espionage724/Downloads/vmap4extractor'
 '/home/espionage724/Downloads/vmap4assembler' Buildings vmaps
-'/home/espionage724/Downloads/mmaps_generator'
+'/home/espionage724/Downloads/mmaps_generator' --bigBaseUnit true --threads 8
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Compress dbc, maps, mmaps, and vmaps folders, and send them to server
