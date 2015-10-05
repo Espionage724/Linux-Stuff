@@ -288,7 +288,7 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor '/home/es
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract content
-%%%%% mmaps_generator took around 3 hours on a FX-8350 for WoD
+%%%%% mmaps_generator took 30 minutes for WotLK, around 3 hours for WoD
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a'
@@ -300,17 +300,17 @@ mkdir vmaps mmaps
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Compress dbc, maps, mmaps, and vmaps folders, and send them to server
-%%%%% zip was 900MB for WotLK, 2GB for WoD
+%%%%% zip was 885MB for WotLK, 2GB for WoD
 %%%%%%%%%%%%%%%%%%%%
 
-scp '/home/espionage724/Downloads/WotLK-TC-content-2015-09-17.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+scp '/home/espionage724/Downloads/WotLK-TC-conten-2015-10-05' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract on server
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/run/bin'
-unzip 'WotLK-TC-content-2015-09-17.zip'
+unzip 'WotLK-TC-conten-2015-10-05'
 sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
