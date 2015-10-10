@@ -376,7 +376,7 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/content_patcher '/home
 %%%%% 
 %%%%% Use -h or /? flag to show available flags for mapextractor and vmap4extractor
 %%%%% Dig through source for available flags for mmaps_generator
-%%%%% mmaps_generator took around TBA with WotLK and 1.2 hours with WoD
+%%%%% mmaps_generator took TBA with WotLK and 1.2 hours with WoD
 %%%%% WotLK: dbc = 90.3MB, maps = 519.6 MB, vmaps = TBA, mmaps = TBA
 %%%%% WoD: dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
 %%%%%%%%%%%%%%%%%%%%
@@ -1009,6 +1009,7 @@ mysql -u root -p
 CREATE DATABASE auth;
 CREATE DATABASE characters;
 CREATE DATABASE world;
+
 CREATE DATABASE hotfixes;
 
 CREATE USER trinity;
@@ -1017,20 +1018,31 @@ SET PASSWORD FOR 'trinity' = PASSWORD ('X');
 GRANT USAGE ON auth.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
 GRANT USAGE ON characters.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
 GRANT USAGE ON world.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
-GRANT USAGE ON hotfixes.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
 
 GRANT ALL PRIVILEGES ON auth.* to 'trinity'@'192.168.1.152';
 GRANT ALL PRIVILEGES ON characters.* to 'trinity'@'192.168.1.152';
 GRANT ALL PRIVILEGES ON world.* to 'trinity'@'192.168.1.152';
-GRANT ALL PRIVILEGES ON hotfixes.* to 'trinity'@'192.168.1.152';
 
 FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% bnetserver realmlist
-%%%%% Do this after starting bnetserver once (in order to create table and data)
+%%%%% 6.x hotfixes Database
+%%%%% Include above as well
+%%%%%%%%%%%%%%%%%%%%
+
+CREATE DATABASE hotfixes;
+GRANT USAGE ON hotfixes.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT ALL PRIVILEGES ON hotfixes.* to 'trinity'@'192.168.1.152';
+FLUSH PRIVILEGES;
+FLUSH TABLES;
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% auth/bnetserver realmlist
+%%%%% Do this after starting auth/bnetserver once (in order to create table and data)
+%%%%% Not tested with authserver yet (should be fine though)
 %%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
@@ -1087,6 +1099,19 @@ mysqldump -u dump -pX mybb > '/home/espionage724/dumps/mybb.sql'
 mysqldump -u dump -pX wordpress > '/home/espionage724/dumps/wordpress.sql'
 
 zip -r '/home/espionage724/backups/'backup-$(date +%Y-%m-%d).zip '/home/espionage724/dumps/'*.sql
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Database Restore
+%%%%% Likely only need auth and characters when switching to 3.3.5 from 6.x
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -pX auth < '/home/espionage724/dumps/auth.sql'
+mysql -u root -pX characters < '/home/espionage724/dumps/characters.sql'
+
+mysql -u root -pX gnusocial < '/home/espionage724/dumps/gnusocial.sql'
+mysql -u root -pX joomla < '/home/espionage724/dumps/joomla.sql'
+mysql -u root -pX mybb < '/home/espionage724/dumps/mybb.sql'
+mysql -u root -pX wordpress < '/home/espionage724/dumps/wordpress.sql'
 
 ####################################################################################################
 ####################################################################################################
