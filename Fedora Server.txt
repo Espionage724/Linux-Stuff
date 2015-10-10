@@ -335,11 +335,31 @@ sync
 rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-09.zip'
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Create Accounts
+%%%%% Further bnetserver Setup
+%%%%% Do after all above is finished and database creation/permissions
+%%%%% Close after starting 1st time
+%%%%% Finish Database setup with realmlist and SOAP stuff
 %%%%%%%%%%%%%%%%%%%%
 
-account create Espionage724 X
-account set gmlevel Espionage724 3 -1
+cd '/home/espionage724'
+./bnet.sh
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Start Servers
+%%%%% Do after all steps are complete
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724'
+./bnet.sh
+./world.sh
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Create Accounts
+%%%%% Note that SOAP account doesn't need bnetaccount, and note that bnetaccount accounts are labeled differently in database
+%%%%%%%%%%%%%%%%%%%%
+
+bnetaccount create Espionage724@realmofespionage X
+account set gmlevel 1#1 3 -1
 
 account create soap X
 account set gmlevel soap 3 -1
@@ -889,7 +909,19 @@ FLUSH TABLES;
 EXIT
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% bnetserver realmlist
+%%%%% Do this after starting bnetserver once (in order to create table and data)
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+update `auth`.`realmlist` set `name` = 'RoE (WoD)' , `address` = 'realmofespionage.com' where `id` = '1';
+
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% SOAP Database
+%%%%% Do this after starting bnetserver once (in order to create table)
 %%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
