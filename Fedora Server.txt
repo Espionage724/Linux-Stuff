@@ -68,12 +68,16 @@ reboot
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Backup hosts file
+%%%%% 
+%%%%% Only do once after clean install
+%%%%% Probably not needed; haven't ran into an issue where I needed old hosts values
 %%%%%%%%%%%%%%%%%%%%
 
 cp '/etc/hosts' '/home/espionage724/.hosts'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Replace hosts file with StevenBlack's
+%%%%% 
 %%%%% Yes update all sources, no domain excludes, no replace existing host (let primary script handle that)
 %%%%% TODO: Set this up on cron or just take note to run it every now and then to keep hosts up-to-date
 %%%%%%%%%%%%%%%%%%%%
@@ -186,18 +190,18 @@ git clone -b 3.3.5 https://github.com/TrinityCore/TrinityCore.git trinitycore
 sync
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% Update 3.3.5
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/trinitycore' && git pull origin 3.3.5 && cd '/home/espionage724'
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% 6.x
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
 git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
 sync
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Update 3.3.5
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724/trinitycore' && git pull origin 3.3.5 && cd '/home/espionage724'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Update 6.x
@@ -265,13 +269,6 @@ cp '/home/espionage724/run/etc/authserver.conf.dist' '/home/espionage724/run/etc
 cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% 6.x Copy Config Files
-%%%%%%%%%%%%%%%%%%%%
-
-cp '/home/espionage724/run/etc/bnetserver.conf.dist' '/home/espionage724/run/etc/bnetserver.conf'
-cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
-
-%%%%%%%%%%%%%%%%%%%%
 %%%%% Edit Config Files for 3.3.5
 %%%%%%%%%%%%%%%%%%%%
 
@@ -289,6 +286,8 @@ PlayerSave.Stats.MinLevel = 10
 mmap.enablePathFinding = 1
 TargetPosRecalculateRange = 0.5
 MaxCoreStuckTime = 10
+RealmZone = 28
+DBC.Locale = 0
 Motd = "Welcome to the Realm of Espionage Wrath of the Lich King server!"
 Server.LoginInfo = 1
 Updates.EnableDatabases = 7
@@ -297,16 +296,20 @@ Warden.ClientCheckFailAction = 2
 ChatFakeMessagePreventing = 1
 ChatStrictLinkChecking.Severity = 2
 PreserveCustomChannelDuration = 7
-Support.TicketsEnabled = 1
-Support.BugsEnabled = 1
-Support.ComplaintsEnabled = 1
-Support.SuggestionsEnabled = 1
+Wintergrasp.Enable = 1
 SOAP.Enabled = 1
 SOAP.Port = 7879
 CharDelete.KeepDays = 7
 PacketSpoof.Policy = 2
 PacketSpoof.BanMode = 2
 -------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% 6.x Copy Config Files
+%%%%%%%%%%%%%%%%%%%%
+
+cp '/home/espionage724/run/etc/bnetserver.conf.dist' '/home/espionage724/run/etc/bnetserver.conf'
+cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Edit Config Files for 6.x
@@ -371,14 +374,14 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/content_patcher '/home
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract and Build Content
 %%%%% 
-%%%%% Use -h flag to show available flags for mapextractor and vmap4extractor
+%%%%% Use -h or /? flag to show available flags for mapextractor and vmap4extractor
 %%%%% Dig through source for available flags for mmaps_generator
 %%%%% mmaps_generator took around TBA with WotLK and 1.2 hours with WoD
-%%%%% WotLK: TBA
+%%%%% WotLK: dbc = 90.3MB, maps = 519.6 MB, vmaps = TBA, mmaps = TBA
 %%%%% WoD: dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft'
+cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft'
 mkdir vmaps mmaps
 '/home/espionage724/Downloads/mapextractor' -f 0
 '/home/espionage724/Downloads/vmap4extractor' -l
@@ -389,7 +392,7 @@ mkdir vmaps mmaps
 %%%%% connection_patcher
 %%%%% 
 %%%%% To be done for 6.x on computers with WoW client to allow connections to private servers
-%%%%% Use -h flag to show available flags
+%%%%% Use -h or /? flag to show available flags
 %%%%% Use of --modulePath implys WoW is installed to a separate Wine prefix somewhere other than the default ~/.wine location (in other words, if it's installed to that default prefix, you don't need that flag)
 %%%%% Run connection_patcher while WoW is running and you're logged into a character on Retail
 %%%%%%%%%%%%%%%%%%%%
