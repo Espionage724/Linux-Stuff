@@ -299,6 +299,16 @@ mkdir vmaps mmaps
 '/home/espionage724/Downloads/mmaps_generator' --bigBaseUnit true --threads 8
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% connection_patcher
+%%%%% To be done on computers with WoW client
+%%%%% Use -h for all flags
+%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/Downloads/connection_patcher' --path '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64.exe' --modulePath '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data/Blizzard Entertainment'
+
+'/home/espionage724/Downloads/connection_patcher' --path '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow.exe' --modulePath '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data/Blizzard Entertainment'
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% Compress dbc, maps, mmaps, and vmaps folders, and send them to server
 %%%%% zip was 885MB for WotLK, 2GB for WoD
 %%%%%%%%%%%%%%%%%%%%
