@@ -140,7 +140,7 @@ sudo firewall-cmd --reload
 %%%%% Runs Minetest server
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel distcc
+sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel distcc zeromq3-devel
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -155,14 +155,14 @@ sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wge
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
-git clone -b 3.3.5 https://github.com/TrinityCore/TrinityCore.git trinitycore
+git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
 sync
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Update TrinityCore
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724/trinitycore' && git pull origin 3.3.5 && cd '/home/espionage724'
+cd '/home/espionage724/trinitycore' && git pull origin 6.x && cd '/home/espionage724'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -220,14 +220,14 @@ DISTCC_HOSTS='192.168.1.150/8 localhost/2' make -j10 install
 %%%%% Copy Config Files
 %%%%%%%%%%%%%%%%%%%%
 
-cp '/home/espionage724/run/etc/authserver.conf.dist' '/home/espionage724/run/etc/authserver.conf'
+cp '/home/espionage724/run/etc/bnetserver.conf.dist' '/home/espionage724/run/etc/bnetserver.conf'
 cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Edit Config Files
 %%%%%%%%%%%%%%%%%%%%
 
-nano '/home/espionage724/run/etc/authserver.conf'
+nano '/home/espionage724/run/etc/bnetserver.conf'
 
 -------------------------
 Updates.EnableDatabases = 1
