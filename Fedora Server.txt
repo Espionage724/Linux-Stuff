@@ -114,16 +114,17 @@ smtp.sendgrid.net
 %%%%%%%%%%%%%%%%%%%%
 %%%%% 30000 is Minetest
 %%%%% 26000 is Xonotic
-%%%%% 3724 is authserver
-%%%%% 8085 is worldserver
+%%%%% 1118 and 1119 is bnetserver
+%%%%% 8085 and 8086 is worldserver
 %%%%% 7879 is SOAP
 %%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-port=30000/udp
 sudo firewall-cmd --permanent --add-port=26000/udp
-sudo firewall-cmd --permanent --add-port=3724/tcp
+sudo firewall-cmd --permanent --add-port=1118/tcp
+sudo firewall-cmd --permanent --add-port=1119/tcp
 sudo firewall-cmd --permanent --add-port=8085/tcp
-sudo firewall-cmd --permanent --add-port=7879/tcp
+sudo firewall-cmd --permanent --add-port=8086/tcp
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -230,8 +231,8 @@ cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/et
 nano '/home/espionage724/run/etc/bnetserver.conf'
 
 -------------------------
+WrongPass.MaxCount = 5
 Updates.EnableDatabases = 1
-Updates.MySqlCLIPath = "/usr/bin/mysql"
 -------------------------
 
 nano '/home/espionage724/run/etc/worldserver.conf'
@@ -289,8 +290,9 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/content_patcher '/home
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract and Build Content
-%%%%% Use -h for mapextractor and vmap4extractor for all flags
-%%%%% mmaps_generator took 30 minutes for WotLK, around 3 hours for WoD
+%%%%% Use -h flag to show available flags
+%%%%% Dig through source for all flags for mmaps_generator
+%%%%% mmaps_generator took 30 minutes for WotLK, around TBA for WoD
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft'
@@ -302,8 +304,9 @@ mkdir vmaps mmaps
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% connection_patcher
-%%%%% To be done on computers with WoW client
-%%%%% Use -h for all flags
+%%%%% To be done on computers with WoW client to allow connections to private servers
+%%%%% Use -h flag to show available flags
+%%%%% Use of --modulePath implys WoW is installed to a separate Wine prefix somewhere other than the default ~/.wine location (in other words, if it's installed to that default prefix, you don't need that flag)
 %%%%%%%%%%%%%%%%%%%%
 
 '/home/espionage724/Downloads/connection_patcher' --path '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64.exe' --modulePath '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data/Blizzard Entertainment'
@@ -312,7 +315,7 @@ mkdir vmaps mmaps
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Compress dbc, maps, mmaps, and vmaps folders, and send them to server
-%%%%% zip was 885MB for WotLK, 2GB for WoD
+%%%%% zip was 885MB for WotLK, TBA for WoD
 %%%%%%%%%%%%%%%%%%%%
 
 scp '/home/espionage724/Downloads/WotLK-TC-content-2015-10-05.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
