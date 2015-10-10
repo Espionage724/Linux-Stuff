@@ -278,23 +278,25 @@ rbac account grant soap 228 -1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Get extractors from server
+%%%%% Get extractors/assemblers and patcher from server
 %%%%%%%%%%%%%%%%%%%%
 
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor '/home/espionage724/Downloads'
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4extractor '/home/espionage724/Downloads'
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4assembler '/home/espionage724/Downloads'
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/mmaps_generator '/home/espionage724/Downloads'
-scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/content_patcher '/home/espionage724/Downloads'
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Extract content
+%%%%% Extract and Build Content
+%%%%% Use -h for mapextractor and vmap4extractor for all flags
 %%%%% mmaps_generator took 30 minutes for WotLK, around 3 hours for WoD
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a'
+cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft'
 mkdir vmaps mmaps
-'/home/espionage724/Downloads/mapextractor'
-'/home/espionage724/Downloads/vmap4extractor'
+'/home/espionage724/Downloads/mapextractor' -f 0
+'/home/espionage724/Downloads/vmap4extractor' -l
 '/home/espionage724/Downloads/vmap4assembler' Buildings vmaps
 '/home/espionage724/Downloads/mmaps_generator' --bigBaseUnit true --threads 8
 
