@@ -526,11 +526,13 @@ rm '/home/espionage724/Wine Prefixes/EyeQ/drive_c/users/Public/Start Menu/Progra
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% World of Warcraft
-%%%%% 3.3.5a
+%%%%% 
+%%%%% Good for Classic, WotLK, and WoD
 %%%%% Copy WoW folder to Downloads prior to starting
+%%%%% Drop WINEARCH for 64-bit WoD
 %%%%%%%%%%%%%%%%%%%%
 
-WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' WINEARCH=win32 wineboot && mv '/home/espionage724/Downloads/World of Warcraft 3.3.5a' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files'
+WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' WINEARCH=win32 wineboot && mv '/home/espionage724/Downloads/World of Warcraft' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% SQLyog
@@ -618,17 +620,17 @@ gedit '/home/espionage724/.local/share/applications/wine/Programs/World of Warcr
 -------------------------
 [Desktop Entry]
 Name=World of Warcraft
-Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a/Wow.exe'
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' wine '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft/Wow.exe'
 Type=Application
 StartupNotify=true
-Path=/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a
+Path=/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft
 Icon=WoW.0
 -------------------------
 
 wget https://slimgur.com/images/2015/09/19/dde8d0b76cbc06fce8f80e59969011d0.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/WoW.0.png'
 
 wget http://www.wowace.com/media/files/443/930/Prat-3.0-3.3.26.zip
-unzip '/home/espionage724/Prat-3.0-3.3.26.zip' -d '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft 3.3.5a/Interface/AddOns'
+unzip '/home/espionage724/Prat-3.0-3.3.26.zip' -d '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft/Interface/AddOns'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% SQLyog
