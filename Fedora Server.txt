@@ -145,7 +145,7 @@ sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Fedora Server + Headless Management
-%%%%% Compile and configures TrinityCore (3.3.5 and 6.x)
+%%%%% Compile and configures TrinityCore
 %%%%% Runs Minetest server
 %%%%%%%%%%%%%%%%%%%%
 
@@ -269,18 +269,6 @@ PacketSpoof.Policy = 2
 PacketSpoof.BanMode = 2
 -------------------------
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Create Account
-%%%%%%%%%%%%%%%%%%%%
-
-account create Espionage724 X
-account set gmlevel Espionage724 3 -1
-
-account create soap X
-account set gmlevel soap 3 -1
-rbac account grant soap 219 -1
-rbac account grant soap 228 -1
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
@@ -301,9 +289,11 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/content_patcher '/home
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract and Build Content
-%%%%% Use -h flag to show available flags
-%%%%% Dig through source for all flags for mmaps_generator
-%%%%% mmaps_generator took 30 minutes for WotLK (old methods), around TBA for WoD (new standards)
+%%%%% Use -h flag to show available flags for mapextractor and vmap4extractor
+%%%%% Dig through source for available flags for mmaps_generator
+%%%%% mmaps_generator took around 3 hours with old standards, around 1.2 hours with new standards
+%%%%% WoD (old standards): dbc = 207.6MB, maps = 544.3MB, vmaps = 1.3GB, mmaps = 3.9GB
+%%%%% WoD (new standards): dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft'
@@ -327,7 +317,8 @@ mkdir vmaps mmaps
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Compress dbc, maps, mmaps, and vmaps folders, and send them to server
-%%%%% zip was 885MB for WotLK (old standard), TBA for WoD (new standard)
+%%%%% WoD (old standards): 2.1GB
+%%%%% WoD (new standards): 3.1GB
 %%%%% Run from host
 %%%%%%%%%%%%%%%%%%%%
 
@@ -342,6 +333,18 @@ cd '/home/espionage724/run/bin'
 unzip 'WoD-TC-content-2015-10-09.zip'
 sync
 rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-09.zip'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Create Accounts
+%%%%%%%%%%%%%%%%%%%%
+
+account create Espionage724 X
+account set gmlevel Espionage724 3 -1
+
+account create soap X
+account set gmlevel soap 3 -1
+rbac account grant soap 219 -1
+rbac account grant soap 228 -1
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
