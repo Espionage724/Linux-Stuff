@@ -119,20 +119,31 @@ smtp.sendgrid.net
 %%%%%%%%%%%%%%%%%%%%
 %%%%% 30000 is Minetest
 %%%%% 26000 is Xonotic
-%%%%% 1118 and 1119 is bnetserver
-%%%%% 8085 and 8086 is worldserver
+%%%%% 
+%%%%% 3724 is authserver (3.3.5)
+%%%%% 1118 and 1119 is bnetserver (6.x)
+%%%%% 
+%%%%% 8085 is worldserver (3.3.5 and 6.x)
+%%%%% 8086 is worldserver (6.x)
+%%%%% 
 %%%%% 7879 is SOAP
 %%%%% 3632 is distcc
 %%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-port=30000/udp
 sudo firewall-cmd --permanent --add-port=26000/udp
+
+sudo firewall-cmd --permanent --add-port=3724/tcp
+sudo firewall-cmd --permanent --add-port=8085/tcp
+
 sudo firewall-cmd --permanent --add-port=1118/tcp
 sudo firewall-cmd --permanent --add-port=1119/tcp
 sudo firewall-cmd --permanent --add-port=8085/tcp
 sudo firewall-cmd --permanent --add-port=8086/tcp
+
 sudo firewall-cmd --permanent --add-port=7879/tcp
 sudo firewall-cmd --permanent --add-port=3632/tcp
+
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -145,11 +156,18 @@ sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Fedora Server + Headless Management
+%%%%% 
 %%%%% Compile and configures TrinityCore
 %%%%% Runs Minetest server
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel distcc zeromq3-devel
+sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel distcc
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Include For TrinityCore 6.x
+%%%%%%%%%%%%%%%%%%%%
+
+zeromq3-devel
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -160,7 +178,15 @@ sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wge
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Download TrinityCore
+%%%%% 3.3.5
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724'
+git clone -b 3.3.5 https://github.com/TrinityCore/TrinityCore.git trinitycore
+sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% 6.x
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
@@ -168,7 +194,13 @@ git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
 sync
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Update TrinityCore
+%%%%% Update 3.3.5
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/trinitycore' && git pull origin 3.3.5 && cd '/home/espionage724'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Update 6.x
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/trinitycore' && git pull origin 6.x && cd '/home/espionage724'
@@ -226,14 +258,58 @@ DISTCC_HOSTS='192.168.1.150/8 localhost/2' make -j10 install
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Copy Config Files
+%%%%% 3.3.5 Copy Config Files
+%%%%%%%%%%%%%%%%%%%%
+
+cp '/home/espionage724/run/etc/authserver.conf.dist' '/home/espionage724/run/etc/authserver.conf'
+cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% 6.x Copy Config Files
 %%%%%%%%%%%%%%%%%%%%
 
 cp '/home/espionage724/run/etc/bnetserver.conf.dist' '/home/espionage724/run/etc/bnetserver.conf'
 cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Edit Config Files
+%%%%% Edit Config Files for 3.3.5
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run/etc/authserver.conf'
+
+-------------------------
+WrongPass.MaxCount = 5
+Updates.EnableDatabases = 1
+-------------------------
+
+nano '/home/espionage724/run/etc/worldserver.conf'
+
+-------------------------
+PlayerSave.Stats.MinLevel = 10
+mmap.enablePathFinding = 1
+TargetPosRecalculateRange = 0.5
+MaxCoreStuckTime = 10
+Motd = "Welcome to the Realm of Espionage Wrath of the Lich King server!"
+Server.LoginInfo = 1
+Updates.EnableDatabases = 7
+Warden.Enabled = 1
+Warden.ClientCheckFailAction = 2
+ChatFakeMessagePreventing = 1
+ChatStrictLinkChecking.Severity = 2
+PreserveCustomChannelDuration = 7
+Support.TicketsEnabled = 1
+Support.BugsEnabled = 1
+Support.ComplaintsEnabled = 1
+Support.SuggestionsEnabled = 1
+SOAP.Enabled = 1
+SOAP.Port = 7879
+CharDelete.KeepDays = 7
+PacketSpoof.Policy = 2
+PacketSpoof.BanMode = 2
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Edit Config Files for 6.x
 %%%%%%%%%%%%%%%%%%%%
 
 nano '/home/espionage724/run/etc/bnetserver.conf'
@@ -278,22 +354,28 @@ PacketSpoof.BanMode = 2
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Get extractors/assemblers and patcher from server
+%%%%% Get extractors and assemblers from server
 %%%%%%%%%%%%%%%%%%%%
 
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor '/home/espionage724/Downloads'
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4extractor '/home/espionage724/Downloads'
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4assembler '/home/espionage724/Downloads'
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/mmaps_generator '/home/espionage724/Downloads'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Get content_patcher for 6.x
+%%%%%%%%%%%%%%%%%%%%
+
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/content_patcher '/home/espionage724/Downloads'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract and Build Content
+%%%%% 
 %%%%% Use -h flag to show available flags for mapextractor and vmap4extractor
 %%%%% Dig through source for available flags for mmaps_generator
-%%%%% mmaps_generator took around 3 hours with old standards, around 1.2 hours with new standards
-%%%%% WoD (old standards): dbc = 207.6MB, maps = 544.3MB, vmaps = 1.3GB, mmaps = 3.9GB
-%%%%% WoD (new standards): dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
+%%%%% mmaps_generator took around TBA with WotLK and 1.2 hours with WoD
+%%%%% WotLK: TBA
+%%%%% WoD: dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft'
@@ -305,7 +387,8 @@ mkdir vmaps mmaps
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% connection_patcher
-%%%%% To be done on computers with WoW client to allow connections to private servers
+%%%%% 
+%%%%% To be done for 6.x on computers with WoW client to allow connections to private servers
 %%%%% Use -h flag to show available flags
 %%%%% Use of --modulePath implys WoW is installed to a separate Wine prefix somewhere other than the default ~/.wine location (in other words, if it's installed to that default prefix, you don't need that flag)
 %%%%% Run connection_patcher while WoW is running and you're logged into a character on Retail
@@ -316,9 +399,18 @@ mkdir vmaps mmaps
 '/home/espionage724/Downloads/connection_patcher' --path '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow.exe' --modulePath '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data/Blizzard Entertainment'
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Compress dbc, maps, mmaps, and vmaps folders, and send them to server
-%%%%% WoD (old standards): 2.1GB
-%%%%% WoD (new standards): 3.1GB
+%%%%% Compress dbc, maps, mmaps, and vmaps folders for 3.3.5, and send them to server
+%%%%% 
+%%%%% Archive Size: TBA
+%%%%% Run from host
+%%%%%%%%%%%%%%%%%%%%
+
+scp '/home/espionage724/Downloads/WotLK-TC-content-2015-10-10.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Compress dbc, maps, mmaps, and vmaps folders for 6.x, and send them to server
+%%%%% 
+%%%%% Archive Size: 3.1GB
 %%%%% Run from host
 %%%%%%%%%%%%%%%%%%%%
 
@@ -326,7 +418,6 @@ scp '/home/espionage724/Downloads/WoD-TC-content-2015-10-09.zip' espionage724@19
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract on server
-%%%%% Run on server (obviously :p)
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/run/bin'
@@ -336,6 +427,7 @@ rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-09.zip'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Further bnetserver Setup
+%%%%% 
 %%%%% Do after all above is finished and database creation/permissions
 %%%%% Close after starting 1st time
 %%%%% Finish Database setup with realmlist and SOAP stuff
@@ -354,8 +446,22 @@ cd '/home/espionage724'
 ./world.sh
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Create Accounts
-%%%%% Note that SOAP account doesn't need bnetaccount, and note that bnetaccount accounts are labeled differently in database
+%%%%% Create Accounts for 3.3.5
+%%%%%%%%%%%%%%%%%%%%
+
+account create Espionage724 X
+account set gmlevel Espionage724 3 -1
+
+account create soap X
+account set gmlevel soap 3 -1
+rbac account grant soap 219 -1
+rbac account grant soap 228 -1
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Create Accounts for 6.x
+%%%%% 
+%%%%% Note that bnetaccount accounts are labeled differently in database (hence gmlevel)
+%%%%% Note that SOAP account doesn't use bnetaccount but instead account; this is intentional
 %%%%%%%%%%%%%%%%%%%%
 
 bnetaccount create Espionage724@realmofespionage X
@@ -381,7 +487,18 @@ rbac account grant soap 228 -1
 http://community.trinitycore.org/files/category/1-database/
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Pull full world and hotfixes database files on server
+%%%%% Pull full world database file on server for 3.3.5
+%%%%% 
+%%%%% Download full DB archive and extract to Downloads folder
+%%%%% Command below needs updated when new TDB release arrives
+%%%%% Follow DB setup under Kraityn to create databases manually
+%%%%%%%%%%%%%%%%%%%%
+
+scp '/home/espionage724/Downloads/TDB_full_335.59_2015_07_14_7z.bd1a8fb92e11fdcda018dd784bf4a091_FILES/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Pull full world and hotfixes database files on server for 6.x
+%%%%% 
 %%%%% Download full DB archive and extract to Downloads folder
 %%%%% Command below needs updated when new TDB release arrives
 %%%%% Follow DB setup under Kraityn to create databases manually
