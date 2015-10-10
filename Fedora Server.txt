@@ -376,8 +376,8 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/content_patcher '/home
 %%%%% 
 %%%%% Use -h or /? flag to show available flags for mapextractor and vmap4extractor
 %%%%% Dig through source for available flags for mmaps_generator
-%%%%% mmaps_generator took TBA with WotLK and 1.2 hours with WoD
-%%%%% WotLK: dbc = 90.3MB, maps = 519.6 MB, vmaps = TBA, mmaps = TBA
+%%%%% mmaps_generator took 32 minutes with WotLK and 1.2 hours with WoD
+%%%%% WotLK: dbc = 90.3MB, maps = 519.6 MB, vmaps = 1.3GB, mmaps = 1.6GB
 %%%%% WoD: dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
 %%%%%%%%%%%%%%%%%%%%
 
@@ -404,11 +404,20 @@ mkdir vmaps mmaps
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Compress dbc, maps, mmaps, and vmaps folders for 3.3.5, and send them to server
 %%%%% 
-%%%%% Archive Size: TBA
+%%%%% Archive Size: 1.3GB
 %%%%% Run from host
 %%%%%%%%%%%%%%%%%%%%
 
 scp '/home/espionage724/Downloads/WotLK-TC-content-2015-10-10.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract on 3.3.5 server
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/run/bin'
+unzip 'WotLK-TC-content-2015-10-10.zip'
+sync
+rm '/home/espionage724/run/bin/WotLK-TC-content-2015-10-10.zip'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Compress dbc, maps, mmaps, and vmaps folders for 6.x, and send them to server
@@ -420,7 +429,7 @@ scp '/home/espionage724/Downloads/WotLK-TC-content-2015-10-10.zip' espionage724@
 scp '/home/espionage724/Downloads/WoD-TC-content-2015-10-09.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Extract on server
+%%%%% Extract on 6.x server
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/run/bin'
@@ -445,8 +454,15 @@ cd '/home/espionage724'
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
-./bnet.sh
+./auth.sh
 ./world.sh
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Check Servers
+%%%%%%%%%%%%%%%%%%%%
+
+screen -r auth
+screen -r world
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Create Accounts for 3.3.5
