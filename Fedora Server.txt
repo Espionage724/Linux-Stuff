@@ -1034,6 +1034,17 @@ sudo -u apache wget 'https://raw.githubusercontent.com/dimadin/disable-google-fo
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% Drop Databases
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+DROP DATABASE auth;
+DROP DATABASE characters;
+DROP DATABASE world;
+DROP DATABASE hotfixes;
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% Databases
 %%%%%%%%%%%%%%%%%%%%
 
@@ -1042,8 +1053,6 @@ mysql -u root -p
 CREATE DATABASE auth;
 CREATE DATABASE characters;
 CREATE DATABASE world;
-
-CREATE DATABASE hotfixes;
 
 CREATE USER trinity;
 SET PASSWORD FOR 'trinity' = PASSWORD ('X');
