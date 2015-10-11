@@ -330,8 +330,11 @@ PlayerSave.Stats.MinLevel = 10
 mmap.enablePathFinding = 1
 TargetPosRecalculateRange = 0.5
 MaxCoreStuckTime = 10
+RealmZone = 28
+Quests.EnableQuestTracker = 1
 Motd = "Welcome to the Realm of Espionage Warlords of Draenor server!"
 Server.LoginInfo = 1
+FeatureSystem.CharacterUndelete.Enabled = 1
 Updates.EnableDatabases = 15
 Warden.Enabled = 1
 Warden.ClientCheckFailAction = 2
@@ -342,6 +345,7 @@ Support.TicketsEnabled = 1
 Support.BugsEnabled = 1
 Support.ComplaintsEnabled = 1
 Support.SuggestionsEnabled = 1
+Wintergrasp.Enable = 1
 SOAP.Enabled = 1
 SOAP.IP = "0.0.0.0"
 SOAP.Port = 7879
@@ -368,10 +372,10 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4assembler '/home/
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/mmaps_generator '/home/espionage724/Downloads'
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Get content_patcher for 6.x
+%%%%% Get connection_patcher for 6.x
 %%%%%%%%%%%%%%%%%%%%
 
-scp espionage724@192.168.1.152:/home/espionage724/run/bin/content_patcher '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/connection_patcher '/home/espionage724/Downloads'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract and Build Content
@@ -381,27 +385,30 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/content_patcher '/home
 %%%%% mmaps_generator took 32 minutes with WotLK and 1.2 hours with WoD
 %%%%% WotLK: dbc = 90.3MB, maps = 519.6 MB, vmaps = 1.3GB, mmaps = 1.6GB
 %%%%% WoD: dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
+%%%%% Drop (x86) if using 3.3.5 (since WoW will be in 32-bit prefix)
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft'
+cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft'
 mkdir vmaps mmaps
-'/home/espionage724/Downloads/mapextractor' -f 0
-'/home/espionage724/Downloads/vmap4extractor' -l
-'/home/espionage724/Downloads/vmap4assembler' Buildings vmaps
-'/home/espionage724/Downloads/mmaps_generator' --bigBaseUnit true --threads 8
+
+'/home/espionage724/Downloads/mapextractor' -f 0 && sync
+'/home/espionage724/Downloads/vmap4extractor' -l && sync
+'/home/espionage724/Downloads/vmap4assembler' Buildings vmaps && sync
+'/home/espionage724/Downloads/mmaps_generator' --bigBaseUnit true --threads 8 && sync
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% connection_patcher
 %%%%% 
 %%%%% To be done for 6.x on computers with WoW client to allow connections to private servers
 %%%%% Use -h or /? flag to show available flags
-%%%%% Use of --modulePath implys WoW is installed to a separate Wine prefix somewhere other than the default ~/.wine location (in other words, if it's installed to that default prefix, you don't need that flag)
+%%%%% Use of -m implys WoW is installed to a separate Wine prefix somewhere other than the default ~/.wine location (in other words, if it's installed to that default prefix, you don't need that flag)
+%%%%% Start WoW at least once from both Battle.net launcher and standalone exe (may not be needed)
 %%%%% Run connection_patcher while WoW is running and you're logged into a character on Retail
 %%%%%%%%%%%%%%%%%%%%
 
-'/home/espionage724/Downloads/connection_patcher' --path '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64.exe' --modulePath '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data/Blizzard Entertainment'
+'/home/espionage724/Downloads/connection_patcher' -m '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64.exe'
 
-'/home/espionage724/Downloads/connection_patcher' --path '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow.exe' --modulePath '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data/Blizzard Entertainment'
+'/home/espionage724/Downloads/connection_patcher' -m '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow.exe'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Compress dbc, maps, mmaps, and vmaps folders for 3.3.5, and send them to server
@@ -428,16 +435,16 @@ rm '/home/espionage724/run/bin/WotLK-TC-content-2015-10-10.zip'
 %%%%% Run from host
 %%%%%%%%%%%%%%%%%%%%
 
-scp '/home/espionage724/Downloads/WoD-TC-content-2015-10-09.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+scp '/home/espionage724/Downloads/WoD-TC-content-2015-10-11.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Extract on 6.x server
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/run/bin'
-unzip 'WoD-TC-content-2015-10-09.zip'
+unzip 'WoD-TC-content-2015-10-11.zip'
 sync
-rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-09.zip'
+rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-11.zip'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Further bnetserver Setup
@@ -502,12 +509,6 @@ rbac account grant soap 228 -1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Download Full Database Archive
-%%%%%%%%%%%%%%%%%%%%
-
-http://community.trinitycore.org/files/category/1-database/
-
-%%%%%%%%%%%%%%%%%%%%
 %%%%% Pull full world database file on server for 3.3.5
 %%%%% 
 %%%%% Download full DB archive and extract to Downloads folder
@@ -515,7 +516,14 @@ http://community.trinitycore.org/files/category/1-database/
 %%%%% Follow DB setup under Kraityn to create databases manually
 %%%%%%%%%%%%%%%%%%%%
 
-scp '/home/espionage724/Downloads/TDB_full_335.59_2015_07_14_7z.bd1a8fb92e11fdcda018dd784bf4a091_FILES/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+cd '/home/espionage724/Downloads'
+aria2c https://github.com/TrinityCore/TrinityCore/releases/download/TDB335.59/TDB_full_335.59_2015_07_14.7z
+7za x '/home/espionage724/Downloads/TDB335.59/TDB_full_335.59_2015_07_14.7z'
+sync
+
+scp '/home/espionage724/Downloads/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+TODO: Figure out files to rm
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Pull full world and hotfixes database files on server for 6.x
@@ -525,9 +533,16 @@ scp '/home/espionage724/Downloads/TDB_full_335.59_2015_07_14_7z.bd1a8fb92e11fdcd
 %%%%% Follow DB setup under Kraityn to create databases manually
 %%%%%%%%%%%%%%%%%%%%
 
-scp '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14_7z.8c8b4094bc593f4c5c3451e84cbdb671_FILES/TDB_full_world_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+cd '/home/espionage724/Downloads'
+aria2c https://github.com/TrinityCore/TrinityCore/releases/download/TDB6.02/TDB_full_6.02_2015_07_14.7z
+7za x '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14.7z'
+sync
 
-scp '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14_7z.8c8b4094bc593f4c5c3451e84cbdb671_FILES/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+scp '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+rm -R '/home/espionage724/Downloads/updates_tdb_601_to_602_only' '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14.7z' '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
