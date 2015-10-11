@@ -449,9 +449,9 @@ rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-11.zip'
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Further bnetserver Setup
 %%%%% 
-%%%%% Do after all above is finished and database creation/permissions
+%%%%% Do this while content is extracting
 %%%%% Close after starting 1st time
-%%%%% Finish Database setup with realmlist and SOAP stuff
+%%%%% Finish Database setup with realmlist and SOAP permissions on Kraityn
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
@@ -463,14 +463,14 @@ cd '/home/espionage724'
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
-./auth.sh
+./bnet.sh
 ./world.sh
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Check Servers
 %%%%%%%%%%%%%%%%%%%%
 
-screen -r auth
+screen -r bnet
 screen -r world
 
 %%%%%%%%%%%%%%%%%%%%
