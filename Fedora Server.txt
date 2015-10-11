@@ -451,6 +451,50 @@ unzip 'WoD-TC-content-2015-10-11.zip'
 sync
 rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-11.zip'
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% TrinityCore Database Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Pull full world database file on server for 3.3.5
+%%%%% 
+%%%%% Download full DB archive and extract to Downloads folder
+%%%%% Command below needs updated when new TDB release arrives
+%%%%% Follow DB setup under Kraityn to create databases manually
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/Downloads'
+aria2c https://github.com/TrinityCore/TrinityCore/releases/download/TDB335.59/TDB_full_335.59_2015_07_14.7z
+7za x '/home/espionage724/Downloads/TDB_full_335.59_2015_07_14.7z'
+sync
+
+scp '/home/espionage724/Downloads/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+rm -R '/home/espionage724/Downloads/updates_tdb_33558_to_33559_only' '/home/espionage724/Downloads/TDB_full_335.59_2015_07_14.7z' '/home/espionage724/Downloads/TDB_full_world_335.59_2015_07_14.sql'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Pull full world and hotfixes database files on server for 6.x
+%%%%% 
+%%%%% Download full DB archive and extract to Downloads folder
+%%%%% Command below needs updated when new TDB release arrives
+%%%%% Follow DB setup under Kraityn to create databases manually
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/Downloads'
+aria2c https://github.com/TrinityCore/TrinityCore/releases/download/TDB6.02/TDB_full_6.02_2015_07_14.7z
+7za x '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14.7z'
+sync
+
+scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+scp '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+rm -R '/home/espionage724/Downloads/updates_tdb_601_to_602_only' '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14.7z' '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'
+
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Further bnetserver Setup
 %%%%% 
@@ -504,50 +548,6 @@ account create soap X
 account set gmlevel soap 3 -1
 rbac account grant soap 219 -1
 rbac account grant soap 228 -1
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% TrinityCore Database Setup
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Pull full world database file on server for 3.3.5
-%%%%% 
-%%%%% Download full DB archive and extract to Downloads folder
-%%%%% Command below needs updated when new TDB release arrives
-%%%%% Follow DB setup under Kraityn to create databases manually
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724/Downloads'
-aria2c https://github.com/TrinityCore/TrinityCore/releases/download/TDB335.59/TDB_full_335.59_2015_07_14.7z
-7za x '/home/espionage724/Downloads/TDB335.59/TDB_full_335.59_2015_07_14.7z'
-sync
-
-scp '/home/espionage724/Downloads/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
-
-TODO: Figure out files to rm
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Pull full world and hotfixes database files on server for 6.x
-%%%%% 
-%%%%% Download full DB archive and extract to Downloads folder
-%%%%% Command below needs updated when new TDB release arrives
-%%%%% Follow DB setup under Kraityn to create databases manually
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724/Downloads'
-aria2c https://github.com/TrinityCore/TrinityCore/releases/download/TDB6.02/TDB_full_6.02_2015_07_14.7z
-7za x '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14.7z'
-sync
-
-scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
-
-scp '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
-
-rm -R '/home/espionage724/Downloads/updates_tdb_601_to_602_only' '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14.7z' '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
