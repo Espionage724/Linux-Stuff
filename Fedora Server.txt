@@ -251,7 +251,12 @@ DISTCC_HOSTS='192.168.1.150/8 localhost/2' make -j10 install
 
 cd '/home/espionage724' && rm -R '/home/espionage724/build' && mkdir '/home/espionage724/build' && cd '/home/espionage724/build'
 CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
-DISTCC_HOSTS='192.168.1.150/8 localhost/2' make -j10 install
+DISTCC_HOSTS='192.168.1.150/8 localhost/2' make -j10
+
+sudo systemctl stop auth world
+make install
+sync
+sudo systemctl start auth world
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -381,11 +386,11 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/connection_patcher '/h
 %%%%% Extract and Build Content
 %%%%% 
 %%%%% Use -h or /? flag to show available flags for mapextractor and vmap4extractor
-%%%%% Dig through source for available flags for mmaps_generator
+%%%%% mmaps_generator flags: https://github.com/TrinityCore/TrinityCore/tree/6.x/src/tools/mmaps_generator/Info
 %%%%% mmaps_generator took 32 minutes with WotLK and 1.2 hours with WoD
-%%%%% WotLK: dbc = 90.3MB, maps = 519.6 MB, vmaps = 1.3GB, mmaps = 1.6GB
-%%%%% WoD: dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
-%%%%% Drop (x86) if using 3.3.5 (since WoW will be in 32-bit prefix)
+%%%%% WotLK (12340): dbc = 90.3MB, maps = 519.6 MB, vmaps = 1.3GB, mmaps = 1.6GB
+%%%%% WoD (20474): dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
+%%%%% Drop '(x86)' from command if using 3.3.5 (since WoW will be in 32-bit prefix and not have 32-bit-specific Program Files)
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft'
@@ -1147,13 +1152,13 @@ zip -r '/home/espionage724/backups/'backup-$(date +%Y-%m-%d).zip '/home/espionag
 %%%%% Likely only need auth and characters when switching to 3.3.5 from 6.x
 %%%%%%%%%%%%%%%%%%%%
 
-mysql -u root -pX auth < '/home/espionage724/dumps/auth.sql'
-mysql -u root -pX characters < '/home/espionage724/dumps/characters.sql'
+mysql -u root -p auth < '/home/espionage724/dumps/auth.sql'
+mysql -u root -p characters < '/home/espionage724/dumps/characters.sql'
 
-mysql -u root -pX gnusocial < '/home/espionage724/dumps/gnusocial.sql'
-mysql -u root -pX joomla < '/home/espionage724/dumps/joomla.sql'
-mysql -u root -pX mybb < '/home/espionage724/dumps/mybb.sql'
-mysql -u root -pX wordpress < '/home/espionage724/dumps/wordpress.sql'
+mysql -u root -p gnusocial < '/home/espionage724/dumps/gnusocial.sql'
+mysql -u root -p joomla < '/home/espionage724/dumps/joomla.sql'
+mysql -u root -p mybb < '/home/espionage724/dumps/mybb.sql'
+mysql -u root -p wordpress < '/home/espionage724/dumps/wordpress.sql'
 
 ####################################################################################################
 ####################################################################################################
