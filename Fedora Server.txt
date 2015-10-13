@@ -174,6 +174,12 @@ sudo dnf install minetest screen distcc wget p7zip autoconf libtool gcc gcc-c++ 
 cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% ACE Repo
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/devel:/libraries:/ACE:/micro/Fedora_22/devel:libraries:ACE:micro.repo
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% Include For TrinityCore 6.x
 %%%%%%%%%%%%%%%%%%%%
 
