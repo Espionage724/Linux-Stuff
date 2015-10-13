@@ -233,6 +233,21 @@ sync
 
 cd '/home/espionage724/trinitycore' && git pull origin 6.x && cd '/home/espionage724'
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724'
+hg clone https://bitbucket.org/oregon/oregoncore oregoncore
+sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Update OregonCore
+%%%%% Taken from Wiki, untested
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/oregoncore' && hg pull && hg update && cd '/home/espionage724/oregoncore/sql/updates' && hg pull && hg update && cd '/home/espionage724'
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
@@ -281,6 +296,16 @@ sudo systemctl stop auth world
 make install
 sync
 sudo systemctl start auth world
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Initial OregonCore Compile
+%%%%% distcc is pointless since fast compile, and enabled PCH because compiling breaks without it
+%%%%%%%%%%%%%%%%%%%%
+
+mkdir '/home/espionage724/build' '/home/espionage724/run'
+cd '/home/espionage724/build'
+cmake '/home/espionage724/oregoncore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
+make -j4 install
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -430,7 +455,7 @@ DatabaseUpdater.PathToUpdates = "/home/espionage724/oregoncore/sql/updates"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Get extractors and assemblers from server
+%%%%% Get extractors and assemblers from server for TrinityCore
 %%%%%%%%%%%%%%%%%%%%
 
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor '/home/espionage724/Downloads'
@@ -445,17 +470,30 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/mmaps_generator '/home
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/connection_patcher '/home/espionage724/Downloads'
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% Get extractors and assemblers from server for OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/map_extractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap_extractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap_assembler '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/movements_extractor '/home/espionage724/Downloads'
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% Extract and Build Content
 %%%%% 
 %%%%% Use -h or /? flag to show available flags for mapextractor and vmap4extractor
 %%%%% mmaps_generator flags: https://github.com/TrinityCore/TrinityCore/tree/6.x/src/tools/mmaps_generator/Info
 %%%%% mmaps_generator took 32 minutes with WotLK and 1.2 hours with WoD
+%%%%% 
+%%%%% TBC (8086): dbc = 50.0MB, maps = 362.1 MB, vmaps = 373.9 MB, mmaps = TBA
 %%%%% WotLK (12340): dbc = 90.3MB, maps = 519.6 MB, vmaps = 1.3GB, mmaps = 1.6GB
 %%%%% WoD (20474): dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
-%%%%% Drop '(x86)' from command if using 3.3.5 (since WoW will be in 32-bit prefix and not have 32-bit-specific Program Files)
+%%%%% 
+%%%%% Drop '(x86)' from command if using 3.3.5
+%%%%% Change extractor names slightly for OregonCore; flags below still work fine
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft'
+cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft'
 mkdir vmaps mmaps
 
 '/home/espionage724/Downloads/mapextractor' -f 0 && sync
@@ -512,6 +550,24 @@ cd '/home/espionage724/run/bin'
 unzip 'WoD-TC-content-2015-10-11.zip'
 sync
 rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-11.zip'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Compress dbc, maps, mmaps, and vmaps folders for OregonCore, and send them to server
+%%%%% 
+%%%%% Archive Size: TBA
+%%%%% Run from host
+%%%%%%%%%%%%%%%%%%%%
+
+scp '/home/espionage724/Downloads/TBC-OC-content-2015-10-12.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract on 6.x server
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/run/bin'
+unzip 'TBC-OC-content-2015-10-12.zip'
+sync
+rm '/home/espionage724/run/bin/TBC-OC-content-2015-10-12.zip'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
