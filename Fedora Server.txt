@@ -165,19 +165,7 @@ sudo firewall-cmd --reload
 %%%%% Runs Minetest server
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install minetest screen distcc wget p7zip autoconf libtool gcc gcc-c++ make cmake git ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel bzip2-devel
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% OregonCore Test
-%%%%%%%%%%%%%%%%%%%%
-
-cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% ACE Repo
-%%%%%%%%%%%%%%%%%%%%
-
-sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/devel:/libraries:/ACE:/micro/Fedora_22/devel:libraries:ACE:micro.repo
+sudo dnf install minetest screen distcc wget p7zip autoconf libtool gcc gcc-c++ make cmake git ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Include For TrinityCore 6.x
@@ -190,6 +178,19 @@ zeromq3-devel
 %%%%%%%%%%%%%%%%%%%%
 
 sudo dnf remove git ncurses-devel boost-devel
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% ACE Repo
+%%%%% Needed for OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/devel:/libraries:/ACE:/micro/Fedora_22/devel:libraries:ACE:micro.repo
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Switch From OregonCore to TrinityCore
@@ -282,7 +283,7 @@ host = 192.168.1.153
 mkdir '/home/espionage724/build' '/home/espionage724/run'
 cd '/home/espionage724/build'
 CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
-DISTCC_HOSTS='192.168.1.150/8 localhost/2' make -j10 install
+DISTCC_HOSTS='192.168.1.150/12 localhost/6' make -j18 install
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Recompile After Update
