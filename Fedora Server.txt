@@ -67,6 +67,13 @@ reboot
 
 bash <(curl -s https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Scripts/hosts.sh)
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Disable HDD power-saving and other performance hampering features
+%%%%% TODO: Cron this
+%%%%%%%%%%%%%%%%%%%%
+
+bash <(curl -s https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Scripts/hd.sh)
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
