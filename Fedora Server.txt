@@ -383,6 +383,44 @@ PacketSpoof.Policy = 2
 PacketSpoof.BanMode = 2
 -------------------------
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% OregonCore Copy Config Files
+%%%%%%%%%%%%%%%%%%%%
+
+cp '/home/espionage724/run/etc/oregonrealm.conf.dist' '/home/espionage724/run/etc/oregonrealm.conf'
+cp '/home/espionage724/run/etc/oregoncore.conf.dist' '/home/espionage724/run/etc/oregoncore.conf'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Edit Config Files for OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run/etc/oregonrealm.conf'
+
+-------------------------
+WrongPass.MaxCount = 5
+-------------------------
+
+nano '/home/espionage724/run/etc/oregoncore.conf'
+
+-------------------------
+TargetPosRecalculateRange = 0.5
+MaxCoreStuckTime = 10
+GameType = 1
+RealmZone = 28
+DBC.Locale = 0
+Motd = "Welcome to the Realm of Espionage TBC server!"
+Server.LoginInfo = 1
+ChatFakeMessagePreventing = 1
+ChatStrictLinkChecking.Severity = 2
+SOAP.Enabled = 1
+SOAP.IP = 0.0.0.0
+SOAP.Port = 7879
+Warden.Enabled = 1
+Warden.Kick = 1
+DatabaseUpdater.Enabled = 1
+DatabaseUpdater.PathToUpdates = "/home/espionage724/oregoncore/sql/updates"
+-------------------------
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
