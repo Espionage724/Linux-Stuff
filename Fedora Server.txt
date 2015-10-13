@@ -483,9 +483,9 @@ scp espionage724@192.168.1.152:/home/espionage724/run/bin/movements_extractor '/
 %%%%% 
 %%%%% Use -h or /? flag to show available flags for mapextractor and vmap4extractor
 %%%%% mmaps_generator flags: https://github.com/TrinityCore/TrinityCore/tree/6.x/src/tools/mmaps_generator/Info
-%%%%% mmaps_generator took 32 minutes with WotLK and 1.2 hours with WoD
+%%%%% mmaps_generator took 44 minutes with TBC, 32 minutes with WotLK, and 1.2 hours with WoD
 %%%%% 
-%%%%% TBC (8086): dbc = 50.0MB, maps = 362.1 MB, vmaps = 373.9 MB, mmaps = TBA
+%%%%% TBC (8086): dbc = 50.0MB, maps = 362.1 MB, vmaps = 373.9 MB, mmaps = 1.2GB
 %%%%% WotLK (12340): dbc = 90.3MB, maps = 519.6 MB, vmaps = 1.3GB, mmaps = 1.6GB
 %%%%% WoD (20474): dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
 %%%%% 
@@ -561,7 +561,7 @@ rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-11.zip'
 scp '/home/espionage724/Downloads/TBC-OC-content-2015-10-12.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Extract on 6.x server
+%%%%% Extract on OregonCore server
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/run/bin'
@@ -887,6 +887,7 @@ collation-server = utf8mb4_unicode_ci
 character-set-server = utf8mb4
 character-set-client-handshake = FALSE
 innodb_buffer_pool_size = 1024M
+max_allowed_packet = 10M
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
