@@ -165,13 +165,31 @@ sudo firewall-cmd --reload
 %%%%% Runs Minetest server
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install minetest screen autoconf libtool gcc gcc-c++ make cmake git wget p7zip ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel distcc
+sudo dnf install minetest screen distcc wget p7zip autoconf libtool gcc gcc-c++ make cmake git ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel bzip2-devel
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% OregonCore Test
+%%%%%%%%%%%%%%%%%%%%
+
+cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Include For TrinityCore 6.x
 %%%%%%%%%%%%%%%%%%%%
 
 zeromq3-devel
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Switch From TrinityCore to OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf remove git ncurses-devel boost-devel
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Switch From OregonCore to TrinityCore
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf remove binutils-devel compat-readline5 compat-readline5-devel mercurial ncurses-devel readline-devel
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
