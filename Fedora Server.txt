@@ -1169,6 +1169,7 @@ DROP DATABASE hotfixes;
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Databases
+%%%%% Make sure to mysqldump first
 %%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
@@ -1204,16 +1205,59 @@ FLUSH PRIVILEGES;
 FLUSH TABLES;
 EXIT
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% OregonCore
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%%%%%%%%%%%%%%%%%%%
-%%%%% auth/bnetserver realmlist
-%%%%% Do this after starting auth/bnetserver once (in order to create table and data)
-%%%%% Not tested with authserver yet (should be fine though)
+%%%%% Drop Databases
+%%%%% Make sure to mysqldump first
 %%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
 
-update `auth`.`realmlist` set `name` = 'RoE (WoD)' , `address` = 'realmofespionage.com' where `id` = '1';
+DROP DATABASE realmd;
+DROP DATABASE characters;
+DROP DATABASE world;
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Databases
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE DATABASE realmd;
+CREATE DATABASE characters;
+CREATE DATABASE world;
+
+CREATE USER oregon;
+SET PASSWORD FOR 'oregon' = PASSWORD ('X');
+
+GRANT USAGE ON realmd.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON characters.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON world.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
+
+GRANT ALL PRIVILEGES ON realmd.* to 'oregon'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON characters.* to 'oregon'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON world.* to 'oregon'@'192.168.1.152';
+
+FLUSH PRIVILEGES;
+FLUSH TABLES;
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% realmlist
+%%%%% Do this after starting authserver/bnetserver/oregoncore-realm once (in order to create table and data)
+%%%%% Not tested with authserver nor oregoncore-realm yet (should be fine though)
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+update `auth`.`realmlist` set `name` = 'RoE (WotLK)' , `address` = 'realmofespionage.com' where `id` = '1';
 EXIT
 
 %%%%%%%%%%%%%%%%%%%%
