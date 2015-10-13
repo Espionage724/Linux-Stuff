@@ -330,21 +330,13 @@ rm '/home/espionage724/run/bin/WotLK-TC-content-2015-10-10.zip'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Pull full world database file on server for 3.3.5
-%%%%% 
-%%%%% Download full DB archive and extract to Downloads folder
-%%%%% Command below needs updated when new TDB release arrives
-%%%%% Follow DB setup under Kraityn to create databases manually
+%%%%% Download TDB
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724/Downloads'
-aria2c https://github.com/TrinityCore/TrinityCore/releases/download/TDB335.59/TDB_full_335.59_2015_07_14.7z
-7za x '/home/espionage724/Downloads/TDB_full_335.59_2015_07_14.7z'
-sync
-
-scp '/home/espionage724/Downloads/TDB_full_world_335.59_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
-
-rm -R '/home/espionage724/Downloads/updates_tdb_33558_to_33559_only' '/home/espionage724/Downloads/TDB_full_335.59_2015_07_14.7z' '/home/espionage724/Downloads/TDB_full_world_335.59_2015_07_14.sql'
+cd '/home/espionage724/run/bin'
+wget https://github.com/TrinityCore/TrinityCore/releases/download/TDB335.59/TDB_full_335.59_2015_07_14.7z
+7za x '/home/espionage724/run/bin/TDB_full_335.59_2015_07_14.7z' 'TDB_full_world_335.59_2015_07_14.sql'
+rm '/home/espionage724/run/bin/TDB_full_335.59_2015_07_14.7z'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
