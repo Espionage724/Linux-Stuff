@@ -1,0 +1,491 @@
+####################################################################################################
+####################################################################################################
+#####
+##### General Start
+#####
+####################################################################################################
+####################################################################################################
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% hosts
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Backup hosts file
+%%%%% 
+%%%%% Only do once after clean install
+%%%%% Probably not needed; haven't ran into an issue where I needed old hosts values
+%%%%%%%%%%%%%%%%%%%%
+
+cp '/etc/hosts' '/home/espionage724/.hosts'
+
+####################################################################################################
+####################################################################################################
+#####
+##### General End
+#####
+####################################################################################################
+####################################################################################################
+
+####################################################################################################
+####################################################################################################
+#####
+##### Oak Start
+#####
+####################################################################################################
+####################################################################################################
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Firewall Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% 1118 and 1119 is bnetserver (6.x)
+%%%%% 8086 is worldserver (6.x)
+%%%%%%%%%%%%%%%%%%%%
+
+sudo firewall-cmd --permanent --add-port=1118/tcp
+sudo firewall-cmd --permanent --add-port=1119/tcp
+sudo firewall-cmd --permanent --add-port=8086/tcp
+sudo firewall-cmd --reload
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Include For TrinityCore 6.x
+%%%%%%%%%%%%%%%%%%%%
+
+zeromq3-devel
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Switch From TrinityCore to OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf remove git ncurses-devel boost-devel
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% ACE Repo
+%%%%% Needed for OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/devel:/libraries:/ACE:/micro/Fedora_22/devel:libraries:ACE:micro.repo
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Switch From OregonCore to TrinityCore
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf remove binutils-devel compat-readline5 compat-readline5-devel mercurial ncurses-devel readline-devel
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Git Management
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% 6.x
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724'
+git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
+sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Update 6.x
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/trinitycore' && git pull origin 6.x && cd '/home/espionage724'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724'
+hg clone https://bitbucket.org/oregon/oregoncore oregoncore
+sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Update OregonCore
+%%%%% Taken from Wiki, untested
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/oregoncore' && hg pull && hg update && cd '/home/espionage724/oregoncore/sql/updates' && hg pull && hg update && cd '/home/espionage724'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Compile and Install TrinityCore
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Initial OregonCore Compile
+%%%%% distcc is pointless since fast compile, and enabled PCH because compiling breaks without it
+%%%%%%%%%%%%%%%%%%%%
+
+mkdir '/home/espionage724/build' '/home/espionage724/run'
+cd '/home/espionage724/build'
+cmake '/home/espionage724/oregoncore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
+make -j4 install
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Configure TrinityCore
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% 6.x Copy Config Files
+%%%%%%%%%%%%%%%%%%%%
+
+cp '/home/espionage724/run/etc/bnetserver.conf.dist' '/home/espionage724/run/etc/bnetserver.conf'
+cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Edit Config Files for 6.x
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run/etc/bnetserver.conf'
+
+-------------------------
+WrongPass.MaxCount = 5
+Updates.EnableDatabases = 1
+-------------------------
+
+nano '/home/espionage724/run/etc/worldserver.conf'
+
+-------------------------
+PlayerSave.Stats.MinLevel = 10
+mmap.enablePathFinding = 1
+TargetPosRecalculateRange = 0.5
+MaxCoreStuckTime = 10
+RealmZone = 28
+Quests.EnableQuestTracker = 1
+Motd = "Welcome to the Realm of Espionage Warlords of Draenor server!"
+Server.LoginInfo = 1
+FeatureSystem.CharacterUndelete.Enabled = 1
+Updates.EnableDatabases = 15
+Warden.Enabled = 1
+Warden.ClientCheckFailAction = 2
+ChatFakeMessagePreventing = 1
+ChatStrictLinkChecking.Severity = 2
+PreserveCustomChannelDuration = 7
+Support.TicketsEnabled = 1
+Support.BugsEnabled = 1
+Support.ComplaintsEnabled = 1
+Support.SuggestionsEnabled = 1
+Wintergrasp.Enable = 1
+SOAP.Enabled = 1
+SOAP.IP = "0.0.0.0"
+SOAP.Port = 7879
+CharDelete.KeepDays = 7
+PacketSpoof.Policy = 2
+PacketSpoof.BanMode = 2
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% OregonCore Copy Config Files
+%%%%%%%%%%%%%%%%%%%%
+
+cp '/home/espionage724/run/etc/oregonrealm.conf.dist' '/home/espionage724/run/etc/oregonrealm.conf'
+cp '/home/espionage724/run/etc/oregoncore.conf.dist' '/home/espionage724/run/etc/oregoncore.conf'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Edit Config Files for OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run/etc/oregonrealm.conf'
+
+-------------------------
+WrongPass.MaxCount = 5
+-------------------------
+
+nano '/home/espionage724/run/etc/oregoncore.conf'
+
+-------------------------
+TargetPosRecalculateRange = 0.5
+MaxCoreStuckTime = 10
+GameType = 1
+RealmZone = 28
+DBC.Locale = 0
+Motd = "Welcome to the Realm of Espionage TBC server!"
+Server.LoginInfo = 1
+ChatFakeMessagePreventing = 1
+ChatStrictLinkChecking.Severity = 2
+SOAP.Enabled = 1
+SOAP.IP = 0.0.0.0
+SOAP.Port = 7879
+Warden.Enabled = 1
+Warden.Kick = 1
+DatabaseUpdater.Enabled = 1
+DatabaseUpdater.PathToUpdates = "/home/espionage724/oregoncore/sql/updates"
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Content Extractors/Patcher Management
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Get connection_patcher for 6.x
+%%%%%%%%%%%%%%%%%%%%
+
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/connection_patcher '/home/espionage724/Downloads'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Get extractors and assemblers from server for OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/map_extractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap_extractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap_assembler '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/movements_extractor '/home/espionage724/Downloads'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract and Build Content
+%%%%% 
+%%%%% Use -h or /? flag to show available flags for mapextractor and vmap4extractor
+%%%%% mmaps_generator flags: https://github.com/TrinityCore/TrinityCore/tree/6.x/src/tools/mmaps_generator/Info
+%%%%% mmaps_generator took 44 minutes with TBC and 1.2 hours with WoD
+%%%%% 
+%%%%% TBC (8086): dbc = 50.0MB, maps = 362.1 MB, vmaps = 373.9 MB, mmaps = 1.2GB
+%%%%% WoD (20474): dbc = 207.6MB, maps = 1.1GB, vmaps = 3.2GB, mmaps = 3.5GB
+%%%%% 
+%%%%% Drop '(x86)' from command if using TBC
+%%%%% Change extractor names slightly for OregonCore; flags below still work fine
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft'
+mkdir vmaps mmaps
+
+'/home/espionage724/Downloads/mapextractor' -f 0 && sync
+'/home/espionage724/Downloads/vmap4extractor' -l && sync
+'/home/espionage724/Downloads/vmap4assembler' Buildings vmaps && sync
+'/home/espionage724/Downloads/mmaps_generator' --bigBaseUnit true --threads 8 && sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% connection_patcher
+%%%%% 
+%%%%% To be done for 6.x on computers with WoW client to allow connections to private servers
+%%%%% Use -h or /? flag to show available flags
+%%%%% Use of -m implys WoW is installed to a separate Wine prefix somewhere other than the default ~/.wine location (in other words, if it's installed to that default prefix, you don't need that flag)
+%%%%% Start WoW at least once from both Battle.net launcher and standalone exe (may not be needed)
+%%%%% Run connection_patcher while WoW is running and you're logged into a character on Retail
+%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/Downloads/connection_patcher' -m '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow-64.exe'
+
+'/home/espionage724/Downloads/connection_patcher' -m '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/users/Public/Application Data' '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files (x86)/World of Warcraft/Wow.exe'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Compress dbc, maps, mmaps, and vmaps folders for 6.x, and send them to server
+%%%%% 
+%%%%% Archive Size: 3.1GB
+%%%%% Run from host
+%%%%%%%%%%%%%%%%%%%%
+
+scp '/home/espionage724/Downloads/WoD-TC-content-2015-10-11.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract on 6.x server
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/run/bin'
+unzip 'WoD-TC-content-2015-10-11.zip'
+sync
+rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-11.zip'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Compress dbc, maps, mmaps, and vmaps folders for OregonCore, and send them to server
+%%%%% 
+%%%%% Archive Size: 722.6 MB
+%%%%% Run from host
+%%%%%%%%%%%%%%%%%%%%
+
+scp '/home/espionage724/Downloads/TBC-OC-content-2015-10-12.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract on OregonCore server
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/run/bin'
+unzip 'TBC-OC-content-2015-10-12.zip'
+sync
+rm '/home/espionage724/run/bin/TBC-OC-content-2015-10-12.zip'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% TrinityCore Database Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Pull full world and hotfixes database files on server for 6.x
+%%%%% 
+%%%%% Download full DB archive and extract to Downloads folder
+%%%%% Command below needs updated when new TDB release arrives
+%%%%% Follow DB setup under Kraityn to create databases manually
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/Downloads'
+aria2c https://github.com/TrinityCore/TrinityCore/releases/download/TDB6.02/TDB_full_6.02_2015_07_14.7z
+7za x '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14.7z'
+sync
+
+scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+scp '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+rm -R '/home/espionage724/Downloads/updates_tdb_601_to_602_only' '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14.7z' '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% OregonCore Database Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Copy data to databases manually
+%%%%% Do after creating databases on Kraityn
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u oregon -p realmd < '/home/espionage724/oregoncore/sql/realmd.sql'
+mysql -u oregon -p characters < '/home/espionage724/oregoncore/sql/characters.sql'
+
+cd '/home/espionage724/oregoncore/sql' && unzip 'oregon_database.zip' && sync
+mysql -u oregon -p world < '/home/espionage724/oregoncore/sql/oregon_database.sql'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% TrinityCore Accounts
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% 6.x
+%%%%% 
+%%%%% Note that bnetaccount accounts are labeled differently in database (hence gmlevel)
+%%%%% Note that SOAP account doesn't use bnetaccount but instead account; this is intentional
+%%%%%%%%%%%%%%%%%%%%
+
+bnetaccount create Espionage724@realmofespionage X
+account set gmlevel 1#1 3 -1
+
+account create soap X
+account set gmlevel soap 3 -1
+rbac account grant soap 219 -1
+rbac account grant soap 228 -1
+
+####################################################################################################
+####################################################################################################
+#####
+##### Oak End
+#####
+####################################################################################################
+####################################################################################################
+
+####################################################################################################
+####################################################################################################
+#####
+##### Kraityn Start
+#####
+####################################################################################################
+####################################################################################################
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% TrinityCore
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% 6.x hotfixes Database
+%%%%% Include above as well
+%%%%%%%%%%%%%%%%%%%%
+
+CREATE DATABASE hotfixes;
+GRANT USAGE ON hotfixes.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT ALL PRIVILEGES ON hotfixes.* to 'trinity'@'192.168.1.152';
+FLUSH PRIVILEGES;
+FLUSH TABLES;
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% OregonCore
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Drop Databases
+%%%%% Make sure to mysqldump first
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+DROP DATABASE realmd;
+DROP DATABASE characters;
+DROP DATABASE world;
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Databases
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE DATABASE realmd;
+CREATE DATABASE characters;
+CREATE DATABASE world;
+
+CREATE USER oregon;
+SET PASSWORD FOR 'oregon' = PASSWORD ('X');
+
+GRANT USAGE ON realmd.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON characters.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT USAGE ON world.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
+
+GRANT ALL PRIVILEGES ON realmd.* to 'oregon'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON characters.* to 'oregon'@'192.168.1.152';
+GRANT ALL PRIVILEGES ON world.* to 'oregon'@'192.168.1.152';
+
+FLUSH PRIVILEGES;
+FLUSH TABLES;
+EXIT
