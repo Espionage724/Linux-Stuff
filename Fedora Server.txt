@@ -554,7 +554,7 @@ rm '/home/espionage724/run/bin/WoD-TC-content-2015-10-11.zip'
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Compress dbc, maps, mmaps, and vmaps folders for OregonCore, and send them to server
 %%%%% 
-%%%%% Archive Size: TBA
+%%%%% Archive Size: 722.6 MB
 %%%%% Run from host
 %%%%%%%%%%%%%%%%%%%%
 
@@ -612,6 +612,33 @@ scp '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql' espionage7
 scp '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 rm -R '/home/espionage724/Downloads/updates_tdb_601_to_602_only' '/home/espionage724/Downloads/TDB_full_6.02_2015_07_14.7z' '/home/espionage724/Downloads/TDB_full_hotfixes_6.02_2015_07_14.sql' '/home/espionage724/Downloads/TDB_full_world_6.02_2015_07_14.sql'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% OregonCore Database Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Copy data to databases manually
+%%%%% Do after creating databases on Kraityn
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u oregon -p realmd < '/home/espionage724/oregoncore/sql/realmd.sql'
+mysql -u oregon -p characters < '/home/espionage724/oregoncore/sql/characters.sql'
+
+cd '/home/espionage724/oregoncore/sql' && unzip 'oregon_database.zip' && sync
+mysql -u oregon -p world < '/home/espionage724/oregoncore/sql/oregon_database.sql'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Random TrinityCore Stuff (TODO: FIX THIS MESS)
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Further bnetserver Setup
