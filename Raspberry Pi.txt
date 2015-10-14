@@ -75,6 +75,34 @@ systemctl enable storage-NAS.mount
 sync
 exit
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% RetroPie NAS Mount
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ssh pi@192.168.1. (password: raspberry)
+
+sudo nano '/etc/fstab'
+
+--------------
+# NAS
+//192.168.1.157/Espionage724/Media/RetroPie /home/pi/RetroPie cifs auto,uid=pi,credentials=/home/pi/.smbcredentials,iocharset=utf8,sec=ntlmv2 0 0
+--------------
+
+nano '/home/pi/.smbcredentials'
+
+--------------
+username=Espionage724
+password=PASSWORD
+--------------
+
+chmod 600 '/home/pi/.smbcredentials'
+sync
+exit
+
 ####################################################################################################
 ####################################################################################################
 #####
