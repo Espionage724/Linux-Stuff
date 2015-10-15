@@ -247,3 +247,97 @@ SET PASSWORD FOR 'soap' = PASSWORD ('X');
 GRANT SELECT, UPDATE on realmd.account to 'soap'@'%' IDENTIFIED BY 'X';
 FLUSH PRIVILEGES;
 EXIT
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Script Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% oregon-realm
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/realm.sh'
+
+-------------------------
+cd '/home/espionage724/run/bin'
+screen -dmS realm '/home/espionage724/run/bin/oregon-realm'
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% oregon-core
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/core.sh'
+
+-------------------------
+cd '/home/espionage724/run/bin'
+screen -dmS core '/home/espionage724/run/bin/oregon-core'
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Make Executable
+%%%%%%%%%%%%%%%%%%%%
+
+chmod +x '/home/espionage724/realm.sh' '/home/espionage724/core.sh'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Execute
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Information
+%%%%%%%%%%%%%%%%%%%%
+
+- Starts oregon-realm and oregon-core in a dedicated screen sessions and changes Terminal over to the screen session
+- To leave screen session without closing program; hit Ctrl + A and D (hold Ctrl and then press A and D at the same time)
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% oregon-realm
+%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/realm.sh' && screen -r realm
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% oregon-core
+%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/core.sh' && screen -r core
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% OregonCore Accounts
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Main Administrator
+%%%%%%%%%%%%%%%%%%%%
+
+account create Espionage724 X
+account set addon Espionage724 1
+account set gmlevel Espionage724 3
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% SOAP
+%%%%%%%%%%%%%%%%%%%%
+
+account create soap X
+account set gmlevel soap 3
+
+####################################################################################################
+####################################################################################################
+#####
+##### End
+#####
+####################################################################################################
+####################################################################################################
