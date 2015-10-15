@@ -108,16 +108,17 @@ nano '/home/espionage724/run/etc/oregoncore.conf'
 -------------------------
 TargetPosRecalculateRange = 0.5
 MaxCoreStuckTime = 10
-GameType = 1
 RealmZone = 28
 DBC.Locale = 0
 Motd = "Welcome to the Realm of Espionage TBC server!"
 Server.LoginInfo = 1
 ChatFakeMessagePreventing = 1
 ChatStrictLinkChecking.Severity = 2
+GM.StartLevel = 1
 SOAP.Enabled = 1
 SOAP.IP = 0.0.0.0
 SOAP.Port = 7879
+CharDelete.KeepDays = 7
 Warden.Enabled = 1
 Warden.Kick = 1
 DatabaseUpdater.Enabled = 1
@@ -131,3 +132,48 @@ DatabaseUpdater.PathToUpdates = "/home/espionage724/oregoncore/sql/updates"
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Get extractors and assemblers
+%%%%%%%%%%%%%%%%%%%%
+
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/map_extractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap_extractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap_assembler '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/movements_extractor '/home/espionage724/Downloads'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract and Build Content
+%%%%% 
+%%%%% Use /? flag to show available flags for map_extractor and vmap_extractor
+%%%%% movements_extractor flags: 'oregoncore/src/tools/movements_extractor/Info/readme'
+%%%%% movements_extractor took 44 minutes with TBC
+%%%%% 
+%%%%% TBC (8086): dbc = 50.0MB, maps = 362.1 MB, vmaps = 373.9 MB, mmaps = 1.2GB
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft'
+mkdir vmaps mmaps
+
+'/home/espionage724/Downloads/map_extractor' -f 0 && sync
+'/home/espionage724/Downloads/vmap_extractor' -l && sync
+'/home/espionage724/Downloads/vmap_assembler' Buildings vmaps && sync
+'/home/espionage724/Downloads/movements_extractor' --bigBaseUnit true --threads 8 && sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Compress dbc, maps, mmaps, and vmaps folders for OregonCore, and send them to server
+%%%%% 
+%%%%% Archive Size: 722.6 MB
+%%%%% Run from host
+%%%%%%%%%%%%%%%%%%%%
+
+scp '/home/espionage724/Downloads/TBC-OC-content-2015-10-12.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract on OregonCore server
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/run/bin'
+unzip 'TBC-OC-content-2015-10-12.zip'
+sync
+rm '/home/espionage724/run/bin/TBC-OC-content-2015-10-12.zip'
