@@ -6,8 +6,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Commands below are only tested on Fedora 22
-- Assumes presense of two different machines, one for OregonCore, and one for MySQL and/or webserver for SOAP
+- OregonCore setup for Realm of Espionage
+- Commands below are for and only tested on Fedora 22 (can be adapted for use elsewhere of course)
+- Assumes presense of three different machines, one for OregonCore, one for MySQL and/or webserver for SOAP, and one to run WoW on (desktop/client)
+- Do commands below on OregonCore computer unless otherwise specified
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -32,7 +34,6 @@ sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% ACE Repo
-%%%%% Needed for OregonCore
 %%%%%%%%%%%%%%%%%%%%
 
 sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/devel:/libraries:/ACE:/micro/Fedora_22/devel:libraries:ACE:micro.repo
@@ -143,7 +144,7 @@ DatabaseUpdater.PathToUpdates = "/home/espionage724/oregoncore/sql/updates"
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Get extractors and assemblers
+%%%%% Get extractors and assemblers from server to client computer
 %%%%%%%%%%%%%%%%%%%%
 
 scp espionage724@192.168.1.152:/home/espionage724/run/bin/map_extractor '/home/espionage724/Downloads'
@@ -173,7 +174,7 @@ mkdir vmaps mmaps
 %%%%% Compress dbc, maps, mmaps, and vmaps folders and send to server
 %%%%% 
 %%%%% Archive Size: 722.6 MB
-%%%%% Run from host
+%%%%% Do on WoW computer
 %%%%%%%%%%%%%%%%%%%%
 
 scp '/home/espionage724/Downloads/TBC-OC-content-2015-10-12.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
@@ -195,7 +196,8 @@ rm '/home/espionage724/run/bin/TBC-OC-content-2015-10-12.zip'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Create Databases
+%%%%% Create Databases, oregon user, and grant permissions
+%%%%% Do on MySQL computer
 %%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
@@ -204,24 +206,12 @@ CREATE DATABASE realmd;
 CREATE DATABASE characters;
 CREATE DATABASE world;
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Create User
-%%%%%%%%%%%%%%%%%%%%
-
 CREATE USER oregon;
 SET PASSWORD FOR 'oregon' = PASSWORD ('X');
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Grant Permissions
-%%%%%%%%%%%%%%%%%%%%
 
 GRANT ALL PRIVILEGES ON realmd.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
 GRANT ALL PRIVILEGES ON characters.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
 GRANT ALL PRIVILEGES ON world.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Finish
-%%%%%%%%%%%%%%%%%%%%
 
 FLUSH PRIVILEGES;
 FLUSH TABLES;
@@ -239,6 +229,7 @@ mysql -u oregon -p world < '/home/espionage724/oregoncore/sql/oregon_database.sq
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Change realmlist
+%%%%% Do on MySQL computer
 %%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
@@ -249,6 +240,7 @@ EXIT
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% SOAP Permissions
+%%%%% Do on MySQL computer
 %%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
@@ -332,6 +324,7 @@ chmod +x '/home/espionage724/realm.sh' '/home/espionage724/core.sh'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Main Administrator
+%%%%% Do from oregon-core console
 %%%%%%%%%%%%%%%%%%%%
 
 account create Espionage724 X
@@ -340,6 +333,7 @@ account set gmlevel Espionage724 3
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% SOAP
+%%%%% Do from oregon-core console
 %%%%%%%%%%%%%%%%%%%%
 
 account create soap X
