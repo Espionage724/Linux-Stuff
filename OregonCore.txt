@@ -45,15 +45,14 @@ sudo dnf install cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mari
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
-hg clone https://bitbucket.org/oregon/oregoncore oregoncore
-sync
+hg clone https://bitbucket.org/oregon/oregoncore oregoncore && sync
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Update OregonCore
 %%%%% Taken from Wiki, untested
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724/oregoncore' && hg pull && hg update && cd '/home/espionage724/oregoncore/sql/updates' && hg pull && hg update && cd '/home/espionage724'
+cd '/home/espionage724/oregoncore' && hg pull && hg update && cd '/home/espionage724/oregoncore/sql/updates' && hg pull && hg update && sync && cd '/home/espionage724'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -70,8 +69,7 @@ cd '/home/espionage724/oregoncore' && hg pull && hg update && cd '/home/espionag
 mkdir '/home/espionage724/build' '/home/espionage724/run'
 cd '/home/espionage724/build'
 cmake '/home/espionage724/oregoncore' -DTOOLS=1 -DUSE_SFMT=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
-make -j4 install
-sync
+make -j4 install && sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -161,7 +159,7 @@ mkdir vmaps mmaps
 '/home/espionage724/Downloads/movements_extractor' --bigBaseUnit true --threads 8 && sync
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Compress dbc, maps, mmaps, and vmaps folders for OregonCore, and send them to server
+%%%%% Compress dbc, maps, mmaps, and vmaps folders and send to server
 %%%%% 
 %%%%% Archive Size: 722.6 MB
 %%%%% Run from host
@@ -170,10 +168,82 @@ mkdir vmaps mmaps
 scp '/home/espionage724/Downloads/TBC-OC-content-2015-10-12.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Extract on OregonCore server
+%%%%% Extract Content
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/run/bin'
-unzip 'TBC-OC-content-2015-10-12.zip'
-sync
+unzip 'TBC-OC-content-2015-10-12.zip' && sync
 rm '/home/espionage724/run/bin/TBC-OC-content-2015-10-12.zip'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Database Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Create Databases
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE DATABASE realmd;
+CREATE DATABASE characters;
+CREATE DATABASE world;
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Create User
+%%%%%%%%%%%%%%%%%%%%
+
+CREATE USER oregon;
+SET PASSWORD FOR 'oregon' = PASSWORD ('X');
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Grant Permissions
+%%%%%%%%%%%%%%%%%%%%
+
+GRANT ALL PRIVILEGES ON realmd.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT ALL PRIVILEGES ON characters.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT ALL PRIVILEGES ON world.* to 'oregon'@'192.168.1.152' IDENTIFIED BY 'X';
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Finish
+%%%%%%%%%%%%%%%%%%%%
+
+FLUSH PRIVILEGES;
+FLUSH TABLES;
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Copy data to databases manually
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u oregon -p realmd < '/home/espionage724/oregoncore/sql/realmd.sql'
+mysql -u oregon -p characters < '/home/espionage724/oregoncore/sql/characters.sql'
+
+cd '/home/espionage724/oregoncore/sql' && unzip 'oregon_database.zip' && sync && cd '/home/espionage724'
+mysql -u oregon -p world < '/home/espionage724/oregoncore/sql/oregon_database.sql'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Change realmlist
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+update `realmd`.`realmlist` set `name` = 'RoE (TBC)' , `address` = 'realmofespionage.com' where `id` = '1';
+FLUSH TABLES;
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% SOAP Permissions
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE USER soap;
+SET PASSWORD FOR 'soap' = PASSWORD ('X');
+GRANT SELECT, UPDATE on realmd.account to 'soap'@'%' IDENTIFIED BY 'X';
+FLUSH PRIVILEGES;
+EXIT
