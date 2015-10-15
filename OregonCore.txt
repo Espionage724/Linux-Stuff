@@ -1,0 +1,133 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Firewall Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo firewall-cmd --permanent --add-port=3724/tcp
+sudo firewall-cmd --permanent --add-port=8085/tcp
+sudo firewall-cmd --permanent --add-port=7879/tcp
+sudo firewall-cmd --reload
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% ACE Repo
+%%%%% Needed for OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/devel:/libraries:/ACE:/micro/Fedora_22/devel:libraries:ACE:micro.repo
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Mercurial Management
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% OregonCore
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724'
+hg clone https://bitbucket.org/oregon/oregoncore oregoncore
+sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Update OregonCore
+%%%%% Taken from Wiki, untested
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/oregoncore' && hg pull && hg update && cd '/home/espionage724/oregoncore/sql/updates' && hg pull && hg update && cd '/home/espionage724'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Compile and Install
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Initial Compile
+%%%%%%%%%%%%%%%%%%%%
+
+mkdir '/home/espionage724/build' '/home/espionage724/run'
+cd '/home/espionage724/build'
+cmake '/home/espionage724/oregoncore' -DTOOLS=1 -DUSE_SFMT=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
+make -j4 install
+sync
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Configuration
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Copy Config Files
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724'
+cp '/home/espionage724/run/etc/oregonrealm.conf.dist' '/home/espionage724/run/etc/oregonrealm.conf'
+cp '/home/espionage724/run/etc/oregoncore.conf.dist' '/home/espionage724/run/etc/oregoncore.conf'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% oregon-realm Config
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run/etc/oregonrealm.conf'
+
+-------------------------
+WrongPass.MaxCount = 5
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% oregon-core Config
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run/etc/oregoncore.conf'
+
+-------------------------
+TargetPosRecalculateRange = 0.5
+MaxCoreStuckTime = 10
+GameType = 1
+RealmZone = 28
+DBC.Locale = 0
+Motd = "Welcome to the Realm of Espionage TBC server!"
+Server.LoginInfo = 1
+ChatFakeMessagePreventing = 1
+ChatStrictLinkChecking.Severity = 2
+SOAP.Enabled = 1
+SOAP.IP = 0.0.0.0
+SOAP.Port = 7879
+Warden.Enabled = 1
+Warden.Kick = 1
+DatabaseUpdater.Enabled = 1
+DatabaseUpdater.PathToUpdates = "/home/espionage724/oregoncore/sql/updates"
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Content Extractors/Patcher Management
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
