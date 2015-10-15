@@ -337,6 +337,7 @@ account set gmlevel Espionage724 3
 %%%%%%%%%%%%%%%%%%%%
 
 account create soap X
+account set addon soap 1
 account set gmlevel soap 3
 
 ####################################################################################################
