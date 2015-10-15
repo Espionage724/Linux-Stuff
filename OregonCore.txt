@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - OregonCore setup for Realm of Espionage
-- Commands below are for and only tested on Fedora 22 (can be adapted for use elsewhere of course)
+- Commands below are for and only tested on Fedora 22 Server (can be adapted for use elsewhere of course)
 - Assumes presense of three different machines, one for OregonCore, one for MySQL and/or webserver for SOAP, and one to run WoW on (desktop/client)
 - Do commands below on OregonCore computer unless otherwise specified
 
@@ -42,7 +42,7 @@ sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/dev
 %%%%% OregonCore
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel
+sudo dnf install cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel screen
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
