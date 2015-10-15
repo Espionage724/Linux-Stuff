@@ -135,6 +135,21 @@ DatabaseUpdater.Enabled = 1
 DatabaseUpdater.PathToUpdates = "/home/espionage724/oregoncore/sql/updates"
 -------------------------
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% oregon-core Test Config
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run/etc/oregoncore.conf'
+
+-------------------------
+StartPlayerLevel = 70
+StartPlayerMoney = 999999999
+Instance.IgnoreLevel = 1
+Instance.IgnoreRaid = 1
+-------------------------
+
+MAKE SURE TO REMOVE gmlevel FROM SOAPRegistration.php
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
