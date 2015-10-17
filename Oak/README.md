@@ -16,18 +16,6 @@ mt.sh
 - Startup script for Minetest server
 - Resides at /home/espionage724
 
-start.sh
-- auth, world, and mt systemd start script
-- Resides at /home/espionage724
-
-stop.sh
-- auth, world, and mt systemd stop script
-- Resides at /home/espionage724
-
-systemctl.sh
-- systemd fix script
-- Resides at /home/espionage724
-
 up.sh
 - General and TrinityCore update script
 - Resides at /home/espionage724
