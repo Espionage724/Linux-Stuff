@@ -783,6 +783,7 @@ sudo -u mumble-server nano '/etc/mumble-server.ini'
 -------------------------
 - Uncomment autoban
 welcometext="Welcome to the Realm of Espionage Mumble server!"
+host=0.0.0.0
 serverpassword=roemumble
 registerName=RoE (Mumble)
 registerUrl=https://www.realmofespionage.com
@@ -792,8 +793,6 @@ sendversion=True
 -------------------------
 
 sudo systemctl restart murmur
-
-TODO: Figure out why murmur doesn't allow connections on system reboot, but allows connections after service restart
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% SuperUser
