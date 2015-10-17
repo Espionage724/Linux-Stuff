@@ -103,6 +103,7 @@ DISTCC_HOSTS='192.168.1.150/8 localhost/1' make -j9 install && sync
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Copy Configuration Files
+%%%%% Only do for initial setup
 %%%%%%%%%%%%%%%%%%%%
 
 cp '/home/espionage724/run/etc/authserver.conf.dist' '/home/espionage724/run/etc/authserver.conf'
@@ -115,6 +116,7 @@ cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/et
 nano '/home/espionage724/run/etc/authserver.conf'
 
 -------------------------
+LoginDatabaseInfo = "192.168.1.153;3306;trinity;X;auth"
 WrongPass.MaxCount = 5
 Updates.EnableDatabases = 1
 -------------------------
@@ -379,6 +381,21 @@ rbac account grant soap 228 -1
 sudo nano '/etc/systemd/system/auth.service'
 
 -------------------------
+[Unit]
+Description=TrinityCore authserver
+After=network.target
+
+[Service]
+Type=forking
+User=espionage724
+Group=espionage724
+WorkingDirectory=/home/espionage724/run/bin
+ExecStart=/bin/bash /home/espionage724/auth.sh start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
@@ -388,10 +405,25 @@ sudo nano '/etc/systemd/system/auth.service'
 sudo nano '/etc/systemd/system/world.service'
 
 -------------------------
+[Unit]
+Description=TrinityCore worldserver
+After=network.target
+
+[Service]
+Type=forking
+User=espionage724
+Group=espionage724
+WorkingDirectory=/home/espionage724/run/bin
+ExecStart=/bin/bash /home/espionage724/world.sh start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Finalize
+%%%%% Enable Services
 %%%%%%%%%%%%%%%%%%%%
 
 sudo systemctl daemon-reload
