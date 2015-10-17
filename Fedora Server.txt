@@ -67,13 +67,6 @@ reboot
 
 bash <(curl -s https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Scripts/hosts.sh)
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Disable HDD power-saving and other performance hampering features
-%%%%% TODO: Cron this
-%%%%%%%%%%%%%%%%%%%%
-
-bash <(curl -s https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Scripts/hd.sh)
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
@@ -85,6 +78,64 @@ bash <(curl -s https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master
 SMTP
 smtp.sendgrid.net
 587/TLS
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Hard Drive Performance
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Get Identifier
+%%%%%%%%%%%%%%%%%%%%
+
+udisksctl status
+
+- Take Model and Serial, combine with dashes. The below:
+
+-------------------------
+MODEL                     REVISION  SERIAL               DEVICE
+--------------------------------------------------------------------------
+Maxtor 6L160P0            BAJ41G20  L3DQFKHH             sda 
+-------------------------
+
+is "Maxtor-6L160P0-L3DQFKHH"
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Add configuration
+%%%%% Change filename based on above info
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/udisks2/Maxtor-6L160P0-L3DQFKHH.conf'
+
+-------------------------
+[ATA]
+StandbyTimeout=0
+WriteCacheEnabled=true
+APMLevel=255
+AAMLevel=0
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Verify
+%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl status udisks2 -l
+
+-------------------------
+Oct 17 02:12:07 Oak udisksd[28577]: Applying configuration from /etc/udisks2/Maxtor-6L160P0-L3DQFKHH.conf to /dev/sda
+Oct 17 02:12:07 Oak udisksd[28577]: Set standby timer to disabled (value 0) on /dev/sda [Maxtor-6L160P0-L3DQFKHH]
+Oct 17 02:12:07 Oak udisksd[28577]: Set APM level to 255 on /dev/sda [Maxtor-6L160P0-L3DQFKHH]
+Oct 17 02:12:07 Oak udisksd[28577]: Set AAM value to 1 on /dev/sda [Maxtor-6L160P0-L3DQFKHH]
+Oct 17 02:12:07 Oak udisksd[28577]: Enabled Write-Cache on /dev/sda [Maxtor-6L160P0-L3DQFKHH]
+Oct 17 02:12:18 Oak udisksd[28577]: Applying configuration from /etc/udisks2/Maxtor-6L160P0-L3DQFKHH.conf to /dev/sda
+Oct 17 02:12:18 Oak udisksd[28577]: Set standby timer to disabled (value 0) on /dev/sda [Maxtor-6L160P0-L3DQFKHH]
+Oct 17 02:12:18 Oak udisksd[28577]: Set APM level to 255 on /dev/sda [Maxtor-6L160P0-L3DQFKHH]
+Oct 17 02:12:18 Oak udisksd[28577]: Set AAM value to 0 on /dev/sda [Maxtor-6L160P0-L3DQFKHH]
+Oct 17 02:12:18 Oak udisksd[28577]: Enabled Write-Cache on /dev/sda [Maxtor-6L160P0-L3DQFKHH]
+-------------------------
 
 ####################################################################################################
 ####################################################################################################
