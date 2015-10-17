@@ -165,21 +165,12 @@ Oct 17 02:12:18 Oak udisksd[28577]: Enabled Write-Cache on /dev/sda [Maxtor-6L16
 %%%%% 30000 is Minetest
 %%%%% 26000 is Xonotic
 %%%%% 
-%%%%% 3724 is authserver (3.3.5)
-%%%%% 8085 is worldserver (3.3.5)
-%%%%% 
 %%%%% 7879 is SOAP
 %%%%% 3632 is distcc
 %%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-port=30000/udp
 sudo firewall-cmd --permanent --add-port=26000/udp
-
-sudo firewall-cmd --permanent --add-port=3724/tcp
-sudo firewall-cmd --permanent --add-port=8085/tcp
-
-sudo firewall-cmd --permanent --add-port=7879/tcp
-sudo firewall-cmd --permanent --add-port=3632/tcp
 
 sudo firewall-cmd --reload
 
@@ -198,223 +189,7 @@ sudo firewall-cmd --reload
 %%%%% Runs Minetest server
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install minetest screen distcc wget p7zip autoconf libtool gcc gcc-c++ make cmake git ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% Git Management
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% 3.3.5
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724'
-git clone -b 3.3.5 https://github.com/TrinityCore/TrinityCore.git trinitycore
-sync
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Update 3.3.5
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724/trinitycore' && git pull origin 3.3.5 && cd '/home/espionage724' && sync
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% Configure MariaDB Client
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Tell TrinityCore where database is
-%%%%%%%%%%%%%%%%%%%%
-
-sudo nano '/etc/my.cnf.d/client.cnf'
-
--------------------------
-[client]
-host = 192.168.1.153
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% Compile and Install TrinityCore
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Initial Compile
-%%%%%%%%%%%%%%%%%%%%
-
-mkdir '/home/espionage724/build' '/home/espionage724/run' && cd '/home/espionage724/build'
-CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
-DISTCC_HOSTS='192.168.1.150/12 localhost/2' make -j14 install
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Recompile After Update
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724' && rm -R '/home/espionage724/build' && mkdir '/home/espionage724/build' && cd '/home/espionage724/build'
-CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
-DISTCC_HOSTS='192.168.1.150/12 localhost/2' make -j14
-
-sudo systemctl stop auth world
-make install
-sync
-sudo systemctl start auth world
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% Configure TrinityCore
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Copy Config Files
-%%%%%%%%%%%%%%%%%%%%
-
-cp '/home/espionage724/run/etc/authserver.conf.dist' '/home/espionage724/run/etc/authserver.conf'
-cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Edit authserver Config
-%%%%%%%%%%%%%%%%%%%%
-
-nano '/home/espionage724/run/etc/authserver.conf'
-
--------------------------
-WrongPass.MaxCount = 5
-Updates.EnableDatabases = 1
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Edit worldserver Config
-%%%%%%%%%%%%%%%%%%%%
-
-nano '/home/espionage724/run/etc/worldserver.conf'
-
--------------------------
-PlayerSave.Stats.MinLevel = 10
-mmap.enablePathFinding = 1
-TargetPosRecalculateRange = 0.5
-MaxCoreStuckTime = 10
-RealmZone = 28
-DBC.Locale = 0
-Motd = "Welcome to the Realm of Espionage Wrath of the Lich King server!"
-Server.LoginInfo = 1
-Updates.EnableDatabases = 7
-Warden.Enabled = 1
-Warden.ClientCheckFailAction = 2
-ChatFakeMessagePreventing = 1
-ChatStrictLinkChecking.Severity = 2
-PreserveCustomChannelDuration = 7
-Wintergrasp.Enable = 1
-SOAP.Enabled = 1
-SOAP.IP = "0.0.0.0"
-SOAP.Port = 7879
-CharDelete.KeepDays = 7
-PacketSpoof.Policy = 2
-PacketSpoof.BanMode = 2
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% Content Extractors/Patcher Management
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Get extractors and assemblers from server for TrinityCore
-%%%%%%%%%%%%%%%%%%%%
-
-scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor '/home/espionage724/Downloads'
-scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4extractor '/home/espionage724/Downloads'
-scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4assembler '/home/espionage724/Downloads'
-scp espionage724@192.168.1.152:/home/espionage724/run/bin/mmaps_generator '/home/espionage724/Downloads'
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Extract and Build Content
-%%%%% 
-%%%%% Use -h or /? flag to show available flags for mapextractor and vmap4extractor
-%%%%% mmaps_generator flags: https://github.com/TrinityCore/TrinityCore/tree/6.x/src/tools/mmaps_generator/Info
-%%%%% mmaps_generator took 32 minutes with WotLK
-%%%%% 
-%%%%% WotLK (12340): dbc = 90.3MB, maps = 519.6 MB, vmaps = 1.3GB, mmaps = 1.6GB
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft'
-mkdir vmaps mmaps
-
-'/home/espionage724/Downloads/mapextractor' -f 0 && sync
-'/home/espionage724/Downloads/vmap4extractor' -l && sync
-'/home/espionage724/Downloads/vmap4assembler' Buildings vmaps && sync
-'/home/espionage724/Downloads/mmaps_generator' --bigBaseUnit true --threads 8 && sync
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Compress dbc, maps, mmaps, and vmaps folders for 3.3.5, and send them to server
-%%%%% 
-%%%%% Archive Size: 1.3GB
-%%%%% Run from host
-%%%%%%%%%%%%%%%%%%%%
-
-scp '/home/espionage724/Downloads/WotLK-TC-content-2015-10-10.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Extract on 3.3.5 server
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724/run/bin'
-unzip 'WotLK-TC-content-2015-10-10.zip'
-sync
-rm '/home/espionage724/run/bin/WotLK-TC-content-2015-10-10.zip'
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% TrinityCore Database Setup
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Download TDB
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724/run/bin'
-wget https://github.com/TrinityCore/TrinityCore/releases/download/TDB335.59/TDB_full_335.59_2015_07_14.7z
-7za x '/home/espionage724/run/bin/TDB_full_335.59_2015_07_14.7z' 'TDB_full_world_335.59_2015_07_14.sql'
-rm '/home/espionage724/run/bin/TDB_full_335.59_2015_07_14.7z'
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% TrinityCore Accounts
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% 3.3.5
-%%%%%%%%%%%%%%%%%%%%
-
-account create Espionage724 X
-account set gmlevel Espionage724 3 -1
-
-account create soap X
-account set gmlevel soap 3 -1
-rbac account grant soap 219 -1
-rbac account grant soap 228 -1
+sudo dnf install minetest screen wget p7zip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -467,18 +242,6 @@ rm '/home/espionage724/.minetest/worlds/world/env_meta.txt'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% TrinityCore authserver
-%%%%%%%%%%%%%%%%%%%%
-
-sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/systemd/auth.service -O '/etc/systemd/system/auth.service'
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% TrinityCore worldserver
-%%%%%%%%%%%%%%%%%%%%
-
-sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/systemd/world.service -O '/etc/systemd/system/world.service'
-
-%%%%%%%%%%%%%%%%%%%%
 %%%%% minetestserver
 %%%%%%%%%%%%%%%%%%%%
 
@@ -495,8 +258,6 @@ sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/
 %%%%%%%%%%%%%%%%%%%%
 
 sudo systemctl daemon-reload
-sudo systemctl enable auth
-sudo systemctl enable world
 sudo systemctl enable mt
 sudo systemctl enable xonotic
 
@@ -897,75 +658,6 @@ cd '/var/www/html/blog/wp-content/plugins'
 sudo -u apache wget 'https://raw.githubusercontent.com/dimadin/disable-google-fonts/master/disable-google-fonts.php'
 
 - Enable plugin afterwards from wp-admin
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% TrinityCore
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Drop Databases
-%%%%%%%%%%%%%%%%%%%%
-
-mysql -u root -p
-
-DROP DATABASE auth;
-DROP DATABASE characters;
-DROP DATABASE world;
-DROP DATABASE hotfixes;
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Databases
-%%%%% Make sure to mysqldump first
-%%%%%%%%%%%%%%%%%%%%
-
-mysql -u root -p
-
-CREATE DATABASE auth;
-CREATE DATABASE characters;
-CREATE DATABASE world;
-
-CREATE USER trinity;
-SET PASSWORD FOR 'trinity' = PASSWORD ('X');
-
-GRANT USAGE ON auth.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
-GRANT USAGE ON characters.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
-GRANT USAGE ON world.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
-
-GRANT ALL PRIVILEGES ON auth.* to 'trinity'@'192.168.1.152';
-GRANT ALL PRIVILEGES ON characters.* to 'trinity'@'192.168.1.152';
-GRANT ALL PRIVILEGES ON world.* to 'trinity'@'192.168.1.152';
-
-FLUSH PRIVILEGES;
-FLUSH TABLES;
-EXIT
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% realmlist
-%%%%% Do this after starting authserver/bnetserver/oregoncore-realm once (in order to create table and data)
-%%%%% Not tested with authserver nor oregoncore-realm yet (should be fine though)
-%%%%%%%%%%%%%%%%%%%%
-
-mysql -u root -p
-
-update `auth`.`realmlist` set `name` = 'RoE (WotLK)' , `address` = 'realmofespionage.com' where `id` = '1';
-EXIT
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% SOAP Database
-%%%%% Do this after starting bnetserver once (in order to create table)
-%%%%%%%%%%%%%%%%%%%%
-
-mysql -u root -p
-
-CREATE USER soap;
-SET PASSWORD FOR 'soap' = PASSWORD ('X');
-GRANT SELECT, UPDATE on auth.account to 'soap'@'%' IDENTIFIED BY 'X';
-FLUSH PRIVILEGES;
-EXIT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
