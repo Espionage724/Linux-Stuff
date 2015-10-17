@@ -1073,6 +1073,7 @@ sudo firewall-cmd --reload
 sudo nano '/usr/lib/systemd/system/murmur.service'
 
 -------------------------
+After=network.target
 Restart=always
 RestartSec=5
 -------------------------
@@ -1090,10 +1091,12 @@ sudo -u mumble-server nano '/etc/mumble-server.ini'
 -------------------------
 - Uncomment autoban
 welcometext="Welcome to the Realm of Espionage Mumble server!"
-serverpassword=password
+serverpassword=roemumble
 registerName=RoE (Mumble)
 registerUrl=https://www.realmofespionage.com
 registerHostname=realmofespionage.com
+certrequired=True
+sendversion=True
 -------------------------
 
 sudo systemctl restart murmur
