@@ -43,7 +43,7 @@ sudo dnf install screen distcc wget p7zip autoconf libtool gcc gcc-c++ make cmak
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% 3.3.5
+%%%%% Initial Download
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724'
@@ -51,7 +51,8 @@ git clone -b 3.3.5 https://github.com/TrinityCore/TrinityCore.git trinitycore
 sync
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Update 3.3.5
+%%%%% Update
+%%%%% Included in up.sh
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/trinitycore' && git pull --rebase origin 3.3.5 && cd '/home/espionage724' && sync
@@ -236,7 +237,7 @@ EXIT
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% World Database Prepare
-%%%%% Needs updated when new world database releases
+%%%%% URL and filenames need updated when new world database releases
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/run/bin'
@@ -296,3 +297,111 @@ nano '/home/espionage724/world.sh'
 cd '/home/espionage724/run/bin'
 screen -dmS world '/home/espionage724/run/bin/worldserver'
 -------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Make Executable
+%%%%%%%%%%%%%%%%%%%%
+
+chmod +x '/home/espionage724/auth.sh' '/home/espionage724/world.sh'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Execute
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Information
+%%%%%%%%%%%%%%%%%%%%
+
+- Starts authserver and worldserver in a dedicated screen sessions and changes Terminal over to the screen session
+- To leave screen session without closing program; hit Ctrl + A and D (hold Ctrl and then press A and D at the same time)
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% authserver
+%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/auth.sh' && screen -r auth
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% worldserver
+%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/world.sh' && screen -r world
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Accounts
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Main Administrator
+%%%%% Do from worldserver console
+%%%%%%%%%%%%%%%%%%%%
+
+account create Espionage724 X
+account set gmlevel Espionage724 3 -1
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% SOAP
+%%%%% Do from worldserver console
+%%%%%%%%%%%%%%%%%%%%
+
+account create soap X
+account set gmlevel soap 3 -1
+rbac account grant soap 219 -1
+rbac account grant soap 228 -1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% systemd Startup Scripts
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Notes
+%%%%%%%%%%%%%%%%%%%%
+
+- Autostarts authserver and worldserver via scripts created above (and thus, in their own screen session)
+- Use auth and world for addressing service names for use with status and service management
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% authserver
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/systemd/system/auth.service'
+
+-------------------------
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% worldserver
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/systemd/system/world.service'
+
+-------------------------
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Finalize
+%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl daemon-reload
+sudo systemctl enable auth
+sudo systemctl enable world
+
+####################################################################################################
+####################################################################################################
+#####
+##### End
+#####
+####################################################################################################
+####################################################################################################
