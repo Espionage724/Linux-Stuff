@@ -1,0 +1,244 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Information
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- TrinityCore (3.3.5) setup for Realm of Espionage
+- Commands below are for and only tested on Fedora 22 Server (can be adapted for use elsewhere of course)
+- Assumes presense of three different machines, one for TrinityCore, one for MySQL and/or webserver for SOAP, and one to run WoW on (desktop/client)
+- Do commands below on TrinityCore computer unless otherwise specified
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Firewall Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo firewall-cmd --permanent --add-port=3724/tcp
+sudo firewall-cmd --permanent --add-port=8085/tcp
+sudo firewall-cmd --permanent --add-port=7879/tcp
+sudo firewall-cmd --reload
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install screen distcc wget p7zip autoconf libtool gcc gcc-c++ make cmake git ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Git Management
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% 3.3.5
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724'
+git clone -b 3.3.5 https://github.com/TrinityCore/TrinityCore.git trinitycore
+sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Update 3.3.5
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/trinitycore' && git pull --rebase origin 3.3.5 && cd '/home/espionage724' && sync
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Configure MariaDB Client
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Tell TrinityCore where MySQL server is
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/my.cnf.d/client.cnf'
+
+-------------------------
+[client]
+host = 192.168.1.153
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Compile and Install TrinityCore
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Initial Compile
+%%%%% Use up.sh for later recompiles
+%%%%%%%%%%%%%%%%%%%%
+
+mkdir '/home/espionage724/build' '/home/espionage724/run' && cd '/home/espionage724/build'
+CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10' && sync
+DISTCC_HOSTS='192.168.1.150/12 localhost/1' make -j13 install && sync
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Configure TrinityCore
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Copy Configuration Files
+%%%%%%%%%%%%%%%%%%%%
+
+cp '/home/espionage724/run/etc/authserver.conf.dist' '/home/espionage724/run/etc/authserver.conf'
+cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/etc/worldserver.conf'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% authserver Configuration
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run/etc/authserver.conf'
+
+-------------------------
+WrongPass.MaxCount = 5
+Updates.EnableDatabases = 1
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% worldserver Configuration
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run/etc/worldserver.conf'
+
+-------------------------
+PlayerSave.Stats.MinLevel = 10
+mmap.enablePathFinding = 1
+TargetPosRecalculateRange = 0.5
+MaxCoreStuckTime = 10
+RealmZone = 28
+DBC.Locale = 0
+Motd = "Welcome to the Realm of Espionage Wrath of the Lich King server!"
+Server.LoginInfo = 1
+Updates.EnableDatabases = 7
+Warden.Enabled = 1
+Warden.ClientCheckFailAction = 2
+ChatFakeMessagePreventing = 1
+ChatStrictLinkChecking.Severity = 2
+PreserveCustomChannelDuration = 7
+Wintergrasp.Enable = 1
+SOAP.Enabled = 1
+SOAP.IP = "0.0.0.0"
+SOAP.Port = 7879
+CharDelete.KeepDays = 7
+PacketSpoof.Policy = 2
+PacketSpoof.BanMode = 2
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Content Extractors/Patcher Management
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Copy extractors and assemblers from TrinityCore computer to Client computer
+%%%%% Run on Client
+%%%%%%%%%%%%%%%%%%%%
+
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/mapextractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4extractor '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/vmap4assembler '/home/espionage724/Downloads'
+scp espionage724@192.168.1.152:/home/espionage724/run/bin/mmaps_generator '/home/espionage724/Downloads'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract and Build Content
+%%%%%
+%%%%% Run on Client
+%%%%% 
+%%%%% Use -h or /? flag to show available flags for mapextractor and vmap4extractor
+%%%%% mmaps_generator flags: https://github.com/TrinityCore/TrinityCore/tree/6.x/src/tools/mmaps_generator/Info
+%%%%% mmaps_generator took 32 minutes with WotLK
+%%%%% 
+%%%%% WotLK (12340): dbc = 90.3MB, maps = 519.6 MB, vmaps = 1.3GB, mmaps = 1.6GB
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft'
+mkdir vmaps mmaps
+
+'/home/espionage724/Downloads/mapextractor' -f 0 && sync
+'/home/espionage724/Downloads/vmap4extractor' -l && sync
+'/home/espionage724/Downloads/vmap4assembler' Buildings vmaps && sync
+'/home/espionage724/Downloads/mmaps_generator' --bigBaseUnit true --threads 8 && sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Compress dbc, maps, mmaps, and vmaps folders for 3.3.5, and send them to server
+%%%%% 
+%%%%% Archive Size: 1.3GB
+%%%%% Run on Client
+%%%%%%%%%%%%%%%%%%%%
+
+scp '/home/espionage724/Downloads/WotLK-TC-content-2015-10-10.zip' espionage724@192.168.1.152:/home/espionage724/run/bin
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract Content
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/run/bin'
+unzip 'WotLK-TC-content-2015-10-10.zip'
+sync
+rm '/home/espionage724/run/bin/WotLK-TC-content-2015-10-10.zip'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Database Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Create Databases, trinity user, and grant permissions
+%%%%% Do on MySQL computer
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE DATABASE auth;
+CREATE DATABASE characters;
+CREATE DATABASE world;
+
+CREATE USER trinity;
+SET PASSWORD FOR 'trinity' = PASSWORD ('X');
+
+GRANT ALL PRIVILEGES ON auth.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT ALL PRIVILEGES ON characters.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
+GRANT ALL PRIVILEGES ON world.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'X';
+
+FLUSH PRIVILEGES;
+FLUSH TABLES;
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Preperation
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/run/bin'
+wget https://github.com/TrinityCore/TrinityCore/releases/download/TDB335.59/TDB_full_335.59_2015_07_14.7z
+7za x '/home/espionage724/run/bin/TDB_full_335.59_2015_07_14.7z' 'TDB_full_world_335.59_2015_07_14.sql'
+rm '/home/espionage724/run/bin/TDB_full_335.59_2015_07_14.7z'
