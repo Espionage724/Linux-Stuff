@@ -203,8 +203,7 @@ scp '/home/espionage724/Downloads/WotLK-TC-content-2015-10-10.zip' espionage724@
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/run/bin'
-unzip 'WotLK-TC-content-2015-10-10.zip'
-sync
+unzip 'WotLK-TC-content-2015-10-10.zip' && sync
 rm '/home/espionage724/run/bin/WotLK-TC-content-2015-10-10.zip'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
