@@ -119,6 +119,7 @@ nano '/home/espionage724/run/etc/authserver.conf'
 LoginDatabaseInfo = "192.168.1.153;3306;trinity;X;auth"
 WrongPass.MaxCount = 5
 Updates.EnableDatabases = 1
+Updates.CleanDeadRefMaxCount = -1
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
@@ -128,19 +129,27 @@ Updates.EnableDatabases = 1
 nano '/home/espionage724/run/etc/worldserver.conf'
 
 -------------------------
+LoginDatabaseInfo     = "192.168.1.153;3306;trinity;X;auth"
+WorldDatabaseInfo     = "192.168.1.153;3306;trinity;X;world"
+CharacterDatabaseInfo = "192.168.1.153;3306;trinity;X;characters"
+Compression = 9
 PlayerSave.Stats.MinLevel = 10
 mmap.enablePathFinding = 1
 TargetPosRecalculateRange = 0.5
 MaxCoreStuckTime = 10
+CleanCharacterDB = 1
+PersistentCharacterCleanFlags = 14
 RealmZone = 28
 DBC.Locale = 0
 Motd = "Welcome to the Realm of Espionage Wrath of the Lich King server!"
 Server.LoginInfo = 1
 Updates.EnableDatabases = 7
+Updates.CleanDeadRefMaxCount = -1
 Warden.Enabled = 1
 Warden.ClientCheckFailAction = 2
 ChatFakeMessagePreventing = 1
 ChatStrictLinkChecking.Severity = 2
+PreserveCustomChannels = 0
 PreserveCustomChannelDuration = 7
 Wintergrasp.Enable = 1
 SOAP.Enabled = 1
