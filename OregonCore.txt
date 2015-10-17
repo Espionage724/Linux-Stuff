@@ -44,6 +44,13 @@ sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/dev
 
 sudo dnf install cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel screen
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Client
+%%%%% Needs ACE (and thus, the ACE repo above) for one or more of the content extractors
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install ace
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
@@ -354,6 +361,78 @@ account set gmlevel Espionage724 3
 account create soap X
 account set addon soap 1
 account set gmlevel soap 3
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% systemd Startup Scripts
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Notes
+%%%%%%%%%%%%%%%%%%%%
+
+- Autostarts oregon-realm and oregon-core via scripts created above (and thus, in their own screen session)
+- Use realm and core for addressing service names for use with status and service management
+- Copy and pasted from TC 3.3.5 setup and altered for OC; so as a warning, this is untested as-is
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% oregon-realm
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/systemd/system/realm.service'
+
+-------------------------
+[Unit]
+Description=OregonCore Realm
+After=network.target
+
+[Service]
+Type=forking
+User=espionage724
+Group=espionage724
+WorkingDirectory=/home/espionage724/run/bin
+ExecStart=/bin/bash /home/espionage724/realm.sh start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% oregon-core
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/systemd/system/core.service'
+
+-------------------------
+[Unit]
+Description=OregonCore Core
+After=network.target
+
+[Service]
+Type=forking
+User=espionage724
+Group=espionage724
+WorkingDirectory=/home/espionage724/run/bin
+ExecStart=/bin/bash /home/espionage724/core.sh start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Enable Services
+%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl daemon-reload
+sudo systemctl enable realm
+sudo systemctl enable core
 
 ####################################################################################################
 ####################################################################################################
