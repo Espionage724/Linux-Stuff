@@ -21,6 +21,7 @@
 
 sudo firewall-cmd --permanent --add-port=3724/tcp
 sudo firewall-cmd --permanent --add-port=8085/tcp
+sudo firewall-cmd --permanent --add-port=3632/tcp
 sudo firewall-cmd --permanent --add-port=7879/tcp
 sudo firewall-cmd --reload
 
@@ -55,7 +56,7 @@ sync
 %%%%% Included in up.sh
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724/trinitycore' && git pull --rebase origin 3.3.5 && cd '/home/espionage724' && sync
+cd '/home/espionage724/trinitycore' && git pull origin 3.3.5 && cd '/home/espionage724' && sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -326,7 +327,7 @@ chmod +x '/home/espionage724/auth.sh' '/home/espionage724/world.sh'
 %%%%% Information
 %%%%%%%%%%%%%%%%%%%%
 
-- Starts authserver and worldserver in a dedicated screen sessions and changes Terminal over to the screen session
+- Starts authserver and worldserver in dedicated screen sessions and changes Terminal over to the screen session
 - To leave screen session without closing program; hit Ctrl + A and D (hold Ctrl and then press A and D at the same time)
 
 %%%%%%%%%%%%%%%%%%%%
