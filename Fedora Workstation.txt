@@ -252,7 +252,7 @@ sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-we
 %%%%% General
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn.x86_64 libtxc_dxtn.i686 unar aria2 java-1.8.0-openjdk hdparm mediainfo pidgin gnome-tweak-tool lm_sensors gimp
+sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-vdpau-drivers libtxc_dxtn.x86_64 libtxc_dxtn.i686 unar aria2 java-1.8.0-openjdk hdparm mediainfo pidgin gnome-tweak-tool lm_sensors gimp xonotic
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Hammerstorm
@@ -461,7 +461,7 @@ pkexec env DISPLAY=$DISPLAY gedit '/usr/lib/systemd/system/distccd.service'
 
 -------------------------
 Remove $OPTIONS
---allow 192.168.1.152
+--allow 192.168.1.152  --jobs 12
 -------------------------
 
 sudo systemctl daemon-reload
@@ -526,6 +526,8 @@ rm '/home/espionage724/Wine Prefixes/EyeQ/drive_c/users/Public/Start Menu/Progra
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% World of Warcraft
+%%%%% 
+%%%%% Enable CSMT and EAX in winecfg
 %%%%% 
 %%%%% Good for Classic, WotLK, and WoD
 %%%%% Copy WoW folder to Downloads prior to starting
@@ -670,6 +672,12 @@ Icon=3A9C_SQLyogCommunity.0
 %%%%%%%%%%%%%%%%%%%%
 
 /home/espionage724/.local/share/applications
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% yum/dnf Repos
+%%%%%%%%%%%%%%%%%%%%
+
+/etc/yum.repos.d
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
