@@ -1,11 +1,11 @@
 # Update Joomla
 cd '/var/www/html'
-sudo -u apache git pull --rebase origin staging
+sudo -u apache git pull origin staging
 
 # Update and do maintenance on GNU social
 cd '/var/www/html/social'
 sudo -u apache '/var/www/html/social/scripts/stopdaemons.sh'
-sudo -u apache git pull --rebase origin nightly
+sudo -u apache git pull origin nightly
 sudo -u apache php '/var/www/html/social/scripts/upgrade.php'
 sudo -u apache php '/var/www/html/social/scripts/remove_duplicate_file_urls.php' -y
 sudo -u apache php '/var/www/html/social/scripts/clean_thumbnails.php' -y
@@ -15,11 +15,11 @@ sudo -u apache '/var/www/html/social/scripts/startdaemons.sh'
 
 # Update WordPress
 cd '/var/www/html/blog'
-sudo -u apache git pull --rebase origin master
+sudo -u apache git pull origin master
 
 # Update MyBB
 cd '/var/www/html/forums'
-sudo -u apache git pull --rebase origin feature
+sudo -u apache git pull origin feature
 
 # Update distro
 sudo dnf update
