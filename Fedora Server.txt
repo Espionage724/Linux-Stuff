@@ -163,14 +163,12 @@ Oct 17 02:12:18 Oak udisksd[28577]: Enabled Write-Cache on /dev/sda [Maxtor-6L16
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% 30000 is Minetest
-%%%%% 26000 is Xonotic
 %%%%% 
 %%%%% 7879 is SOAP
 %%%%% 3632 is distcc
 %%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-port=30000/udp
-sudo firewall-cmd --permanent --add-port=26000/udp
 
 sudo firewall-cmd --reload
 
@@ -248,54 +246,11 @@ rm '/home/espionage724/.minetest/worlds/world/env_meta.txt'
 sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/systemd/mt.service -O '/etc/systemd/system/mt.service'
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Xonotic
-%%%%%%%%%%%%%%%%%%%%
-
-sudo wget https://raw.githubusercontent.com/Espionage724/Linux-Stuff/master/Oak/systemd/xonotic.service -O '/etc/systemd/system/xonotic.service'
-
-%%%%%%%%%%%%%%%%%%%%
 %%%%% General
 %%%%%%%%%%%%%%%%%%%%
 
 sudo systemctl daemon-reload
 sudo systemctl enable mt
-sudo systemctl enable xonotic
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% Xonotic
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Files
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724'
-wget http://dl.xonotic.org/xonotic-0.8.1.zip
-unzip xonotic-0.8.1.zip
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Configuration
-%%%%%%%%%%%%%%%%%%%%
-
-cp '/home/espionage724/Xonotic/server/server.cfg' '/home/espionage724/.xonotic/data/server.cfg'
-nano '/home/espionage724/.xonotic/data/server.cfg'
-
--------------------------
-sv_public 1
-sv_status_privacy 1
-hostname "Realm of Espionage Xonotic Server ($g_xonoticversion)"
-sv_motd "Welcome to the Realm of Espionage Xonotic server!" 
-maxplayers 16
-gametype dm
-skill 9
-minplayers 16
-bot_prefix [BOT]
-g_maplist_check_waypoints 1
--------------------------
 
 ####################################################################################################
 ####################################################################################################
