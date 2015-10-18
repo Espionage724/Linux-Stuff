@@ -347,7 +347,7 @@ chmod +x '/home/espionage724/bnet.sh' '/home/espionage724/world.sh'
 %%%%% Information
 %%%%%%%%%%%%%%%%%%%%
 
-- Starts authserver and worldserver in a dedicated screen sessions and changes Terminal over to the screen session
+- Starts authserver and worldserver in dedicated screen sessions and changes Terminal over to the screen session
 - To leave screen session without closing program; hit Ctrl + A and D (hold Ctrl and then press A and D at the same time)
 
 %%%%%%%%%%%%%%%%%%%%
