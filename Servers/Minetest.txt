@@ -1,0 +1,175 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Information
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Minetest setup for Realm of Espionage
+- Commands below are for and only tested on Fedora 22 Server (can be adapted for use elsewhere of course)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Firewall Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo firewall-cmd --permanent --add-port=30000/udp
+sudo firewall-cmd --reload
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install screen minetest
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Configure Minetest
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Server setup
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/.minetest/minetest.conf'
+
+-------------------------
+name = Espionage724
+port = 30000
+server_name = RoE (MT)
+server_description = Realm of Espionage Minetest server
+server_address = realmofespionage.com
+server_url = https://www.realmofespionage.com
+server_announce = 1
+serverlist_url = servers.minetest.net
+default_game = minetest
+motd = Welcome to the Realm of Espionage Minetest server!
+default_password = roemt
+enable_pvp = true
+disallow_empty_password = true
+disable_anticheat = false
+kick_msg_shutdown = Server is shutting down, this is likely normal and for maintenance reasons.
+kick_msg_crash =  The server has crashed, and this is not normal. Get a hold of Espionage724 right away :p
+enable_ipv6 = false
+secure.enable_security = true
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Fix "EnvArgsEnd not found!" (prevents server startup after crash)
+%%%%% 
+%%%%% Happens because of MT not being properly shutdown, causing corruption
+%%%%% Doesn't delete anything important
+%%%%%%%%%%%%%%%%%%%%
+
+rm '/home/espionage724/.minetest/worlds/world/env_meta.txt'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Script Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Minetest
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/mt.sh'
+
+-------------------------
+cd '/home/espionage724'
+screen -dmS mt '/usr/bin/minetestserver'
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Make Executable
+%%%%%%%%%%%%%%%%%%%%
+
+chmod +x '/home/espionage724/mt.sh'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Execute
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Information
+%%%%%%%%%%%%%%%%%%%%
+
+- Starts Minetests (server) in dedicated screen session and changes Terminal over to the screen session
+- To leave screen session without closing program; hit Ctrl + A and D (hold Ctrl and then press A and D at the same time)
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Minetest
+%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/mt.sh' && screen -r mt
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% systemd Startup Scripts
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Notes
+%%%%%%%%%%%%%%%%%%%%
+
+- Autostarts Minetest (server) via script created above (and thus, in its own screen session)
+- Use mt for addressing service name for use with status and service management
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Minetest
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/systemd/system/mt.service'
+
+-------------------------
+[Unit]
+Description=minetestserver
+After=network.target
+
+[Service]
+Type=forking
+User=espionage724
+Group=espionage724
+WorkingDirectory=/home/espionage724
+ExecStart=/bin/bash /home/espionage724/mt.sh start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Enable Service
+%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl daemon-reload
+sudo systemctl enable mt
+
+####################################################################################################
+####################################################################################################
+#####
+##### End
+#####
+####################################################################################################
+####################################################################################################
