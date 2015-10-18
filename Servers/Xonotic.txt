@@ -1,0 +1,166 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Information
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Xonotic setup for Realm of Espionage
+- Commands below are for and only tested on Fedora 22 Server (can be adapted for use elsewhere of course)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Firewall Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo firewall-cmd --permanent --add-port=26000/udp
+sudo firewall-cmd --reload
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install screen wget p7zip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Xonotic
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Download
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724'
+wget http://dl.xonotic.org/xonotic-0.8.1.zip
+unzip xonotic-0.8.1.zip
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Configuration
+%%%%%%%%%%%%%%%%%%%%
+
+cp '/home/espionage724/Xonotic/server/server.cfg' '/home/espionage724/.xonotic/data/server.cfg'
+nano '/home/espionage724/.xonotic/data/server.cfg'
+
+-------------------------
+sv_public 1
+sv_status_privacy 1
+hostname "Realm of Espionage Xonotic Server ($g_xonoticversion)"
+sv_motd "Welcome to the Realm of Espionage Xonotic server!" 
+maxplayers 16
+gametype dm
+skill 9
+minplayers 16
+bot_prefix [BOT]
+g_maplist_check_waypoints 1
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Script Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Xonotic
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/xonotic.sh'
+
+-------------------------
+screen -dmS xonotic '/home/espionage724/Xonotic/xonotic-linux-dedicated.sh'
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Make Executable
+%%%%%%%%%%%%%%%%%%%%
+
+chmod +x '/home/espionage724/xonotic.sh'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Execute
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Information
+%%%%%%%%%%%%%%%%%%%%
+
+- Starts Xonotic (dedicated server) in a dedicated screen session and changes Terminal over to the screen session
+- To leave screen session without closing program; hit Ctrl + A and D (hold Ctrl and then press A and D at the same time)
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Xonotic
+%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/xonotic.sh' && screen -r xonotic
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% systemd Startup Scripts
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Notes
+%%%%%%%%%%%%%%%%%%%%
+
+- Autostarts Xonotic (dedicated server) via script created above (and thus, in its own screen session)
+- Use xonotic for addressing service name for use with status and service management
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Xonotic
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/systemd/system/xonotic.service'
+
+-------------------------
+[Unit]
+Description=Xonotic
+After=network.target
+
+[Service]
+Type=forking
+User=espionage724
+Group=espionage724
+WorkingDirectory=/home/espionage724
+ExecStart=/bin/bash /home/espionage724/xonotic.sh start
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Enable Service
+%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl daemon-reload
+sudo systemctl enable xonotic
+
+####################################################################################################
+####################################################################################################
+#####
+##### End
+#####
+####################################################################################################
+####################################################################################################
