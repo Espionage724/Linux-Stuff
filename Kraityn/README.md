@@ -1,6 +1,3 @@
-Deprecated
-- Folder containing outdated and/or unused scripts
-
 b.sh
 - Database backup script
 - Resides at /home/espionage724
