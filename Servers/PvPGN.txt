@@ -98,6 +98,10 @@ DISTCC_HOSTS='192.168.1.150/8 localhost/1' make -j9 && sync && sudo make install
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% bnetd.conf
+%%%%%%%%%%%%%%%%%%%%
+
 nano '/home/espionage724/run-pvpgn/etc/pvpgn/bnetd.conf'
 
 -------------------------
@@ -111,13 +115,47 @@ contact_email = "X"
 servername = "RoE (PvPGN)"
 -------------------------
 
-nano '/home/espionage724/run-pvpgn/etc/pvpgn/bnetd.conf'
+%%%%%%%%%%%%%%%%%%%%
+%%%%% d2cs.conf
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run-pvpgn/etc/pvpgn/d2cs.conf'
 
 -------------------------
-motd                    =       "Welcome to the Realm of Espionage Battle.net s$
+motd                    =       "Welcome to the Realm of Espionage Battle.net server!"
 -------------------------
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% realm.conf
+%%%%%%%%%%%%%%%%%%%%
 
+nano '/home/espionage724/run-pvpgn/etc/pvpgn/realm.conf'
+
+-------------------------
+"RoE (Closed)"                  "PvPGN Closed Realm"            realmofespionage.com:6113
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% realm.conf
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run-pvpgn/etc/pvpgn/d2cs.conf'
+
+-------------------------
+realmname               =       "RoE (Closed)"
+gameservlist            =       realmofespionage.com
+bnetdaddr               =       realmofespionage.com:6112
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% d2dbs.conf
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run-pvpgn/etc/pvpgn/d2dbs.conf'
+
+-------------------------
+gameservlist            =       realmofespionage.com
+-------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
