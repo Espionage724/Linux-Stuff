@@ -8,6 +8,10 @@ auth.sh
 - Startup script for authserver (TrinityCore)
 - Resides at /home/espionage724
 
+in.sh
+- Installs TrinityCore and PvPGN after compilation
+- Resides at /home/espionage724
+
 minetest.conf
 - Minetest server configuration
 - Resides at /home/espionage724/.minetest
