@@ -19,9 +19,26 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-TODO: FIX THIS
+%%%%%%%%%%%%%%%%%%%%
+%%%%% WarCraft III
+%%%%%%%%%%%%%%%%%%%%
 
-6112 6113
+sudo firewall-cmd --permanent --add-port=6112/tcp
+sudo firewall-cmd --permanent --add-port=6200/tcp
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Untested
+%%%%%%%%%%%%%%%%%%%%
+
+sudo firewall-cmd --permanent --add-port=6113/tcp
+sudo firewall-cmd --permanent --add-port=6114/tcp
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Notes
+%%%%%%%%%%%%%%%%%%%%
+
+- There is likely more ports for other games
+- Anything under untested just looked important while checking through config files, and may or may not be needed
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -93,6 +110,14 @@ contact_name = "Espionage724"
 contact_email = "X"
 servername = "RoE (PvPGN)"
 -------------------------
+
+nano '/home/espionage724/run-pvpgn/etc/pvpgn/bnetd.conf'
+
+-------------------------
+motd                    =       "Welcome to the Realm of Espionage Battle.net s$
+-------------------------
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
