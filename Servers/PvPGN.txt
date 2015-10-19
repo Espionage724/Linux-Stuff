@@ -25,6 +25,7 @@
 
 sudo firewall-cmd --permanent --add-port=6112/tcp
 sudo firewall-cmd --permanent --add-port=6200/tcp
+sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Untested
@@ -116,35 +117,26 @@ servername = "RoE (PvPGN)"
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% d2cs.conf
-%%%%%%%%%%%%%%%%%%%%
-
-nano '/home/espionage724/run-pvpgn/etc/pvpgn/d2cs.conf'
-
--------------------------
-motd                    =       "Welcome to the Realm of Espionage Battle.net server!"
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%
 %%%%% realm.conf
 %%%%%%%%%%%%%%%%%%%%
 
 nano '/home/espionage724/run-pvpgn/etc/pvpgn/realm.conf'
 
 -------------------------
-"RoE (Closed)"                  "PvPGN Closed Realm"            realmofespionage.com:6113
+"RoE (Closed)"                  "PvPGN Closed Realm"            192.168.1.152:6113
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% realm.conf
+%%%%% d2cs.conf
 %%%%%%%%%%%%%%%%%%%%
 
 nano '/home/espionage724/run-pvpgn/etc/pvpgn/d2cs.conf'
 
 -------------------------
 realmname               =       "RoE (Closed)"
-gameservlist            =       realmofespionage.com
-bnetdaddr               =       realmofespionage.com:6112
+gameservlist            =       192.168.1.152
+bnetdaddr               =       192.168.1.152:6112
+motd                    =       "Welcome to the Realm of Espionage Battle.net server!"
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
@@ -154,7 +146,22 @@ bnetdaddr               =       realmofespionage.com:6112
 nano '/home/espionage724/run-pvpgn/etc/pvpgn/d2dbs.conf'
 
 -------------------------
-gameservlist            =       realmofespionage.com
+gameservlist            =       192.168.1.152
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% address_translation.conf
+%%%%% Likely not correct
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/run-pvpgn/etc/pvpgn/address_translation.conf.conf'
+
+-------------------------
+192.168.1.152:6200      realmofespionage.com:6200      192.168.1.1/24           ANY
+192.168.1.152:6112      realmofespionage.com:6118      192.168.1.1/24           ANY
+192.168.1.152:6113      realmofespionage.com:6113      192.168.1.1/24           ANY
+192.168.1.152:4000      realmofespionage.com:4000      192.168.1.1/24           ANY
+192.168.1.152:4005      realmofespionage.com:4005      192.168.1.1/24           ANY
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
