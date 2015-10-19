@@ -42,7 +42,7 @@ sudo dnf config-manager --add-repo http://download.opensuse.org/repositories/dev
 %%%%% OregonCore
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install cpp gcc gcc-c++ make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel screen
+sudo dnf install cpp gcc gcc-c++ clang make cmake mercurial openssl openssl-devel mariadb-devel mariadb mariadb-libs readline readline-devel compat-readline5-devel compat-readline5 zlib-devel binutils-devel ace-devel screen
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Client
@@ -87,7 +87,7 @@ cd '/home/espionage724/oregoncore' && hg pull && hg update && cd '/home/espionag
 
 mkdir '/home/espionage724/build' '/home/espionage724/run'
 cd '/home/espionage724/build'
-cmake '/home/espionage724/oregoncore' -DTOOLS=1 -DUSE_SFMT=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
+CC='clang' CXX='clang++' cmake '/home/espionage724/oregoncore' -DTOOLS=1 -DUSE_SFMT=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10'
 make -j4 install && sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
