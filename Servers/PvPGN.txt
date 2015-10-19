@@ -80,5 +80,5 @@ cd '/home/espionage724/pvpgn' && git pull origin master && cd '/home/espionage72
 %%%%%%%%%%%%%%%%%%%%
 
 mkdir '/home/espionage724/build-pvpgn' '/home/espionage724/run-pvpgn' && cd '/home/espionage724/build-pvpgn'
-CC='distcc clang' CXX='distcc clang++' cmake '/home/espionage724/pvpgn' -DCMAKE_INSTALL_PREFIX='/home/espionage724/run-pvpgn' -DWITH_MYSQL=1 -DWITH_LUA=1 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10' && sync
-DISTCC_HOSTS='192.168.1.150/8 localhost/1' make -j9 install && sync
+CC='distcc clang' CXX='distcc clang++' cmake '/home/espionage724/pvpgn' -DCMAKE_INSTALL_PREFIX='/home/espionage724/run-pvpgn' -DWITH_MYSQL=1 -DWITH_LUA=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10' && sync
+DISTCC_HOSTS='192.168.1.150/8 localhost/1' make -j9 && sync
