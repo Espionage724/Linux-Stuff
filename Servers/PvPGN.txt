@@ -8,8 +8,7 @@
 
 - PvPGN setup for Realm of Espionage
 - Commands below are for and only tested on Fedora 22 Server (can be adapted for use elsewhere of course)
-- Assumes presense of three different machines, one for TrinityCore, one for MySQL, and one to run games on
-- Guide is being written as I proceed; may or may not produce something usable and could be ditched altogether if it doesn't work out:p
+- Assumes presense of two different machines, one for PvPGN, and one for MySQL
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,27 +18,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%% WarCraft III
-%%%%%%%%%%%%%%%%%%%%
-
 sudo firewall-cmd --permanent --add-port=6112/tcp
 sudo firewall-cmd --permanent --add-port=6200/tcp
 sudo firewall-cmd --reload
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Untested
-%%%%%%%%%%%%%%%%%%%%
-
-sudo firewall-cmd --permanent --add-port=6113/tcp
-sudo firewall-cmd --permanent --add-port=6114/tcp
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Notes
-%%%%%%%%%%%%%%%%%%%%
-
-- There is likely more ports for other games
-- Anything under untested just looked important while checking through config files, and may or may not be needed
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -100,6 +81,13 @@ DISTCC_HOSTS='192.168.1.150/8 localhost/1' make -j9 && sync && sudo make install
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% Notes
+%%%%%%%%%%%%%%%%%%%%
+
+- Tested working with WarCraft III and Diablo II
+- This only sets up a Diablo II open server; closed needs much more setup and win32-only D2GS
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% bnetd.conf
 %%%%%%%%%%%%%%%%%%%%
 
@@ -113,55 +101,7 @@ description = "unknown"
 url = "https://www.realmofespionage.com"
 contact_name = "Espionage724"
 contact_email = "X"
-servername = "RoE (PvPGN)"
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% realm.conf
-%%%%%%%%%%%%%%%%%%%%
-
-nano '/home/espionage724/run-pvpgn/etc/pvpgn/realm.conf'
-
--------------------------
-"RoE (Closed)"                  "PvPGN Closed Realm"            192.168.1.152:6113
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% d2cs.conf
-%%%%%%%%%%%%%%%%%%%%
-
-nano '/home/espionage724/run-pvpgn/etc/pvpgn/d2cs.conf'
-
--------------------------
-realmname               =       "RoE (Closed)"
-gameservlist            =       192.168.1.152
-bnetdaddr               =       192.168.1.152:6112
-motd                    =       "Welcome to the Realm of Espionage Battle.net server!"
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% d2dbs.conf
-%%%%%%%%%%%%%%%%%%%%
-
-nano '/home/espionage724/run-pvpgn/etc/pvpgn/d2dbs.conf'
-
--------------------------
-gameservlist            =       192.168.1.152
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% address_translation.conf
-%%%%% Likely not correct
-%%%%%%%%%%%%%%%%%%%%
-
-nano '/home/espionage724/run-pvpgn/etc/pvpgn/address_translation.conf.conf'
-
--------------------------
-192.168.1.152:6200      realmofespionage.com:6200      192.168.1.1/24           ANY
-192.168.1.152:6112      realmofespionage.com:6118      192.168.1.1/24           ANY
-192.168.1.152:6113      realmofespionage.com:6113      192.168.1.1/24           ANY
-192.168.1.152:4000      realmofespionage.com:4000      192.168.1.1/24           ANY
-192.168.1.152:4005      realmofespionage.com:4005      192.168.1.1/24           ANY
+servername = "RoE (Battle.net)"
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
