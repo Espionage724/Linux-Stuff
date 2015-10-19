@@ -258,7 +258,7 @@ sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools mpv mesa-
 %%%%% Hammerstorm
 %%%%%%%%%%%%%%%%%%%%
 
-HandBrake-gui distcc-server gcc gcc-c++
+HandBrake-gui distcc-server gcc gcc-c++ clang
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Hatebeat
