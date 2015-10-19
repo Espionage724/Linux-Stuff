@@ -184,7 +184,14 @@ chmod +x '/home/espionage724/pvpgn.sh'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-TODO: Grant self super powers :p
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Grant Administrator
+%%%%% Do this after creating account in-game and either make sure you're the first user, or change the uid below
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+update `pvpgn`.`pvpgn_BNET` set `auth_admin` = 'true' , `auth_command_groups` = '255' where `uid` = '1'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
