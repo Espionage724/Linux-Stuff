@@ -81,3 +81,49 @@ DISTCC_HOSTS='192.168.1.150/8 localhost/1' make -j9 && sync && sudo make install
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+nano '/home/espionage724/run-pvpgn/etc/pvpgn/bnetd.conf'
+
+-------------------------
+storage_path = "sql:mode=mysql;host=192.168.1.153;name=pvpgn;user=pvpgn;pass=X;default=0;prefix=pvpgn_"
+kick_old_login = false
+location = "Pennsylvania"
+description = "unknown"
+url = "https://www.realmofespionage.com"
+contact_name = "Espionage724"
+contact_email = "X"
+servername = "RoE (PvPGN)"
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Database Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Create Database, pvpgn user, and grant permissions
+%%%%% Do on MySQL computer
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE DATABASE pvpgn;
+
+CREATE USER pvpgn;
+SET PASSWORD FOR 'pvpgn' = PASSWORD ('X');
+
+GRANT ALL PRIVILEGES ON pvpgn.* to 'pvpgn'@'192.168.1.152' IDENTIFIED BY 'X';
+
+FLUSH PRIVILEGES;
+FLUSH TABLES;
+EXIT
+
+####################################################################################################
+####################################################################################################
+#####
+##### End
+#####
+####################################################################################################
+####################################################################################################
