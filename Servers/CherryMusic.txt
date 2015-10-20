@@ -8,7 +8,7 @@
 
 - CherryMusic setup
 - Commands below are for and only tested on Fedora 22 Server (can be adapted for use elsewhere of course)
-- Needs RPM Fusion for FFmpeg for audio transcoding
+- Needs RPM Fusion for Lame for MP3 transcoding (can opt both if not dealing with MP3s)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,7 +39,7 @@ sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-relea
 %%%%% Software
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install screen git ffmpeg ImageMagick python-unidecode
+sudo dnf install screen git ImageMagick python-unidecode python-cherrypy vorbis-tools lame flac
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -63,3 +63,82 @@ sync
 
 cd '/home/espionage724/cherrymusic' && git pull origin devel && cd '/home/espionage724' && sync
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Script Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% cherrymusic
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/cherry.sh'
+
+-------------------------
+cd '/home/espionage724/cherrymusic'
+screen -dmS cherry python cherrymusic
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Make Executable
+%%%%%%%%%%%%%%%%%%%%
+
+chmod +x '/home/espionage724/cherry.sh'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Execute
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Information
+%%%%%%%%%%%%%%%%%%%%
+
+- Starts cherrymusic in dedicated screen session and changes Terminal over to the screen session
+- To leave screen session without closing program; hit Ctrl + A and D (hold Ctrl and then press A and D at the same time)
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% cherrymusic
+%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/cherry.sh' && screen -r cherry
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Configure CherryMusic
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/.config/cherrymusic/cherrymusic.conf'
+
+-------------------------
+basedir = /home/espionage724/Music
+transcode = True
+ssl_enabled = True
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Certificates
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+TODO
+
+####################################################################################################
+####################################################################################################
+#####
+##### End
+#####
+####################################################################################################
+####################################################################################################
