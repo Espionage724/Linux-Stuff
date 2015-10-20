@@ -9,6 +9,7 @@
 - CherryMusic setup
 - Commands below are for and only tested on Fedora 22 Server (can be adapted for use elsewhere of course)
 - Needs RPM Fusion for Lame for MP3 transcoding (can opt both if not dealing with MP3s)
+- Does not cover SSL currently; needs investigated later
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -122,18 +123,31 @@ nano '/home/espionage724/.config/cherrymusic/cherrymusic.conf'
 -------------------------
 basedir = /home/espionage724/Music
 transcode = True
-ssl_enabled = True
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% Certificates
+%%%%% Manage Music
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-TODO
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Copy Bulk Music Over
+%%%%% Do on whatever computer has music
+%%%%%%%%%%%%%%%%%%%%
+
+scp '/home/espionage724/Downloads/Music.zip' espionage724@192.168.1.154:/home/espionage724/Music
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Extract Music
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/Music'
+unzip '/home/espionage724/Music/Music.zip'
+sync
+rm '/home/espionage724/Music/Music.zip'
 
 ####################################################################################################
 ####################################################################################################
