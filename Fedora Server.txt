@@ -162,7 +162,6 @@ Oct 17 02:12:18 Oak udisksd[28577]: Enabled Write-Cache on /dev/sda [Maxtor-6L16
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 sudo firewall-cmd --permanent --add-service=https
-sudo firewall-cmd --permanent --add-service=mysql
 sudo firewall-cmd --reload
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -173,7 +172,6 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sudo systemctl enable mariadb
 sudo systemctl enable httpd
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -217,32 +215,6 @@ sudo nano '/etc/httpd/conf/httpd.conf'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% MariaDB Settings
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-sudo nano '/etc/my.cnf.d/custom.cnf'
-
--------------------------
-[client]
-default-character-set=utf8mb4
-
-[mysql]
-default-character-set=utf8mb4
-
-[mysqld]
-init-connect='SET NAMES utf8mb4'
-collation-server = utf8mb4_unicode_ci
-character-set-server = utf8mb4
-character-set-client-handshake = FALSE
-innodb_buffer_pool_size = 1024M
-max_allowed_packet = 10M
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
 %%%%% PHP Settings
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -255,26 +227,6 @@ upload_max_filesize = 12M
 date.timezone = America/New_York
 ;output_buffering = 4096
 -------------------------
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% MariaDB Configuration
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-sudo systemctl start mariadb
-mysql_secure_installation
-
-mysql -u root -p
-
-CREATE USER Espionage724;
-SET PASSWORD FOR 'Espionage724' = PASSWORD ('X');
-GRANT USAGE ON *.* to 'Espionage724'@'192.168.1.150' IDENTIFIED BY 'X';
-GRANT ALL PRIVILEGES ON *.* to 'Espionage724'@'192.168.1.150';
-FLUSH PRIVILEGES;
-EXIT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
