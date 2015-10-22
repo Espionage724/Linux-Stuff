@@ -69,6 +69,8 @@ sudo systemctl enable php-fpm
 sudo nano '/etc/nginx/nginx.conf'
 
 -------------------------
+    include /etc/nginx/sites-enabled/*.conf;
+    server_names_hash_bucket_size 64;
     gzip  on;
 -------------------------
 
@@ -127,6 +129,17 @@ sudo nano '/etc/nginx/ssl-unified.crt'
 -------------------------
 (combine sub.class1.server.ca.pem and ssl.crt and paste here)
 -------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Server Blocks Initial
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo mkdir '/etc/nginx/sites-available'
+sudo mkdir '/etc/nginx/sites-enabled'
 
 ####################################################################################################
 ####################################################################################################
