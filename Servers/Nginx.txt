@@ -121,6 +121,7 @@ date.timezone = America/New_York
 sudo nano '/etc/php-fpm.d/www.conf'
 
 -------------------------
+listen = /var/run/php-fpm/php-fpm.sock
 user = nginx
 group = nginx
 -------------------------
@@ -162,13 +163,6 @@ sudo nano '/etc/nginx/ssl-unified.crt'
 %%%%%%%%%%%%%%%%%%%%
 
 - Put/edit confs in /etc/nginx/conf.d/FILE.conf
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Create folders
-%%%%%%%%%%%%%%%%%%%%
-
-sudo mkdir '/etc/nginx/sites-available'
-sudo mkdir '/etc/nginx/sites-enabled'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Disable Default Blocks
