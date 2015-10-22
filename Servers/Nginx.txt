@@ -17,7 +17,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sudo firewall-cmd --permanent --add-service=http
 sudo firewall-cmd --permanent --add-service=https
 sudo firewall-cmd --reload
 
@@ -155,10 +154,21 @@ sudo nano '/etc/nginx/ssl-unified.crt'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% Server Blocks Initial
+%%%%% Server Blocks
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Notes
+%%%%%%%%%%%%%%%%%%%%
+
+- Put/edit confs in /etc/nginx/sites-available/FILE.conf
+- Enable confs with sudo ln -s /etc/nginx/sites-available/FILE.conf /etc/nginx/sites-enabled/FILE.conf
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Create folders
+%%%%%%%%%%%%%%%%%%%%
 
 sudo mkdir '/etc/nginx/sites-available'
 sudo mkdir '/etc/nginx/sites-enabled'
