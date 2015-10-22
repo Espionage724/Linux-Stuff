@@ -28,7 +28,7 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sudo yum install mariadb-server nano
+sudo yum install mariadb-server nano zip unzip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -92,6 +92,40 @@ SET PASSWORD FOR 'Espionage724' = PASSWORD ('x');
 GRANT ALL PRIVILEGES ON *.* to 'Espionage724'@'192.168.1.150' IDENTIFIED BY 'x';
 FLUSH PRIVILEGES;
 EXIT
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Backup Databases
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mkdir '/home/espionage724/backups' '/home/espionage724/dumps'
+
+mysqldump -u dump -pX auth > '/home/espionage724/dumps/auth.sql'
+mysqldump -u dump -pX characters > '/home/espionage724/dumps/characters.sql'
+mysqldump -u dump -pX gnusocial > '/home/espionage724/dumps/gnusocial.sql'
+mysqldump -u dump -pX joomla > '/home/espionage724/dumps/joomla.sql'
+mysqldump -u dump -pX mybb > '/home/espionage724/dumps/mybb.sql'
+mysqldump -u dump -pX wordpress > '/home/espionage724/dumps/wordpress.sql'
+
+zip -r backups/backup-$(date +%Y-%m-%d).zip dumps/*.sql
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Restore Databases
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p auth < '/home/espionage724/dumps/auth.sql'
+mysql -u root -p characters < '/home/espionage724/dumps/characters.sql'
+mysql -u root -p gnusocial < '/home/espionage724/dumps/gnusocial.sql'
+mysql -u root -p joomla < '/home/espionage724/dumps/joomla.sql'
+mysql -u root -p mybb < '/home/espionage724/dumps/mybb.sql'
+mysql -u root -p wordpress < '/home/espionage724/dumps/wordpress.sql'
 
 ####################################################################################################
 ####################################################################################################
