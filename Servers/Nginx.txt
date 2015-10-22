@@ -30,6 +30,12 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% EPEL Repo
+%%%%%%%%%%%%%%%%%%%%
+
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% Nginx Repo
 %%%%%%%%%%%%%%%%%%%%
 
@@ -39,7 +45,7 @@ sudo yum install http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-ce
 %%%%% Software
 %%%%%%%%%%%%%%%%%%%%
 
-sudo yum install nginx nano
+sudo yum install nginx nano php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git php-pecl-zip php-pear-Mail php-fpm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -63,4 +69,36 @@ sudo nano '/etc/nginx/nginx.conf'
 
 -------------------------
     gzip  on;
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% PHP Configuration
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/php.ini'
+
+-------------------------
+upload_max_filesize = 12M
+post_max_size = 12M
+date.timezone = America/New_York
+;output_buffering = 4096
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% php-fpm Configuration
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/php-fpm.d/www.conf'
+
+-------------------------
+user = nginx
+group = nginx
 -------------------------
