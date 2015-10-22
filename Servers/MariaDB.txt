@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - MariaDB setup for Realm of Espionage
-- Commands below are only tested on centOS 7
+- Commands below are for Fedora 22 Server
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,7 +28,17 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sudo yum install mariadb-server nano zip unzip
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Pre-Install
+%%%%%%%%%%%%%%%%%%%%
+
+Fedora Server with MariaDB + Headless Management
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Post-Install
+%%%%%%%%%%%%%%%%%%%%
+
+TODO
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
