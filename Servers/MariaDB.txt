@@ -120,12 +120,54 @@ zip -r backups/backup-$(date +%Y-%m-%d).zip dumps/*.sql
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Restore Databases
+%%%%%%%%%%%%%%%%%%%%
+
 mysql -u root -p auth < '/home/espionage724/dumps/auth.sql'
 mysql -u root -p characters < '/home/espionage724/dumps/characters.sql'
 mysql -u root -p gnusocial < '/home/espionage724/dumps/gnusocial.sql'
 mysql -u root -p joomla < '/home/espionage724/dumps/joomla.sql'
 mysql -u root -p mybb < '/home/espionage724/dumps/mybb.sql'
 mysql -u root -p wordpress < '/home/espionage724/dumps/wordpress.sql'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Account and Permissions
+%%%%% Should really just toss this all into a SQL file :p
+%%%%%%%%%%%%%%%%%%%%
+
+CREATE USER joomla;
+SET PASSWORD FOR 'joomla' = PASSWORD ('X');
+GRANT ALL PRIVILEGES ON joomla.* to 'joomla'@'192.168.1.153' IDENTIFIED BY 'x';
+
+CREATE USER gnusocial;
+SET PASSWORD FOR 'gnusocial' = PASSWORD ('X');
+GRANT ALL PRIVILEGES ON gnusocial.* to 'gnusocial'@'192.168.1.153' IDENTIFIED BY 'x';
+
+CREATE USER mybb;
+SET PASSWORD FOR 'mybb' = PASSWORD ('X');
+GRANT ALL PRIVILEGES ON mybb.* to 'mybb'@'192.168.1.153' IDENTIFIED BY 'x';
+
+CREATE USER wordpress;
+SET PASSWORD FOR 'wordpress' = PASSWORD ('X');
+GRANT ALL PRIVILEGES ON wordpress.* to 'wordpress'@'192.168.1.153' IDENTIFIED BY 'x';
+
+CREATE USER trinity;
+SET PASSWORD FOR 'trinity' = PASSWORD ('X');
+GRANT ALL PRIVILEGES ON auth.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'x';
+GRANT ALL PRIVILEGES ON characters.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'x';
+GRANT ALL PRIVILEGES ON world.* to 'trinity'@'192.168.1.152' IDENTIFIED BY 'x';
+
+CREATE USER soap;
+SET PASSWORD FOR 'soap' = PASSWORD ('X');
+GRANT SELECT, UPDATE on auth.account to 'soap'@'%' IDENTIFIED BY 'X';
+
+CREATE USER pvpgn;
+SET PASSWORD FOR 'pvpgn' = PASSWORD ('X');
+GRANT ALL PRIVILEGES ON pvpgn.* to 'pvpgn'@'192.168.1.152' IDENTIFIED BY 'x';
+
+FLUSH PRIVILEGES;
+EXIT
 
 ####################################################################################################
 ####################################################################################################
