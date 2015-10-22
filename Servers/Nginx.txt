@@ -45,7 +45,7 @@ sudo yum install http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-ce
 %%%%% Software
 %%%%%%%%%%%%%%%%%%%%
 
-sudo yum install nginx nano php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git php-pecl-zip php-pear-Mail php-fpm
+sudo yum install nginx nano zip unzip php-mysqlnd php-JsonSchema php-intl php-gmp php-gd php-opcache php-pecl-mailparse php-pecl-sphinx php-php-gettext git php-pecl-zip php-pear-Mail php-fpm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,6 +57,28 @@ sudo yum install nginx nano php-mysqlnd php-JsonSchema php-intl php-gmp php-gd p
 
 sudo systemctl enable nginx
 sudo systemctl enable php-fpm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Permissions
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% SELinux
+%%%%%%%%%%%%%%%%%%%%
+
+sudo setsebool -P httpd_can_sendmail 1
+sudo setsebool -P httpd_can_network_connect 1
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Files
+%%%%%%%%%%%%%%%%%%%%
+
+sudo chown nginx:nginx -R '/var/www/html'
+sudo chcon -R -t httpd_sys_rw_content_t '/var/www/html'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
