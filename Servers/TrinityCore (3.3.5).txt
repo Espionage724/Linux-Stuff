@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - TrinityCore (3.3.5) setup for Realm of Espionage
-- Commands below are for and only tested on Fedora 22 Server (can be adapted for use elsewhere of course)
+- Commands below are only tested on CentOS 7
 - Assumes presense of three different machines, one for TrinityCore, one for MySQL and/or webserver for SOAP, and one to run WoW on (desktop/client)
 - Do commands below on TrinityCore computer unless otherwise specified
 
@@ -33,7 +33,17 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install screen distcc wget p7zip autoconf libtool gcc gcc-c++ make cmake git ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel
+%%%%%%%%%%%%%%%%%%%%
+%%%%% EPEL Repo
+%%%%%%%%%%%%%%%%%%%%
+
+sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Software
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install screen nano distcc wget p7zip autoconf libtool gcc gcc-c++ clang make cmake git ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
