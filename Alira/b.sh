@@ -1,4 +1,4 @@
-# Go home
+# Start at home
 cd '/home/espionage724'
 
 # Backup databases
@@ -12,5 +12,8 @@ mysqldump -u dump -px wordpress > '/home/espionage724/dumps/wordpress.sql'
 # Archive databases
 zip -r backups/backup-$(date +%Y-%m-%d).zip dumps/*.sql
 
-# Finish up
+# Write changes to disk
 sync
+
+# Finish up
+cd '/home/espionage724/'
