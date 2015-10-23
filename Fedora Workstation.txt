@@ -187,23 +187,10 @@ pkexec env DISPLAY=$DISPLAY gedit '/etc/profile.d/custom.sh'
 export vblank_mode=0
 
 # Disable Vsync on Mutter
+export MUTTER_SYNC=0
+
+# Disable Vsync on Clutter
 export CLUTTER_VBLANK=none
--------------------------
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% mpv Setup
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-mkdir ~/.config/mpv && gedit ~/.config/mpv/mpv.conf
-
--------------------------
-hwdec=vdpau
-vo=opengl-hq
-geometry=50%:50%
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -214,35 +201,21 @@ geometry=50%:50%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-TODO: Figure out how to properly import keys
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% HandBrake Repo
-%%%%% Only needed on Hammerstorm
-%%%%%%%%%%%%%%%%%%%%
-
-sudo dnf config-manager --add-repo http://negativo17.org/repos/fedora-handbrake.repo
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% RPM Fusion Repo
-%%%%%%%%%%%%%%%%%%%%
-
-sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-22.noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-22.noarch.rpm
-
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Remove
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-weather shotwell
+sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution shotwell
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% General
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install minetest perl-Image-ExifTool p7zip android-tools unar aria2 java-1.8.0-openjdk gnome-tweak-tool lm_sensors gimp xonotic transmission
+sudo dnf install minetest perl-Image-ExifTool p7zip android-tools unar aria2 java-1.8.0-openjdk gnome-tweak-tool lm_sensors gimp xonotic transmission cockpit pidgin
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Wine
+%%%%% Try without allowerasing first
 %%%%%%%%%%%%%%%%%%%%
 
 sudo dnf install wine --allowerasing
@@ -251,7 +224,7 @@ sudo dnf install wine --allowerasing
 %%%%% Testing if even needed
 %%%%%%%%%%%%%%%%%%%%
 
-libtxc_dxtn.x86_64 libtxc_dxtn.i686 mpv HandBrake-gui hdparm mediainfo pidgin mesa-vdpau-drivers clang
+libtxc_dxtn.x86_64 libtxc_dxtn.i686 mpv HandBrake-gui hdparm mediainfo mesa-vdpau-drivers
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Hammerstorm
@@ -724,6 +697,43 @@ exiftool -all= *.* -overwrite_original
 #####
 ####################################################################################################
 ####################################################################################################
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% HandBrake Repo
+%%%%% Only needed on Hammerstorm
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf config-manager --add-repo http://negativo17.org/repos/fedora-handbrake.repo
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% RPM Fusion Repo
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-22.noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-22.noarch.rpm
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% mpv Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mkdir ~/.config/mpv && gedit ~/.config/mpv/mpv.conf
+
+-------------------------
+hwdec=vdpau
+vo=opengl-hq
+geometry=50%:50%
+-------------------------
 
 #########################
 ####Change Hostname####
