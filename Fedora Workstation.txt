@@ -10,8 +10,8 @@
 %%%%% Background
 %%%%%%%%%%%%%%%%%%%%
 
-f22 Background
-f22 Lock Screen
+f23 Background
+f23 Lock Screen
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Privacy
@@ -316,6 +316,7 @@ pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 Section "Device"
 	Identifier	"Southern Islands"
 	Driver		"radeon"
+	Option		"DRI3"			"true"	
 EndSection
 
 Section "Monitor"
@@ -351,7 +352,8 @@ pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 Section "Device"
 	Identifier	"Northern Islands"
 	Driver		"radeon"
-	Option		"AccelMethod"	"glamor"
+	Option		"DRI3"			"true"	
+	Option		"AccelMethod"		"glamor"
 EndSection
 
 Section "Monitor"
