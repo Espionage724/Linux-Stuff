@@ -109,8 +109,8 @@ cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/et
 nano '/home/espionage724/run/etc/authserver.conf'
 
 -------------------------
-LoginDatabaseInfo = "192.168.1.153;3306;trinity;X;auth"
 WrongPass.MaxCount = 5
+LoginDatabaseInfo = "192.168.1.154;3306;trinity;x;auth"
 Updates.EnableDatabases = 1
 Updates.CleanDeadRefMaxCount = -1
 -------------------------
@@ -122,9 +122,9 @@ Updates.CleanDeadRefMaxCount = -1
 nano '/home/espionage724/run/etc/worldserver.conf'
 
 -------------------------
-LoginDatabaseInfo     = "192.168.1.154;3306;trinity;X;auth"
-WorldDatabaseInfo     = "192.168.1.154;3306;trinity;X;world"
-CharacterDatabaseInfo = "192.168.1.154;3306;trinity;X;characters"
+LoginDatabaseInfo     = "192.168.1.154;3306;trinity;x;auth"
+WorldDatabaseInfo     = "192.168.1.154;3306;trinity;x;world"
+CharacterDatabaseInfo = "192.168.1.154;3306;trinity;x;characters"
 Compression = 9
 PlayerSave.Stats.MinLevel = 10
 mmap.enablePathFinding = 1
