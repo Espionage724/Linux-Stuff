@@ -506,7 +506,7 @@ WINEPREFIX='/home/espionage724/Wine Prefixes/Diablo II' wine '/home/espionage724
 WINEPREFIX='/home/espionage724/Wine Prefixes/Diablo II' wine '/home/espionage724/Downloads/Diablo II/LODPatch_113d.exe'
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% WarCraft III
+%%%%% Warcraft III
 %%%%%%%%%%%%%%%%%%%%
 
 WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' WINEARCH=win32 wine '/home/espionage724/Downloads/WarCraft III/Warcraft III 1.21b ROC Installer enUS/Installer.exe'
@@ -516,6 +516,8 @@ WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' wine '/home/espionage
 WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' wine '/home/espionage724/Downloads/WarCraft III/War3TFT_126a_English.exe'
 
 unzip '/home/espionage724/Downloads/WarCraft III/w3l-1.26a.zip' -d '/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III'
+
+mv '/home/espionage724/Downloads/WarCraft III/Custom' '/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III/Maps'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -626,6 +628,27 @@ StartupNotify=true
 Path=/home/espionage724/Wine Prefixes/SQLyog/drive_c/Program Files/SQLyog Community
 Icon=3A9C_SQLyogCommunity.0
 -------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Diablo II
+%%%%%%%%%%%%%%%%%%%%
+
+rm -R '/home/espionage724/.local/share/applications/wine/Programs/Diablo II'
+mkdir '/home/espionage724/.local/share/applications/wine/Programs/Diablo II'
+
+gedit '/home/espionage724/.local/share/applications/wine/Programs/Diablo II/Diablo II: Lord of Destruction.desktop'
+
+-------------------------
+[Desktop Entry]
+Name=Diablo II: Lord of Destruction
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/Diablo II' wine '/home/espionage724/Wine Prefixes/Diablo II/drive_c/Program Files/Diablo II/Diablo II.exe'
+Type=Application
+StartupNotify=true
+Path=/home/espionage724/Wine Prefixes/Diablo II/drive_c/Program Files/Diablo II
+Icon=D2LoD.0
+-------------------------
+
+wget https://www.slimgr.com/images/2015/10/23/6d5952556044a88844c8b3a5323a5a9e.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/D2LoD.0.png'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Warcraft III
