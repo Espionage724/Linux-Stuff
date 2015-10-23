@@ -623,6 +623,41 @@ Path=/home/espionage724/Wine Prefixes/SQLyog/drive_c/Program Files/SQLyog Commun
 Icon=3A9C_SQLyogCommunity.0
 -------------------------
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Warcraft III
+%%%%%%%%%%%%%%%%%%%%
+
+rm -R '/home/espionage724/.local/share/applications/wine/Programs/Warcraft III'
+mkdir '/home/espionage724/.local/share/applications/wine/Programs/Warcraft III'
+
+gedit '/home/espionage724/.local/share/applications/wine/Programs/Warcraft III/Warcraft III: Reign of Chaos.desktop'
+
+-------------------------
+[Desktop Entry]
+Name=Warcraft III: Reign of Chaos
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/Warcraft III' wine '/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III/Warcraft III.exe'
+Type=Application
+StartupNotify=true
+Path=/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III
+Icon=W3RoC.0
+-------------------------
+
+gedit '/home/espionage724/.local/share/applications/wine/Programs/Warcraft III/Warcraft III: The Frozen Throne.desktop'
+
+-------------------------
+[Desktop Entry]
+Name=Warcraft III: The Frozen Throne
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/Warcraft III' wine '/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III/Frozen Throne.exe'
+Type=Application
+StartupNotify=true
+Path=/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III
+Icon=W3TFT.0
+-------------------------
+
+wget https://www.slimgr.com/images/2015/10/23/0cda0bfc627bc31de180441695c5ae7e.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3RoC.0.png'
+
+wget https://www.slimgr.com/images/2015/10/23/29d9ffcb043040d5a74ed427a6a99f4b.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3TFT.0.png'
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
