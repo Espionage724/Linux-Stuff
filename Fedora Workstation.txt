@@ -654,9 +654,23 @@ Path=/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraf
 Icon=W3TFT.0
 -------------------------
 
+gedit '/home/espionage724/.local/share/applications/wine/Programs/Warcraft III/Warcraft III: The Frozen Throne (PvPGN).desktop'
+
+-------------------------
+[Desktop Entry]
+Name=Warcraft III: The Frozen Throne (PvPGN)
+Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/Warcraft III' wine '/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III/w3l.exe'
+Type=Application
+StartupNotify=true
+Path=/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III
+Icon=W3TFT.1
+-------------------------
+
 wget https://www.slimgr.com/images/2015/10/23/df41b128831caba4fcb8fde56eae8253.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3RoC.0.png'
 
 wget https://www.slimgr.com/images/2015/10/23/d822b55a5e28ffe259dd9978a59b2ef3.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3TFT.0.png'
+
+wget https://www.slimgr.com/images/2015/10/23/f82dae8a4679dee572ba8e23ecd5ced2.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3TFT.1.png'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
