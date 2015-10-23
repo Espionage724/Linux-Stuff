@@ -693,11 +693,11 @@ Path=/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraf
 Icon=W3TFT.1
 -------------------------
 
-wget https://www.slimgr.com/images/2015/10/23/df41b128831caba4fcb8fde56eae8253.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3RoC.0.png'
+wget https://www.slimgr.com/images/2015/10/23/0cda0bfc627bc31de180441695c5ae7e.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3RoC.0.png'
 
-wget https://www.slimgr.com/images/2015/10/23/d822b55a5e28ffe259dd9978a59b2ef3.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3TFT.0.png'
+wget https://www.slimgr.com/images/2015/10/23/29d9ffcb043040d5a74ed427a6a99f4b.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3TFT.0.png'
 
-wget https://www.slimgr.com/images/2015/10/23/f82dae8a4679dee572ba8e23ecd5ced2.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3TFT.1.png'
+wget https://www.slimgr.com/images/2015/10/23/8e37fe8b89bbccb747944c4752ba8a72.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3TFT.1.png'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
