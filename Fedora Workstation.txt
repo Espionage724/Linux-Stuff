@@ -307,13 +307,13 @@ sudo systemctl mask colord
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% Graphics
+%%%%% Hammerstorm Graphics
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Hammerstorm
+%%%%% xorg.conf
 %%%%%%%%%%%%%%%%%%%%
 
 pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
@@ -342,14 +342,37 @@ EndSection
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% GDM Monitor Arrangement
-%%%%% Do after arrange in gnome-settings
+%%%%% Bezel Compensation
+%%%%%%%%%%%%%%%%%%%%
+
+gedit '/home/espionage724/.config/monitors.xml'
+
+<output name="DVI-0">
+-------------------------
+<x>3440</x>
+-------------------------
+
+<output name="HDMI-0">
+-------------------------
+<x>1720</x>
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% GDM Global Monitor Arrangement
 %%%%%%%%%%%%%%%%%%%%
 
 sudo cp ~/.config/monitors.xml ~gdm/.config/
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Spinecrack Graphics
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Spinecrack
+%%%%% xorg.conf
 %%%%%%%%%%%%%%%%%%%%
 
 pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
