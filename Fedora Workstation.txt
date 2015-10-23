@@ -137,6 +137,13 @@ cd '/home/espionage724/Documents' && wget https://ssl.masterpasswordapp.com/mast
 
 mv '/home/espionage724/mpw.d' '/home/espionage724/.mpw.d'
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Cockpit
+%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl enable cockpit.socket
+http://localhost:9090/
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
