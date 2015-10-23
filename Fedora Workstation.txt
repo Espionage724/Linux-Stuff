@@ -129,6 +129,14 @@ View > [x] Sort by Queue
 sudo firewall-cmd --permanent --add-port=3632/tcp
 sudo firewall-cmd --reload
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Master Password
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/Documents' && wget https://ssl.masterpasswordapp.com/masterpassword-gui.jar && chmod +x '/home/espionage724/Documents/masterpassword-gui.jar'
+
+mv '/home/espionage724/mpw.d' '/home/espionage724/.mpw.d'
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
@@ -200,6 +208,12 @@ export CLUTTER_VBLANK=none
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Master Password
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/Documents' && wget https://ssl.masterpasswordapp.com/masterpassword-gui.jar && chmod +x '/home/espionage724/Documents/masterpassword-gui.jar'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Remove
