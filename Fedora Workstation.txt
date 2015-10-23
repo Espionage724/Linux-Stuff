@@ -76,12 +76,6 @@ Alert volume: (max)
 Time Format: AM / PM
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Details
-%%%%%%%%%%%%%%%%%%%%
-
-Video: mpv Media Player
-
-%%%%%%%%%%%%%%%%%%%%
 %%%%% Users
 %%%%%%%%%%%%%%%%%%%%
 
@@ -126,13 +120,6 @@ Edit > Preferences > Privacy > [x] Enable blocklist: http://john.bitsurge.net/pu
 Edit > Preferences > Downloading > Maximum active downloads: 1
 Edit > Preferences > Speed > Upload (kB/s): 15
 View > [x] Sort by Queue
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Software
-%%%%% Run after adding repos
-%%%%%%%%%%%%%%%%%%%%
- 
-gsettings set org.gnome.software require-appdata false
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Firewall
@@ -255,16 +242,16 @@ sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-we
 sudo dnf install minetest perl-Image-ExifTool p7zip android-tools unar aria2 java-1.8.0-openjdk gnome-tweak-tool lm_sensors gimp xonotic transmission
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Needs additional checking
+%%%%% Wine
 %%%%%%%%%%%%%%%%%%%%
 
-wine
+sudo dnf install wine --allowerasing
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Testing if even needed
 %%%%%%%%%%%%%%%%%%%%
 
-libtxc_dxtn.x86_64 libtxc_dxtn.i686 mpv HandBrake-gui hdparm mediainfo pidgin mesa-vdpau-drivers
+libtxc_dxtn.x86_64 libtxc_dxtn.i686 mpv HandBrake-gui hdparm mediainfo pidgin mesa-vdpau-drivers clang
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Hammerstorm
@@ -498,7 +485,7 @@ pkexec env DISPLAY=$DISPLAY gedit '/usr/lib/systemd/system/distccd.service'
 
 -------------------------
 Remove $OPTIONS
---allow 192.168.1.152  --jobs 12
+--allow 192.168.1.152 --jobs 12
 -------------------------
 
 sudo systemctl daemon-reload
