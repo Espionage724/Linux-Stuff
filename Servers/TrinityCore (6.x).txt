@@ -7,10 +7,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - TrinityCore (6.x) setup for Realm of Espionage
-- Commands below are for and only tested on Fedora 22 Server (can be adapted for use elsewhere of course)
+- Tested on Fedora 23 Server
 - Assumes presense of three different machines, one for TrinityCore, one for MySQL and/or webserver for SOAP, and one to run WoW on (desktop/client)
 - Do commands below on TrinityCore computer unless otherwise specified
-- Untested, but can't see why it wouldn't work
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -36,7 +35,7 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install screen distcc wget p7zip autoconf libtool gcc gcc-c++ make cmake git ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel zeromq3-devel
+sudo dnf install screen distcc wget p7zip autoconf libtool gcc gcc-c++ make cmake git ncurses-devel openssl openssl-devel mariadb mariadb-devel readline-devel zlib-devel bzip2-devel boost-devel zeromq3-devel && sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -50,13 +49,10 @@ sudo dnf install screen distcc wget p7zip autoconf libtool gcc gcc-c++ make cmak
 %%%%% Initial Download
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724'
-git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore
-sync
+cd '/home/espionage724' && git clone -b 6.x https://github.com/TrinityCore/TrinityCore.git trinitycore && sync
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Update
-%%%%% Included in up.sh
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/trinitycore' && git pull origin 6.x && cd '/home/espionage724' && sync
@@ -77,7 +73,7 @@ sudo nano '/etc/my.cnf.d/client.cnf'
 
 -------------------------
 [client]
-host = 192.168.1.153
+host = 192.168.1.154
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,12 +86,11 @@ host = 192.168.1.153
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Initial Compile
-%%%%% Use up.sh for later recompiles
 %%%%%%%%%%%%%%%%%%%%
 
 mkdir '/home/espionage724/build' '/home/espionage724/run' && cd '/home/espionage724/build'
 CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/trinitycore' -DTOOLS=1 -DCMAKE_INSTALL_PREFIX='/home/espionage724/run' -DWITH_WARNINGS=0 -DWITH_COREDEBUG=0 -DUSE_COREPCH=0 -DUSE_SCRIPTPCH=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10' && sync
-DISTCC_HOSTS='192.168.1.150/8 localhost/1' make -j9 install && sync
+DISTCC_HOSTS='192.168.1.150/8 localhost/2' make -j10 install && sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -120,7 +115,7 @@ cp '/home/espionage724/run/etc/worldserver.conf.dist' '/home/espionage724/run/et
 nano '/home/espionage724/run/etc/bnetserver.conf'
 
 -------------------------
-LoginDatabaseInfo = "192.168.1.153;3306;trinity;X;auth"
+LoginDatabaseInfo = "192.168.1.154;3306;trinity;X;auth"
 WrongPass.MaxCount = 5
 Updates.EnableDatabases = 1
 Updates.CleanDeadRefMaxCount = -1
@@ -133,9 +128,9 @@ Updates.CleanDeadRefMaxCount = -1
 nano '/home/espionage724/run/etc/worldserver.conf'
 
 -------------------------
-LoginDatabaseInfo     = "192.168.1.153;3306;trinity;X;auth"
-WorldDatabaseInfo     = "192.168.1.153;3306;trinity;X;world"
-CharacterDatabaseInfo = "192.168.1.153;3306;trinity;X;characters"
+LoginDatabaseInfo     = "192.168.1.154;3306;trinity;X;auth"
+WorldDatabaseInfo     = "192.168.1.154;3306;trinity;X;world"
+CharacterDatabaseInfo = "192.168.1.154;3306;trinity;X;characters"
 Compression = 9
 PlayerSave.Stats.MinLevel = 10
 mmap.enablePathFinding = 1
