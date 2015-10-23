@@ -505,6 +505,8 @@ WINEPREFIX='/home/espionage724/Wine Prefixes/Diablo II' wine '/home/espionage724
 
 WINEPREFIX='/home/espionage724/Wine Prefixes/Diablo II' wine '/home/espionage724/Downloads/Diablo II/LODPatch_113d.exe'
 
+rm -R '/home/espionage724/Downloads/Diablo II'
+
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Warcraft III
 %%%%%%%%%%%%%%%%%%%%
@@ -518,6 +520,8 @@ WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' wine '/home/espionage
 unzip '/home/espionage724/Downloads/WarCraft III/w3l-1.26a.zip' -d '/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III'
 
 mv '/home/espionage724/Downloads/WarCraft III/Custom' '/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III/Maps'
+
+rm -R '/home/espionage724/Downloads/WarCraft III'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
