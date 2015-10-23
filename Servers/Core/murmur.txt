@@ -104,7 +104,16 @@ EXIT
 %%%%% Grant Super Powers
 %%%%%%%%%%%%%%%%%%%%
 
-TODO
+- Log into account wanting to be admin
+- Register user
+- Log out
+- Log into SuperUser
+- Edit Root channel
+- Set Group to admin
+- Add user registered earlier to Members list
+- Log out
+- Log into earlier account
+- Enjoy super powers :p
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
