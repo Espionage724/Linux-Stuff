@@ -252,7 +252,13 @@ sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution totem gnome-we
 %%%%% General
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install wine minetest perl-Image-ExifTool p7zip android-tools unar aria2 java-1.8.0-openjdk gnome-tweak-tool lm_sensors gimp xonotic
+sudo dnf install minetest perl-Image-ExifTool p7zip android-tools unar aria2 java-1.8.0-openjdk gnome-tweak-tool lm_sensors gimp xonotic transmission
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Needs additional checking
+%%%%%%%%%%%%%%%%%%%%
+
+wine
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Testing if even needed
@@ -264,7 +270,7 @@ libtxc_dxtn.x86_64 libtxc_dxtn.i686 mpv HandBrake-gui hdparm mediainfo pidgin me
 %%%%% Hammerstorm
 %%%%%%%%%%%%%%%%%%%%
 
-distcc-server gcc gcc-c++ clang
+distcc-server gcc gcc-c++
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Hatebeat
