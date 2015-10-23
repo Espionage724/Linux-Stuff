@@ -513,6 +513,10 @@ WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' WINEARCH=win32 wine '
 
 WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' wine '/home/espionage724/Downloads/WarCraft III/Warcraft III 1.21b TFT Installer enUS/Installer.exe'
 
+WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' wine '/home/espionage724/Downloads/WarCraft III/War3TFT_126a_English.exe'
+
+unzip '/home/espionage724/Downloads/WarCraft III/w3l-1.26a.zip' -d '/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III'
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
