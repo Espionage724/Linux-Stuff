@@ -495,6 +495,24 @@ WINEPREFIX='/home/espionage724/Wine Prefixes/World of Warcraft' WINEARCH=win32 w
 
 WINEPREFIX='/home/espionage724/Wine Prefixes/SQLyog' wine '/home/espionage724/Downloads/'SQLyog*.exe && rm '/home/espionage724/Downloads/'SQLyog*.exe
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Diablo II
+%%%%%%%%%%%%%%%%%%%%
+
+WINEPREFIX='/home/espionage724/Wine Prefixes/Diablo II' WINEARCH=win32 wine '/home/espionage724/Downloads/Diablo II/D2-1.12A-enUS/Installer.exe'
+
+WINEPREFIX='/home/espionage724/Wine Prefixes/Diablo II' wine '/home/espionage724/Downloads/Diablo II/D2LOD-1.12A-enUS/Installer.exe'
+
+WINEPREFIX='/home/espionage724/Wine Prefixes/Diablo II' wine '/home/espionage724/Downloads/Diablo II/LODPatch_113d.exe'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% WarCraft III
+%%%%%%%%%%%%%%%%%%%%
+
+WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' WINEARCH=win32 wine '/home/espionage724/Downloads/WarCraft III/Warcraft III 1.21b ROC Installer enUS/Installer.exe'
+
+WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' wine '/home/espionage724/Downloads/WarCraft III/Warcraft III 1.21b TFT Installer enUS/Installer.exe'
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
