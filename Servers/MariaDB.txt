@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - MariaDB setup for Realm of Espionage
-- Commands below are for Fedora 22 Server
+- Commands below are for Fedora 23 Server
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,17 +28,7 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Pre-Install
-%%%%%%%%%%%%%%%%%%%%
-
 Fedora Server with MariaDB + Headless Management
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Post-Install
-%%%%%%%%%%%%%%%%%%%%
-
-TODO
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,16 +80,33 @@ mysql_secure_installation
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% Account
+%%%%% Accounts
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Main
+%%%%%%%%%%%%%%%%%%%%
+
 CREATE USER Espionage724;
 SET PASSWORD FOR 'Espionage724' = PASSWORD ('x');
 GRANT ALL PRIVILEGES ON *.* to 'Espionage724'@'192.168.1.150' IDENTIFIED BY 'x';
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Database Backup
+%%%%%%%%%%%%%%%%%%%%
+
+CREATE USER dump;
+SET PASSWORD FOR 'dump' = PASSWORD ('X');
+GRANT SELECT, LOCK TABLES ON *.* to 'dump'@'localhost' IDENTIFIED BY 'X';
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Finish Up
+%%%%%%%%%%%%%%%%%%%%
+
 FLUSH PRIVILEGES;
 EXIT
 
