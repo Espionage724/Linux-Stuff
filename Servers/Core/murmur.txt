@@ -1,0 +1,129 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Information
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- murmur setup for Realm of Espionage
+- Commands below are for Fedora 23 Server
+- Computer is expected to be using Fedora Server with Headless Management, with a separate machine running MySQL
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Firewall Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo firewall-cmd --permanent --add-service=murmur
+sudo firewall-cmd --reload
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf copr enable lkiesow/mumble
+sudo dnf install murmur qt-mysql
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Configuration
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo -u mumble-server nano '/etc/mumble-server.ini'
+
+-------------------------
+database=murmur
+dbDriver=QMYSQL
+dbUsername=murmur
+dbPassword=x
+dbHost=192.168.1.154
+dbPort=3306
+dbPrefix=murmur_
+autobanAttempts = 10
+autobanTimeframe = 120
+autobanTime = 300
+welcometext="Welcome to the Realm of Espionage Mumble server!"
+host=0.0.0.0
+serverpassword=roemumble
+sslCiphers=EECDH+AESGCM:AES256-SHA:AES128-SHA
+certrequired=True
+sendversion=True
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Database Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Create Database, murmur user, and grant permissions
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE DATABASE murmur;
+
+CREATE USER murmur;
+SET PASSWORD FOR 'murmur' = PASSWORD ('X');
+
+GRANT ALL PRIVILEGES ON murmur.* to 'murmur'@'192.168.1.153' IDENTIFIED BY 'X';
+
+FLUSH PRIVILEGES;
+FLUSH TABLES;
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% systemd Startup Script
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Notes
+%%%%%%%%%%%%%%%%%%%%
+
+- Autostarts murmur
+- Use murmur for addressing service name for use with status and service management
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% murmur
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/usr/lib/systemd/system/murmur.service'
+
+-------------------------
+[Service]
+Restart=always
+RestartSec=5
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Enable Services
+%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl daemon-reload
+sudo systemctl enable murmur
+
+####################################################################################################
+####################################################################################################
+#####
+##### End
+#####
+####################################################################################################
+####################################################################################################
