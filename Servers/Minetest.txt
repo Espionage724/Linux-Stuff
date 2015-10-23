@@ -7,7 +7,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Minetest setup for Realm of Espionage
-- Commands below are for and only tested on Fedora 22 Server (can be adapted for use elsewhere of course)
+- Commands below are for Fedora 23 Server
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -111,7 +111,7 @@ chmod +x '/home/espionage724/mt.sh'
 %%%%% Information
 %%%%%%%%%%%%%%%%%%%%
 
-- Starts Minetests (server) in dedicated screen session and changes Terminal over to the screen session
+- Starts minetestserver in dedicated screen session and changes Terminal over to that screen session
 - To leave screen session without closing program; hit Ctrl + A and D (hold Ctrl and then press A and D at the same time)
 
 %%%%%%%%%%%%%%%%%%%%
@@ -132,7 +132,7 @@ chmod +x '/home/espionage724/mt.sh'
 %%%%% Notes
 %%%%%%%%%%%%%%%%%%%%
 
-- Autostarts Minetest (server) via script created above (and thus, in its own screen session)
+- Autostarts minetestserver via script created above (and thus, in its own screen session)
 - Use mt for addressing service name for use with status and service management
 
 %%%%%%%%%%%%%%%%%%%%
