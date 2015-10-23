@@ -14,6 +14,3 @@ zip -r backups/backup-$(date +%Y-%m-%d).zip dumps/*.sql
 
 # Write changes to disk
 sync
-
-# Finish up
-cd '/home/espionage724/'
