@@ -51,6 +51,8 @@ rm '/home/espionage724/xonotic-0.8.1.zip'
 %%%%% Configuration
 %%%%%%%%%%%%%%%%%%%%
 
+TODO: Figure out AES
+
 mkdir '/home/espionage724/.xonotic' '/home/espionage724/.xonotic/data'
 cp '/home/espionage724/Xonotic/server/server.cfg' '/home/espionage724/.xonotic/data/server.cfg'
 nano '/home/espionage724/.xonotic/data/server.cfg'
@@ -61,11 +63,14 @@ sv_status_privacy 1
 hostname "Realm of Espionage Xonotic Server ($g_xonoticversion)"
 sv_motd "Welcome to the Realm of Espionage Xonotic server!" 
 maxplayers 16
-gametype dm
+port 26010
+g_maplist_shuffle 1
+g_maplist_mostrecent_count 3
 rcon_password "x"
 skill 9
 minplayers 16
 g_maplist_check_waypoints 1
+g_instagib 1
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
