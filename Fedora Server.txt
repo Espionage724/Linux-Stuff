@@ -202,79 +202,6 @@ sudo systemctl start httpd
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% GNU social
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Database
-%%%%%%%%%%%%%%%%%%%%
-
-mysql -u root -p
-
-CREATE DATABASE gnusocial;
-CREATE USER gnusocial;
-SET PASSWORD FOR 'gnusocial' = PASSWORD ('X');
-GRANT USAGE ON gnusocial.* to 'gnusocial'@'localhost' IDENTIFIED BY 'X';
-GRANT ALL PRIVILEGES ON gnusocial.* to 'gnusocial'@'localhost';
-FLUSH PRIVILEGES;
-FLUSH TABLES;
-EXIT
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Files
-%%%%%%%%%%%%%%%%%%%%
-
-- GNU social will be root/social
-
-cd '/var/www'
-sudo -u apache git clone -b nightly https://git.gnu.io/gnu/gnu-social.git '/var/www/html/social'
-sync
-sudo -u apache mkdir '/var/www/html/social/avatar' '/var/www/html/social/background' '/var/www/html/social/file'
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Configuration
-%%%%%%%%%%%%%%%%%%%%
-
-- Do following after site setup
-sudo -u apache nano '/var/www/html/social/config.php'
-
--------------------------
-(uncomment out schemacheck line)
-
-$config['mail']['domain'] = 'realmofespionage.com';
-$config['mail']['notifyfrom'] = 'accounts@realmofespionage.com';
-$config['mail']['backend'] = 'smtp';
-$config['mail']['params'] = array(
-'host' => 'smtp.sendgrid.net',
-'port' => 587,
-'auth' => true,
-'username' => 'X',
-'password' => 'X'
-);
-
-addPlugin('EmailRegistration');
-addPlugin("GeoURL");
-addPlugin("ModPlus");
-addPlugin("ChooseTheme");
--------------------------
-
-- Run immediately after editing config.php above
-sudo -u apache php '/var/www/html/social/scripts/checkschema.php'
-
-- Download https://licensebuttons.net/l/by-sa/4.0/80x15.png and upload to /images/servers/ either manually or through Joomla
-
-License Title: Creative Commons Attribution-ShareAlike 4.0 International
-License URL: https://creativecommons.org/licenses/by-sa/4.0/
-License Image URL: https://www.realmofespionage.com/images/servers/cc-by-sa-40.png
-
-TODO: Figure out whether Joomla or GNU social .htaccess causes breakage, don't do below
-- sudo cp '/var/www/html/social/htaccess.sample' '/var/www/html/social/.htaccess'
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
 %%%%% MyBB
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -376,10 +303,9 @@ sudo -u apache wget 'https://raw.githubusercontent.com/dimadin/disable-google-fo
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 - Fedora Server + Headless Management
-- Runs Mumble Server and OpenVPN Server
+- Runs OpenVPN Server
 
-sudo dnf copr enable lkiesow/mumble
-sudo dnf install murmur openvpn easy-rsa
+sudo dnf install openvpn easy-rsa
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -389,65 +315,8 @@ sudo dnf install murmur openvpn easy-rsa
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sudo firewall-cmd --permanent --add-service=murmur
 sudo firewall-cmd --permanent --add-service=openvpn
 sudo firewall-cmd --reload
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% murmur
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% systemd
-%%%%%%%%%%%%%%%%%%%%
-
-sudo nano '/usr/lib/systemd/system/murmur.service'
-
--------------------------
-After=network.target
-Restart=always
-RestartSec=5
--------------------------
-
-sudo systemctl daemon-reload
-sudo systemctl enable murmur
-sudo systemctl start murmur
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Configuration
-%%%%%%%%%%%%%%%%%%%%
-
-sudo -u mumble-server nano '/etc/mumble-server.ini'
-
--------------------------
-- Uncomment autoban
-welcometext="Welcome to the Realm of Espionage Mumble server!"
-host=0.0.0.0
-serverpassword=roemumble
-registerName=RoE (Mumble)
-registerUrl=https://www.realmofespionage.com
-registerHostname=realmofespionage.com
-certrequired=True
-sendversion=True
--------------------------
-
-sudo systemctl restart murmur
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% SuperUser
-%%%%%%%%%%%%%%%%%%%%
-
-sudo nano '/var/log/mumble-server/mumble-server.log'
-- Look for "Password for 'SuperUser' set to"
-- Register desired username on server
-- Connect to server as SuperUser with password above
-- Edit Server from Mumble Client
-- Add desired user to admin user group
-- Disconnect and re-login with desired username
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
