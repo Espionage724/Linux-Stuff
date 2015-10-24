@@ -53,6 +53,20 @@ EXIT
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
+%%%%% URL Rewrite
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/httpd/conf.d/gnusocial.conf'
+
+- Reference gnusocial.conf in this GitHub directory
+
+sudo systemctl restart httpd
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% Configuration
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -93,7 +107,7 @@ sudo -u apache php '/var/www/html/social/scripts/checkschema.php'
 wget https://licensebuttons.net/l/by-sa/4.0/80x15.png -O '/var/www/html/images/servers/cc-by-sa-40.png'
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Database Text
+%%%%% Footer Text
 %%%%%%%%%%%%%%%%%%%%
 
 mysql -u root -p
