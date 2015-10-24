@@ -1,0 +1,114 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Information
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- GNU social setup for Realm of Espionage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Download
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+cd '/var/www'
+sudo -u apache git clone -b nightly https://git.gnu.io/gnu/gnu-social.git '/var/www/html/social'
+sync
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Additional Folders
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo -u apache mkdir '/var/www/html/social/avatar' '/var/www/html/social/background' '/var/www/html/social/file'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Database
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+CREATE DATABASE gnusocial;
+
+CREATE USER gnusocial;
+SET PASSWORD FOR 'gnusocial' = PASSWORD ('X');
+
+GRANT ALL PRIVILEGES ON gnusocial.* to 'gnusocial'@'192.168.1.153' IDENTIFIED BY 'X';
+
+FLUSH PRIVILEGES;
+EXIT
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Configuration
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Initial Setup
+%%%%%%%%%%%%%%%%%%%%
+
+- Go to https://www.realmofespionage.com/social
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% config.php
+%%%%%%%%%%%%%%%%%%%%
+
+sudo -u apache nano '/var/www/html/social/config.php'
+
+- Reference config.php in this GitHub directory
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Check Config
+%%%%%%%%%%%%%%%%%%%%
+
+sudo -u apache php '/var/www/html/social/scripts/checkschema.php'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% License Footer
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Logo
+%%%%%%%%%%%%%%%%%%%%
+
+wget https://licensebuttons.net/l/by-sa/4.0/80x15.png -O '/var/www/html/images/servers/cc-by-sa-40.png'
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Database Text
+%%%%%%%%%%%%%%%%%%%%
+
+mysql -u root -p
+
+update `gnusocial`.`config` set `value` = 'https://www.realmofespionage.com/images/servers/cc-by-sa-40.png' where `section` = 'license' and `setting` = 'image';
+update `gnusocial`.`config` set `value` = 'Creative Commons Attribution-ShareAlike 4.0 International' where `section` = 'license' and `setting` = 'title';
+update `gnusocial`.`config` set `value` = 'https://creativecommons.org/licenses/by-sa/4.0/' where `section` = 'license' and `setting` = 'url';
+update `gnusocial`.`config` set `value` = 'cc by-sa' where `section` = 'license' and `setting` = 'type';
+FLUSH TABLES;
+EXIT
+
+####################################################################################################
+####################################################################################################
+#####
+##### End
+#####
+####################################################################################################
+####################################################################################################
