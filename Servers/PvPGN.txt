@@ -30,7 +30,7 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install screen distcc gcc gcc-c++ make autoconf cmake git zlib-devel mariadb mariadb-devel lua-devel
+sudo dnf install screen distcc gcc gcc-c++ make autoconf cmake git zlib-devel mariadb mariadb-devel compat-lua-devel
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,7 +69,7 @@ cd '/home/espionage724/pvpgn' && git pull origin master && cd '/home/espionage72
 %%%%%%%%%%%%%%%%%%%%
 
 mkdir '/home/espionage724/build-pvpgn' '/home/espionage724/run-pvpgn' && cd '/home/espionage724/build-pvpgn'
-CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/pvpgn' -DCMAKE_INSTALL_PREFIX='/home/espionage724/run-pvpgn' -DWITH_MYSQL=1 -DWITH_LUA=0 -DWITH_WIN32_GUI=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10' && sync
+CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/pvpgn' -DCMAKE_INSTALL_PREFIX='/home/espionage724/run-pvpgn' -DWITH_MYSQL=1 -DWITH_LUA=1 -DWITH_WIN32_GUI=0 -DCMAKE_CXX_FLAGS='-O2 -pipe -march=amdfam10' -DCMAKE_C_FLAGS='-O2 -pipe -march=amdfam10' && sync
 DISTCC_HOSTS='192.168.1.150/8 localhost/1' make -j9 && sync && sudo make install && sudo chown -R espionage724:espionage724 '/home/espionage724/run-pvpgn' && cd '/home/espionage724' && sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
