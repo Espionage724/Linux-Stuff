@@ -8,7 +8,7 @@
 
 - StepMania 5 Compile
 - Commands below are for Fedora 23 Workstation
-- Assumes presense of 
+- Assumes presense of AMD Athlon(tm) 64 X2 Dual Core Processor 5600+ (k8-sse3)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -65,3 +65,4 @@ cd '/home/espionage724/stepmania' && git pull origin master && cd '/home/espiona
 mkdir '/home/espionage724/sm5-build' '/home/espionage724/sm5-run' && cd '/home/espionage724/sm5-build'
 CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/stepmania' -DCMAKE_INSTALL_PREFIX='/home/espionage724/sm5-run' -DCMAKE_CXX_FLAGS='-O2 -pipe -march=k8-sse3' -DCMAKE_C_FLAGS='-O2 -pipe -march=k8-sse3' && sync
 DISTCC_HOSTS='192.168.1.150/8 localhost/2' make -j10 install && sync
+
