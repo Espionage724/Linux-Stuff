@@ -455,7 +455,7 @@ pkexec env DISPLAY=$DISPLAY gedit '/usr/lib/systemd/system/distccd.service'
 
 -------------------------
 Remove $OPTIONS
---allow 192.168.1.152 --jobs 12
+--allow 192.168.1.1/24 --jobs 12
 -------------------------
 
 sudo systemctl daemon-reload
