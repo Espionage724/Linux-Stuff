@@ -54,6 +54,14 @@ cd '/home/espionage724' && git clone -b master https://github.com/stepmania/step
 
 cd '/home/espionage724/stepmania' && git pull origin master && cd '/home/espionage724' && sync
 
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Simply Love (SM5)
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/.stepmania-5.0/Themes' && git clone -b master https://github.com/dguzek/Simply-Love-SM5.git sl && sync
+
+cd '/home/espionage724/.stepmania-5.0/Themes/sl' && git pull origin master && cd '/home/espionage724' && sync
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
