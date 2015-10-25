@@ -28,6 +28,9 @@ sudo firewall-cmd --permanent --remove-port=#/tcp
 
 - Run server-related commands not as plain sudo, but run with sudo -u USERNAME (USERNAME being the user dedicated to that service; mysql = mysql, Apache/httpd = apache)
 
+- Figure out which CPU march to target for GCC
+gcc -### -e -v -march=native /usr/include/stdlib.h
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
