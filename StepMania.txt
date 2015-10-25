@@ -21,13 +21,9 @@
 sudo dnf install gcc gcc-c++ make cmake git distcc automake autoconf mesa-libGL-devel mesa-libGLU-devel glew-devel xorg-x11-server-devel libXtst-devel libXrandr-devel libpng-devel libjpeg-turbo-devel zlib-devel bzip2-devel libogg-devel libvorbis-devel glibc-devel yasm-devel pulseaudio-libs-devel alsa-lib-devel binutils-devel gtk2-devel libstdc++-devel pcre-devel nasm libva-devel jack-audio-connection-kit-devel
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Unknown
-%%%%%%%%%%%%%%%%%%%%
-
-joystick-support
-
-%%%%%%%%%%%%%%%%%%%%
 %%%%% libmad
+%%%%% Package needed = libmad and libmad-devel
+%%%%% If RPM Fusion repo is added, only install two packages above and ignore commands below
 %%%%%%%%%%%%%%%%%%%%
 
 sudo dnf install http://download1.rpmfusion.org/free/fedora/development/23/x86_64/os/libmad-0.15.1b-17.fc22.x86_64.rpm
@@ -43,24 +39,16 @@ sudo dnf install http://download1.rpmfusion.org/free/fedora/development/23/x86_6
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Initial Download
+%%%%% SM5 Download
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724' && git clone -b master https://github.com/stepmania/stepmania.git stepmania && sync
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Update
+%%%%% SM5 Update
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/stepmania' && git pull origin master && cd '/home/espionage724' && sync
-
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Simply Love (SM5)
-%%%%%%%%%%%%%%%%%%%%
-
-cd '/home/espionage724/.stepmania-5.0/Themes' && git clone -b master https://github.com/dguzek/Simply-Love-SM5.git sl && sync
-
-cd '/home/espionage724/.stepmania-5.0/Themes/sl' && git pull origin master && cd '/home/espionage724' && sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -70,7 +58,95 @@ cd '/home/espionage724/.stepmania-5.0/Themes/sl' && git pull origin master && cd
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+- Reference this for ffmpeg info: http://www.stepmania.com/forums/stepmania-releases/show/457?start=80#post9051
+
 mkdir '/home/espionage724/sm5-build' '/home/espionage724/sm5-run' && cd '/home/espionage724/sm5-build'
 CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/stepmania' -DCMAKE_INSTALL_PREFIX='/home/espionage724/sm5-run' -DCMAKE_CXX_FLAGS='-O2 -pipe -march=k8-sse3' -DCMAKE_C_FLAGS='-O2 -pipe -march=k8-sse3' && sync
 DISTCC_HOSTS='192.168.1.150/8 localhost/2' make -j10 install && sync
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Configuration
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/.stepmania-5.0/Save/Preferences.ini'
+
+-------------------------
+GlobalOffsetSeconds=-0.065612
+MachineName=Hatebeat
+ShowMouseCursor=0
+SoundDevice=plughw:0,0
+SoundDrivers=alsa-sw
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Themes
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Simply Love Download
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/.stepmania-5.0/Themes' && git clone -b master https://github.com/dguzek/Simply-Love-SM5.git sl && sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Simply Love Update
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/.stepmania-5.0/Themes/sl' && git pull origin master && cd '/home/espionage724' && sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Metal Noteskin
+%%%%%%%%%%%%%%%%%%%%
+
+TODO
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Script Setup
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% stepmania
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/sm.sh'
+
+-------------------------
+cd '/home/espionage724/sm5-run/stepmania-5.0'
+vblank_mode=0 '/home/espionage724/sm5-run/stepmania-5.0/stepmania'
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Make Executable
+%%%%%%%%%%%%%%%%%%%%
+
+chmod +x '/home/espionage724/sm.sh'
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Execute
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+'/home/espionage724/sm.sh'
+
+####################################################################################################
+####################################################################################################
+#####
+##### End
+#####
+####################################################################################################
+####################################################################################################
