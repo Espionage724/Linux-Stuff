@@ -58,10 +58,47 @@ cd '/home/espionage724/stepmania' && git pull origin master && cd '/home/espiona
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-- Reference this for ffmpeg info: http://www.stepmania.com/forums/stepmania-releases/show/457?start=80#post9051
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Info
+%%%%%%%%%%%%%%%%%%%%
+
+- These steps allow for ffmpeg to recieve compile-time tweaks and to use distcc
+- The flags for ffmpeg are tossed under WITH_GPL_LIBS because that flag is enabled by-default, and it just happens to work well for this (I'm just tossing on more flags along with --enable-gpl)
+- Some ffmpeg flags are probably unnecessary and redundant
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Prepare Build Folder
+%%%%%%%%%%%%%%%%%%%%
 
 mkdir '/home/espionage724/sm5-build' '/home/espionage724/sm5-run' && cd '/home/espionage724/sm5-build'
-CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/stepmania' -DCMAKE_INSTALL_PREFIX='/home/espionage724/sm5-run' -DCMAKE_CXX_FLAGS='-O2 -pipe -march=k8-sse3' -DCMAKE_C_FLAGS='-O2 -pipe -march=k8-sse3' && sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Configure ffmpeg
+%%%%%%%%%%%%%%%%%%%%
+
+nano '/home/espionage724/stepmania/CMake/SetupFfmpeg.cmake'
+
+-------------------------
+if(WITH_GPL_LIBS)
+  list(APPEND FFMPEG_CONFIGURE
+    "--enable-gpl"
+    "--cc=distcc"
+    "--cxx=distcc"
+    "--host-cflags=-O2 -pipe -march=k8-sse3"
+    "--host-cppflags=-O2 -pipe -march=k8-sse3"
+    "--optflags=-O2 -pipe -march=k8-sse3"
+    "--arch=x86_64"
+    "--cpu=k8-sse3"
+  )
+endif()
+-------------------------
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Compile
+%%%%%%%%%%%%%%%%%%%%
+
+export DISTCC_HOSTS='192.168.1.150/8 localhost/2'
+CC='distcc gcc' CXX='distcc g++' cmake '/home/espionage724/stepmania' -DCMAKE_INSTALL_PREFIX='/home/espionage724/sm5-run' -DCMAKE_CXX_FLAGS='-O2 -pipe -march=k8-sse3' -DCMAKE_C_FLAGS='-O2 -pipe -march=k8-sse3' -DWITH_FFMPEG_JOBS=10 && sync
 DISTCC_HOSTS='192.168.1.150/8 localhost/2' make -j10 install && sync
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
