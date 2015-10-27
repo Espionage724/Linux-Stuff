@@ -25,6 +25,7 @@ cd '/home/espionage724' && git clone -b master https://github.com/letsencrypt/le
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Update
+%%%%% May not be needed; calling ./letsencrypt-auto seems to update stuff on its own anyway
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/letsencrypt' && git pull origin master && cd '/home/espionage724' && sync
