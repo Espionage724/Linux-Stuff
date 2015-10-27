@@ -128,7 +128,7 @@ SoundDrivers=alsa-sw
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Simply Love Download
+%%%%% C Download
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/.stepmania-5.0/Themes' && git clone -b master https://github.com/dguzek/Simply-Love-SM5.git sl && sync
