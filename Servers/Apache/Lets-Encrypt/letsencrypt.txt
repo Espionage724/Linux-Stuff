@@ -71,13 +71,18 @@ sudo setenforce 0
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/letsencrypt'
-./letsencrypt-auto auth --verbose
+./letsencrypt-auto --agree-dev-preview --server https://acme-v01.api.letsencrypt.org/directory auth --verbose
+
+- Domains: www.realmofespionage.com realmofespionage.com
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Bring up Temp Webserver
 %%%%% 'x' = redacted; expect to see a large jumble of characters in-place
+%%%%% Do this from separate terminal
+%%%%% Repeat echo -n line and restart python webserver for additional domains upon prompt
 %%%%%%%%%%%%%%%%%%%%
 
+rm -R /tmp/letsencrypt
 mkdir -p /tmp/letsencrypt/public_html/.well-known/acme-challenge
 cd /tmp/letsencrypt/public_html
 echo -n 'x' > .well-known/acme-challenge/'x'
@@ -103,5 +108,13 @@ sudo nano '/etc/httpd/conf.d/ssl.conf'
 -------------------------
 SSLCertificateFile /etc/letsencrypt/live/realmofespionage.com/cert.pem
 SSLCertificateKeyFile /etc/letsencrypt/live/realmofespionage.com/privkey.pem
-SSLCertificateChainFile /etc/letsencrypt/live/realmofespionage.com/fullchain.pem
+SSLCertificateChainFile /etc/letsencrypt/live/realmofespionage.com/chain.pem
 -------------------------
+
+####################################################################################################
+####################################################################################################
+#####
+##### End
+#####
+####################################################################################################
+####################################################################################################
