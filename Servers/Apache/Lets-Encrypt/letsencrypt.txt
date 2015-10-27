@@ -1,0 +1,91 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Information
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+- Let's Encrypt Certificates
+- Tested on Fedora 23 Server
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Git Management
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Initial Download
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724' && git clone -b master https://github.com/letsencrypt/letsencrypt letsencrypt && sync
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Update
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/letsencrypt' && git pull origin master && cd '/home/espionage724' && sync
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% General
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf install rpm-build
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Pull in rest
+%%%%% Also tells you flags
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/letsencrypt'
+./letsencrypt-auto --help
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Obtain Certificates
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Initial
+%%%%%%%%%%%%%%%%%%%%
+
+sudo systemctl stop firewalld httpd
+sudo setenforce 0
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Start Wizard
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/letsencrypt'
+./letsencrypt-auto auth --verbose
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Bring up Temp Webserver
+%%%%% 'x' = redacted; expect to see a large jumble of characters in-place
+%%%%%%%%%%%%%%%%%%%%
+
+mkdir -p /tmp/letsencrypt/public_html/.well-known/acme-challenge
+cd /tmp/letsencrypt/public_html
+echo -n 'x' > .well-known/acme-challenge/'x'
+python2.7 -c "import BaseHTTPServer, SimpleHTTPServer; SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map = {'': 'application/jose+json'}; s = BaseHTTPServer.HTTPServer(('', 80), SimpleHTTPServer.SimpleHTTPRequestHandler); s.serve_forever()"
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Finalize
+%%%%%%%%%%%%%%%%%%%%
+
+sudo setenforce 1
+sudo systemctl start firewalld httpd
