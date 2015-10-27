@@ -89,3 +89,19 @@ python2.7 -c "import BaseHTTPServer, SimpleHTTPServer; SimpleHTTPServer.SimpleHT
 
 sudo setenforce 1
 sudo systemctl start firewalld httpd
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Apache Configuration
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+sudo nano '/etc/httpd/conf.d/ssl.conf'
+
+-------------------------
+SSLCertificateFile /etc/letsencrypt/live/realmofespionage.com/cert.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/realmofespionage.com/privkey.pem
+SSLCertificateChainFile /etc/letsencrypt/live/realmofespionage.com/fullchain.pem
+-------------------------
