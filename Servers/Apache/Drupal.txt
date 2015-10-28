@@ -1,0 +1,13 @@
+- Totally unfinished; will fix up later
+
+sudo rm -R '/var/www/html'
+sudo mkdir '/var/www/html'
+sudo chown apache:apache -R '/var/www/html'
+sudo chcon -R -t httpd_sys_rw_content_t '/var/www/html'
+
+cd '/var/www'
+sudo -u apache git clone -b 7.x git://git.drupal.org/project/drupal.git '/var/www/html' && sync
+
+cd '/var/www/html' && sudo -u apache git pull origin 7.x && cd '/home/espionage724'
+
+
