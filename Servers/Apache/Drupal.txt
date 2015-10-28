@@ -10,4 +10,20 @@ sudo -u apache git clone -b 7.x git://git.drupal.org/project/drupal.git '/var/ww
 
 cd '/var/www/html' && sudo -u apache git pull origin 7.x && cd '/home/espionage724'
 
+mysql -u root -p
+create database drupal;
+CREATE USER drupal;
+SET PASSWORD FOR 'drupal' = PASSWORD ('x');
+GRANT ALL PRIVILEGES ON drupal.* to 'drupal'@'192.168.1.153' IDENTIFIED BY 'x';
+FLUSH PRIVILEGES;
+EXIT
 
+sudo nano '/etc/httpd/conf.d/drupal.conf'
+- Use drupal.conf in github
+
+sudo pecl install uploadprogress
+
+sudo nano '/etc/php.ini'
+--
+extension=uploadprogress.so
+--
