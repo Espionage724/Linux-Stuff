@@ -128,7 +128,13 @@ SoundDrivers=alsa-sw
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% C Download
+%%%%% Information
+%%%%%%%%%%%%%%%%%%%%
+
+- Below commands require starting SM5 at least once in order to create the user-specific folder
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Simply Love Download
 %%%%%%%%%%%%%%%%%%%%
 
 cd '/home/espionage724/.stepmania-5.0/Themes' && git clone -b master https://github.com/dguzek/Simply-Love-SM5.git sl && sync
@@ -143,7 +149,7 @@ cd '/home/espionage724/.stepmania-5.0/Themes/sl' && git pull origin master && cd
 %%%%% Metal Noteskin
 %%%%%%%%%%%%%%%%%%%%
 
-TODO
+cd '/home/espionage724/.stepmania-5.0/NoteSkins' && mkdir dance && cd dance && wget http://zettbou.co.uk/Unlimited_Stepman_Works/_Noteskin/SM5/Dance/USWMetalSM5.rar -O Metal.rar && unar Metal.rar && rm Metal.rar
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
