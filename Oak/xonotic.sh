@@ -1,1 +1,2 @@
-screen -dmS xonotic '/home/espionage724/Xonotic/xonotic-linux-dedicated.sh'
+cd '/home/espionage724/xonotic'
+screen -dmS xonotic '/home/espionage724/xonotic/all' run dedicated
