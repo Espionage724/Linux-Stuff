@@ -1,4 +1,4 @@
-Last metadata expiration check performed 0:26:38 ago on Thu Sep 10 10:15:14 2015.
+Last metadata expiration check performed 2:40:25 ago on Thu Oct 29 02:55:44 2015.
 Environment Group: Minimal Install
  Description: Basic functionality.
  Mandatory Groups:
