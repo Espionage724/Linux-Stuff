@@ -1,6 +1,6 @@
-# Update Joomla
+# Update Drupal
 cd '/var/www/html'
-sudo -u apache git pull origin staging
+sudo -u apache git pull origin 7.x
 
 # Update and do maintenance on GNU social
 cd '/var/www/html/social'
