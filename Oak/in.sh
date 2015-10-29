@@ -1,5 +1,13 @@
-# Stop services
-sudo systemctl stop auth world pvpgn xonotic
+# Stop xonotic
+sudo systemctl stop xonotic
+
+# Update and Compile Xonotic Git
+cd '/home/espionage724/xonotic'
+'/home/espionage724/xonotic/all' update
+'/home/espionage724/xonotic/all' compile dedicated
+
+# Stop other services
+sudo systemctl stop auth world pvpgn
 
 # Install TrinityCore
 cd '/home/espionage724/build'
