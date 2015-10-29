@@ -1,0 +1,15 @@
+Last metadata expiration check performed 2:42:08 ago on Thu Oct 29 02:55:44 2015.
+Environment Group: Fedora Workstation
+ Description: Fedora Workstation is a user friendly desktop system for laptops and PCs.
+ Mandatory Groups:
+   Common NetworkManager Submodules
+   Core
+   Fedora Workstation product core
+   Firefox Web Browser
+   Fonts
+   Guest Desktop Agents
+   Hardware Support
+   LibreOffice
+   Multimedia
+   Printing Support
+   base-x
