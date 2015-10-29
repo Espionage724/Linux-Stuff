@@ -8,6 +8,7 @@
 
 - Xonotic setup for Realm of Espionage
 - Commands below are for Fedora 23 Server
+- For AES support, both client and server need to be user-compiled
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,30 +29,45 @@ sudo firewall-cmd --reload
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install screen wget p7zip
+sudo dnf install screen wget p7zip libjpeg-turbo-devel git
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% Xonotic
+%%%%% Git Management
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Download
+%%%%% Initial Download
 %%%%%%%%%%%%%%%%%%%%
 
-cd '/home/espionage724'
-wget http://dl.xonotic.org/xonotic-0.8.1.zip
-unzip '/home/espionage724/xonotic-0.8.1.zip'
-rm '/home/espionage724/xonotic-0.8.1.zip'
+cd '/home/espionage724' && git clone -b master git://git.xonotic.org/xonotic/xonotic.git xonotic && sync
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% Update
+%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/xonotic' && '/home/espionage724/xonotic/all' update && cd '/home/espionage724' && sync
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Compile
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+cd '/home/espionage724/xonotic' && '/home/espionage724/xonotic/all' compile dedicated && sync
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
 %%%%% Configuration
-%%%%%%%%%%%%%%%%%%%%
-
-TODO: Figure out AES
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 mkdir '/home/espionage724/.xonotic' '/home/espionage724/.xonotic/data'
 cp '/home/espionage724/Xonotic/server/server.cfg' '/home/espionage724/.xonotic/data/server.cfg'
@@ -60,7 +76,7 @@ nano '/home/espionage724/.xonotic/data/server.cfg'
 -------------------------
 sv_public 1
 sv_status_privacy 1
-hostname "Realm of Espionage Xonotic Server ($g_xonoticversion)"
+hostname "Realm of Espionage InstaGib USEast ($g_xonoticversion)"
 sv_motd "Welcome to the Realm of Espionage Xonotic server!" 
 maxplayers 16
 g_maplist_shuffle 1
@@ -89,7 +105,8 @@ g_jetpack 1
 nano '/home/espionage724/xonotic.sh'
 
 -------------------------
-screen -dmS xonotic '/home/espionage724/Xonotic/xonotic-linux-dedicated.sh'
+cd '/home/espionage724/xonotic'
+screen -dmS xonotic '/home/espionage724/xonotic/all' run dedicated
 -------------------------
 
 %%%%%%%%%%%%%%%%%%%%
@@ -164,20 +181,6 @@ WantedBy=multi-user.target
 
 sudo systemctl daemon-reload
 sudo systemctl enable xonotic
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%
-%%%%% Test Compile Info
-%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-- Unfinished :p
-
-xorg-x11-proto-devel libjpeg-turbo-devel SDL2-devel
-
-git clone -b master git://git.xonotic.org/xonotic/xonotic.git xonotic && sync
 
 ####################################################################################################
 ####################################################################################################
