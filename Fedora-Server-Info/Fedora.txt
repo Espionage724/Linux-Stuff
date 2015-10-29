@@ -1,4 +1,4 @@
-Last metadata expiration check performed 0:26:52 ago on Thu Sep 10 10:15:14 2015.
+Last metadata expiration check performed 2:38:33 ago on Thu Oct 29 02:55:44 2015.
 Environment Group: Fedora Server
  Description: An integrated, easier to manage server.
  Mandatory Groups:
@@ -11,6 +11,7 @@ Environment Group: Fedora Server
    Standard
  Optional Groups:
    Basic Web Server
+   Common NetworkManager Submodules
    DNS Name Server
    Directory Server
    Dogtag Certificate System
@@ -18,6 +19,7 @@ Environment Group: Fedora Server
    FreeIPA Server
    Guest Agents
    Hardware Support
+   Headless Virtualization
    High Availability
    Load Balancer
    Mail Server
@@ -25,5 +27,4 @@ Environment Group: Fedora Server
    Network Servers
    PostgreSQL Database
    Printing Support
-   Virtualization
    Windows File Server
