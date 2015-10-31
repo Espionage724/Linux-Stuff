@@ -46,7 +46,15 @@ gcc -### -e -v -march=native /usr/include/stdlib.h
 Address: 192.168.1.15X
 Netmask: 255.255.255.0
 Gateway: 192.168.1.1
-DNS: 104.237.144.172,74.207.232.103,104.245.39.112
+DNS: 192.209.63.8,173.44.61.182,45.35.66.151
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% Change DNS Post-Install
+%%%%%%%%%%%%%%%%%%%%
+
+sudo nmcli con mod enp0s7 ipv4.dns 192.209.63.8
+sudo nmcli con mod enp0s7 +ipv4.dns 173.44.61.182
+sudo nmcli con mod enp0s7 +ipv4.dns 45.35.66.151
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
