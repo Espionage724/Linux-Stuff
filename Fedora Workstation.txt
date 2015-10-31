@@ -190,6 +190,12 @@ pkexec env DISPLAY=$DISPLAY gedit '/etc/hosts'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% updates-testing
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf config-manager --set-enabled updates-testing
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% Master Password
 %%%%%%%%%%%%%%%%%%%%
 
