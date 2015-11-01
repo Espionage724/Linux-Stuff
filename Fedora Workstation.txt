@@ -64,9 +64,9 @@ Pointer speed: Slow
 %%%%%%%%%%%%%%%%%%%%
 
 DNS:
-104.237.144.172
-74.207.232.103
-104.245.39.112
+192.209.63.8
+173.44.61.182
+45.35.66.151
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Printers
@@ -184,7 +184,7 @@ pkexec env DISPLAY=$DISPLAY gedit '/etc/hosts'
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%
-%%%%% Software
+%%%%% Repositories
 %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -194,6 +194,34 @@ pkexec env DISPLAY=$DISPLAY gedit '/etc/hosts'
 %%%%%%%%%%%%%%%%%%%%
 
 sudo dnf config-manager --set-enabled updates-testing
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% griever/mesa-git
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf copr enable griever/mesa-git
+
+pkexec env DISPLAY=$DISPLAY gedit '/etc/yum.repos.d/_copr_griever-mesa-git.repo'
+
+https://copr.fedoraproject.org/coprs/griever/mesa-git/
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%% griever/wine-staging
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf copr enable griever/wine-staging
+
+pkexec env DISPLAY=$DISPLAY gedit '/etc/yum.repos.d/_copr_griever-wine-staging.repo'
+
+https://copr.fedoraproject.org/coprs/griever/wine-staging/
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%
+%%%%% Software
+%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Master Password
