@@ -196,6 +196,12 @@ pkexec env DISPLAY=$DISPLAY gedit '/etc/hosts'
 sudo dnf config-manager --set-enabled updates-testing
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% lkiesow/mumble
+%%%%%%%%%%%%%%%%%%%%
+
+sudo dnf copr enable lkiesow/mumble
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% griever/mesa-git
 %%%%%%%%%%%%%%%%%%%%
 
@@ -239,7 +245,7 @@ sudo dnf remove empathy* gnome-contacts* orca* bijiben* evolution shotwell
 %%%%% General
 %%%%%%%%%%%%%%%%%%%%
 
-sudo dnf install minetest perl-Image-ExifTool p7zip android-tools unar aria2 java-1.8.0-openjdk gnome-tweak-tool lm_sensors gimp xonotic transmission cockpit pidgin wine
+sudo dnf install minetest perl-Image-ExifTool p7zip android-tools unar aria2 java-1.8.0-openjdk gnome-tweak-tool lm_sensors gimp xonotic transmission cockpit pidgin wine mumble
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Dxtn
@@ -249,33 +255,28 @@ sudo dnf install http://download1.rpmfusion.org/free/fedora/development/23/x86_6
 sudo dnf install http://download1.rpmfusion.org/free/fedora/development/23/x86_64/os/libtxc_dxtn-1.0.0-4.fc22.x86_64.rpm
 
 %%%%%%%%%%%%%%%%%%%%
-%%%%% Testing if even needed
-%%%%%%%%%%%%%%%%%%%%
-
-mpv HandBrake-gui hdparm mediainfo mesa-vdpau-drivers
-
-%%%%%%%%%%%%%%%%%%%%
 %%%%% Hammerstorm
 %%%%%%%%%%%%%%%%%%%%
 
 distcc-server gcc gcc-c++
 
 %%%%%%%%%%%%%%%%%%%%
+%%%%% RPM Fusion-related
+%%%%% Install whenever RPM Fusion gets updated
+%%%%%%%%%%%%%%%%%%%%
+
+mpv HandBrake-gui hdparm mediainfo mesa-vdpau-drivers
+
+%%%%%%%%%%%%%%%%%%%%
 %%%%% Hatebeat
+%%%%% 
 %%%%% OpenITG
+%%%%% Needs i686 F23 (x86_64 would need ton of i686 libaries)
 %%%%%%%%%%%%%%%%%%%%
 
-libmad libpng12 joystick-support
+libpng12 joystick-support
 
-%%%%%%%%%%%%%%%%%%%%
-%%%%% Hatebeat
-%%%%% StepMania 5 Compile
-%%%%% All packages need checked
-%%%%%%%%%%%%%%%%%%%%
-
-automake autoconf mesa-libGL-devel mesa-libGLU-devel glew-devel xorg-x11-server-devel libXtst-devel libXrandr-devel libpng-devel libjpeg-turbo-devel zlib-devel bzip2-devel libogg-devel libvorbis-devel glibc-devel yasm-devel pulseaudio-libs-devel alsa-lib-devel make automake binutils-devel gtk2-devel libmad-devel libstdc++-devel gcc-c++ joystick-support
-
-sudo dnf install http://download1.rpmfusion.org/free/fedora/development/23/x86_64/os/libmad-devel-0.15.1b-17.fc22.x86_64.rpm
+sudo dnf install http://download1.rpmfusion.org/free/fedora/development/23/x86_64/os/libmad-0.15.1b-17.fc22.i686.rpm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -319,7 +320,7 @@ pkexec env DISPLAY=$DISPLAY gedit '/usr/share/X11/xorg.conf.d/99-graphics.conf'
 Section "Device"
 	Identifier	"Southern Islands"
 	Driver		"radeon"
-	Option		"DRI3"			"true"	
+	Option		"DRI3"			"true"
 EndSection
 
 Section "Monitor"
