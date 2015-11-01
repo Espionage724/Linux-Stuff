@@ -580,11 +580,11 @@ rm -R '/home/espionage724/Downloads/Diablo II'
 %%%%% Warcraft III
 %%%%%%%%%%%%%%%%%%%%
 
-WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' WINEARCH=win32 wine '/home/espionage724/Downloads/WarCraft III/Warcraft III 1.21b ROC Installer enUS/Installer.exe'
+WINEPREFIX='/home/espionage724/Wine Prefixes/Warcraft III' WINEARCH=win32 wine '/home/espionage724/Downloads/WarCraft III/Warcraft III 1.21b ROC Installer enUS/Installer.exe'
 
-WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' wine '/home/espionage724/Downloads/WarCraft III/Warcraft III 1.21b TFT Installer enUS/Installer.exe'
+WINEPREFIX='/home/espionage724/Wine Prefixes/Warcraft III' wine '/home/espionage724/Downloads/WarCraft III/WarCraft III 1.21b TFT Installer enUS/Installer.exe'
 
-WINEPREFIX='/home/espionage724/Wine Prefixes/WarCraft III' wine '/home/espionage724/Downloads/WarCraft III/War3TFT_126a_English.exe'
+WINEPREFIX='/home/espionage724/Wine Prefixes/Warcraft III' wine '/home/espionage724/Downloads/WarCraft III/War3TFT_126a_English.exe'
 
 unzip '/home/espionage724/Downloads/WarCraft III/w3l-1.26a.zip' -d '/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III'
 
@@ -678,10 +678,8 @@ Path=/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/Wo
 Icon=WoW.0
 -------------------------
 
-wget https://slimgur.com/images/2015/09/19/dde8d0b76cbc06fce8f80e59969011d0.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/WoW.0.png'
-
 wget http://www.wowace.com/media/files/443/930/Prat-3.0-3.3.26.zip
-unzip '/home/espionage724/Prat-3.0-3.3.26.zip' -d '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft/Interface/AddOns'
+mkdir '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft/Interface' && unzip '/home/espionage724/Prat-3.0-3.3.26.zip' -d '/home/espionage724/Wine Prefixes/World of Warcraft/drive_c/Program Files/World of Warcraft/Interface/AddOns'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% SQLyog
@@ -718,10 +716,8 @@ Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/Diablo II' 
 Type=Application
 StartupNotify=true
 Path=/home/espionage724/Wine Prefixes/Diablo II/drive_c/Program Files/Diablo II
-Icon=D2LoD.0
+Icon=CFF8_Diablo II.0
 -------------------------
-
-wget https://www.slimgr.com/images/2015/10/23/6d5952556044a88844c8b3a5323a5a9e.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/D2LoD.0.png'
 
 %%%%%%%%%%%%%%%%%%%%
 %%%%% Warcraft III
@@ -739,7 +735,7 @@ Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/Warcraft II
 Type=Application
 StartupNotify=true
 Path=/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III
-Icon=W3RoC.0
+Icon=938C_Warcraft III.0
 -------------------------
 
 gedit '/home/espionage724/.local/share/applications/wine/Programs/Warcraft III/Warcraft III: The Frozen Throne.desktop'
@@ -751,7 +747,7 @@ Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/Warcraft II
 Type=Application
 StartupNotify=true
 Path=/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III
-Icon=W3TFT.0
+Icon=DB92_Frozen Throne.0
 -------------------------
 
 gedit '/home/espionage724/.local/share/applications/wine/Programs/Warcraft III/Warcraft III: The Frozen Throne (PvPGN).desktop'
@@ -763,14 +759,8 @@ Exec=env WINEDEBUG=-all WINEPREFIX='/home/espionage724/Wine Prefixes/Warcraft II
 Type=Application
 StartupNotify=true
 Path=/home/espionage724/Wine Prefixes/Warcraft III/drive_c/Program Files/Warcraft III
-Icon=W3TFT.1
+Icon=AD78_World Editor.0
 -------------------------
-
-wget https://www.slimgr.com/images/2015/10/23/0cda0bfc627bc31de180441695c5ae7e.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3RoC.0.png'
-
-wget https://www.slimgr.com/images/2015/10/23/29d9ffcb043040d5a74ed427a6a99f4b.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3TFT.0.png'
-
-wget https://www.slimgr.com/images/2015/10/23/8e37fe8b89bbccb747944c4752ba8a72.png -O '/home/espionage724/.local/share/icons/hicolor/256x256/apps/W3TFT.1.png'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
