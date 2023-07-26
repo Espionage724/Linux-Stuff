@@ -1,0 +1,130 @@
+====== Tools ======
+
+<code>sudo zypper install 'nvme-cli' -y && sync</code>
+
+<code>sudo apt install 'nvme-cli' -y && sync</code>
+
+<code>sudo dnf install nvme-cli hdparm -y && sync</code>
+
+====== Suspend/Wake ======
+
+  * Some motherboard firmware lock/freeze drives, and prevents some wipe commands from working
+  * Unlocking drives can be done with a suspend and wake
+  * :!: This applies to both SATA and NVMe drives
+
+<code>sync && systemctl suspend</code>
+
+====== lsblk ======
+
+  * :!: **Always** check before running anything
+  * :!: Assume nothing; all commands below are **immediately destructive** on the block device they're ran on
+
+<code>lsblk</code>
+
+====== EFI Variables ======
+
+****
+
+<code>sudo rm -f '/sys/firmware/efi/efivars/'* || sync && sudo efibootmgr -v</code>
+
+====== Drive Wipe ======
+
+===== Notes =====
+
+  * https://steamcommunity.com/discussions/forum/1/4739473745776804012/?tscn=1641033020#c3203747342915419588
+  * https://steamcommunity.com/discussions/forum/1/3203745634155479256
+
+  * :!: Steam and Oculus are known to be broken with 4K sector size on Windows 11, so 512e/LBAF=0 should be used
+  * Steam and Oculus work fine with 4K sector size on Windows 10 LTSC 2021 and Linux
+
+===== nvme0 =====
+
+  * :!: This is using LBA Format ''1'' for 4K sector size
+
+<code>sudo blkdiscard --force --verbose '/dev/nvme0n1' && sync && sudo nvme format '/dev/nvme0' --force --namespace-id='1' --lbaf='1' --reset --ses='1' --pil='0' --pi='0' --ms='0' && sudo rm -f '/sys/firmware/efi/efivars/'* || sync</code>
+
+<code>sudo blkdiscard --force --verbose '/dev/nvme0n1' && sync</code>
+
+<code>sudo nvme format '/dev/nvme0' --force --namespace-id='1' --lbaf='1' --reset --ses='1' --pil='0' --pi='0' --ms='0' && sync</code>
+
+<code>sudo wipefs --all --force '/dev/nvme0n1'</code>
+
+===== nvme1 =====
+
+  * :!: This is using LBA Format ''1'' for 4K sector size
+
+<code>sudo blkdiscard --force --verbose '/dev/nvme1n1' && sync && sudo nvme format '/dev/nvme1' --force --namespace-id='1' --lbaf='1' --reset --ses='1' --pil='0' --pi='0' --ms='0' && sudo rm -f '/sys/firmware/efi/efivars/'* || sync</code>
+
+<code>sudo blkdiscard --force --verbose '/dev/nvme1n1' && sync</code>
+
+<code>sudo nvme format '/dev/nvme1' --force --namespace-id='1' --lbaf='1' --reset --ses='1' --pil='0' --pi='0' --ms='0' && sync</code>
+
+<code>sudo wipefs --all --force '/dev/nvme1n1'</code>
+
+===== sda =====
+
+<code>sudo blkdiscard --force --verbose '/dev/sda' && sync && sudo hdparm --user-master u --security-set-pass 'x' '/dev/sda' && sudo hdparm --user-master u --security-erase 'x' '/dev/sda' && sudo hdparm --user-master u --security-set-pass 'x' '/dev/sda' && sudo hdparm --user-master u --security-erase-enhanced 'x' '/dev/sda' && sudo rm -f '/sys/firmware/efi/efivars/'* || sync</code>
+
+<code>sudo blkdiscard --force --verbose '/dev/sda' && sync</code>
+
+<code>sudo hdparm --user-master u --security-set-pass 'x' '/dev/sda' && sudo hdparm --user-master u --security-erase 'x' '/dev/sda' && sync</code>
+
+<code>sudo hdparm --user-master u --security-set-pass 'x' '/dev/sda' && sudo hdparm --user-master u --security-erase-enhanced 'x' '/dev/sda' && sync</code>
+
+<code>sudo wipefs --all --force '/dev/sda'</code>
+
+===== sdb =====
+
+<code>sudo blkdiscard --force --verbose '/dev/sdb' && sync && sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdb' && sudo hdparm --user-master u --security-erase 'x' '/dev/sdb' && sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdb' && sudo hdparm --user-master u --security-erase-enhanced 'x' '/dev/sdb' && sudo rm -f '/sys/firmware/efi/efivars/'* || sync</code>
+
+<code>sudo blkdiscard --force --verbose '/dev/sdb' && sync</code>
+
+<code>sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdb' && sudo hdparm --user-master u --security-erase 'x' '/dev/sdb' && sync</code>
+
+<code>sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdb' && sudo hdparm --user-master u --security-erase-enhanced 'x' '/dev/sdb' && sync</code>
+
+<code>sudo wipefs --all --force '/dev/sdb'</code>
+
+===== sdc =====
+
+<code>sudo blkdiscard --force --verbose '/dev/sdc' && sync && sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdc' && sudo hdparm --user-master u --security-erase 'x' '/dev/sdc' && sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdc' && sudo hdparm --user-master u --security-erase-enhanced 'x' '/dev/sdc' && sudo rm -f '/sys/firmware/efi/efivars/'* || sync</code>
+
+<code>sudo blkdiscard --force --verbose '/dev/sdc' && sync</code>
+
+<code>sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdc' && sudo hdparm --user-master u --security-erase 'x' '/dev/sdc' && sync</code>
+
+<code>sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdc' && sudo hdparm --user-master u --security-erase-enhanced 'x' '/dev/sdc' && sync</code>
+
+<code>sudo wipefs --all --force '/dev/sdc'</code>
+
+===== sdd =====
+
+<code>sudo blkdiscard --force --verbose '/dev/sdd' && sync && sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdd' && sudo hdparm --user-master u --security-erase 'x' '/dev/sdd' && sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdd' && sudo hdparm --user-master u --security-erase-enhanced 'x' '/dev/sdd' && sudo rm -f '/sys/firmware/efi/efivars/'* || sync</code>
+
+<code>sudo blkdiscard --force --verbose '/dev/sdd' && sync</code>
+
+<code>sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdd' && sudo hdparm --user-master u --security-erase 'x' '/dev/sdd' && sync</code>
+
+<code>sudo hdparm --user-master u --security-set-pass 'x' '/dev/sdd' && sudo hdparm --user-master u --security-erase-enhanced 'x' '/dev/sdd' && sync</code>
+
+<code>sudo wipefs --all --force '/dev/sdd'</code>
+
+====== Sector Size ======
+
+  * https://community.wd.com/t/sn550-why-it-uses-512b-sector-instead-of-4096/250724
+  * https://filers.blogspot.com/2018/12/how-to-format-nvme-drive.html
+  * https://wiki.archlinux.org/title/Advanced_Format
+  * https://unix.stackexchange.com/questions/562571/switching-hdd-sector-size-to-4096-bytes
+  * https://www.thomas-krenn.com/en/wiki/Advanced_Sector_Format_of_Block_Devices
+
+===== NVMe =====
+
+<code>sudo nvme id-ns '/dev/nvme0' --namespace-id='1' --human-readable</code>
+
+<code>sudo smartctl --all '/dev/nvme0'</code>
+
+===== sda =====
+
+<code>sudo smartctl --all '/dev/sda1'</code>
+
+<code>sudo hdparm --set-sector-size '4096' '/dev/sda'</code>
